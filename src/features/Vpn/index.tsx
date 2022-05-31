@@ -11,6 +11,7 @@ import {
   vpnListState,
 } from "../../stores/vpn.store";
 import { PageTitleBreadcrumbs } from "../../types/pagetitle.type";
+import VPNCreateModal from "./components/VPNCreateModal";
 import VPNListCard from "./components/VPNListCard";
 
 export default function VPNPage() {
@@ -54,6 +55,7 @@ export default function VPNPage() {
         <LoadingOverlay visible={loading} />
         <VPNListCard />
       </Box>
+      <VPNCreateModal />
     </>
   );
 }
