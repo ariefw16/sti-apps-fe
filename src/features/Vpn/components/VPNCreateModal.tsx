@@ -23,16 +23,17 @@ import { User } from "../../../types/user.type";
 interface ItemProps extends SelectItemProps {
   name: string;
   nik?: string;
+  email?: string;
 }
 
 const AutoCompleteItem = forwardRef<HTMLDivElement, ItemProps>(
-  ({ value, name, nik, ...others }: ItemProps, ref) => (
+  ({ value, name, nik, email, ...others }: ItemProps, ref) => (
     <div ref={ref} {...others}>
       <Group noWrap>
         <div>
           <Text>{name}</Text>
           <Text size="xs" color="dimmed">
-            NIK : {nik}
+            NIK : {nik} ({email})
           </Text>
         </div>
       </Group>
@@ -87,6 +88,7 @@ export default function VPNCreateModal() {
               value: us.id.toString(),
               name: us.name,
               nik: us.nik,
+              email: us.email,
             }))}
             label="User"
             placeholder="NIK / Nama"
@@ -100,8 +102,12 @@ export default function VPNCreateModal() {
             nothingFound="No Data Found"
             filter={(value, item) =>
               item.name.toLowerCase().includes(value.toLowerCase().trim()) ||
-              item.nik.toLowerCase().includes(value.toLowerCase().trim())
+              item.nik.toLowerCase().includes(value.toLowerCase().trim()) ||
+              item.email.toLowerCase().includes(value.toLowerCase().trim())
             }
+            onItemSubmit={(v) => {
+              console.log(v);
+            }}
           />
           <TextInput
             label="NIK"
