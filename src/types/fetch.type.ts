@@ -3,6 +3,7 @@ export interface FetchParams {
   limit?: number;
   id?: number;
   q?: string;
+  refreshToggle?: boolean;
 }
 
 export interface FetchResult<T> {
