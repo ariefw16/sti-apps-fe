@@ -21,3 +21,12 @@ export async function saveSettings(data: SettingsData) {
     throw new Error(error.message);
   }
 }
+
+export async function findSettings(key: string): Promise<SettingsData> {
+  try {
+    const result = await axios.get(`settings/key/${key}`);
+    return result.data;
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+}

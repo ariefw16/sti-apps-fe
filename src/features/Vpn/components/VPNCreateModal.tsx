@@ -10,24 +10,30 @@ import {
   SelectItemProps,
   TextInput,
   Text,
+  AutocompleteItem,
+  PasswordInput,
 } from "@mantine/core";
 import { useDebouncedValue } from "@mantine/hooks";
 import { showNotification } from "@mantine/notifications";
 import { forwardRef, useEffect, useState } from "react";
 import { useRecoilValue, useResetRecoilState } from "recoil";
 import { DeviceFloppy, X } from "tabler-icons-react";
+import { findSettings } from "../../../services/settings.service";
 import { fetchUser } from "../../../services/user.service";
 import { vpnCreateState } from "../../../stores/vpn.store";
+import { Unit } from "../../../types/unit.type";
 import { User } from "../../../types/user.type";
 
 interface ItemProps extends SelectItemProps {
   name: string;
   nik?: string;
   email?: string;
+  userId: number;
+  unit?: Unit;
 }
 
 const AutoCompleteItem = forwardRef<HTMLDivElement, ItemProps>(
-  ({ value, name, nik, email, ...others }: ItemProps, ref) => (
+  ({ value, name, nik, email, userId, unit, ...others }: ItemProps, ref) => (
     <div ref={ref} {...others}>
       <Group noWrap>
         <div>
@@ -48,6 +54,12 @@ export default function VPNCreateModal() {
   const [user, setUser] = useState<User[]>([]);
   const [search, setSearch] = useState("");
   const [qSearch] = useDebouncedValue(search, 500);
+  const [skipOnSelect, setSkipOnSelect] = useState(false);
+  const [userData, setUserData] = useState<User>();
+  const [duration, setDuration] = useState<number | undefined>();
+  const [interval, setInterval] = useState<string | null>("days");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
   useEffect(() => {
     if (qSearch !== "") setUserLoading(true);
@@ -55,7 +67,8 @@ export default function VPNCreateModal() {
 
   useEffect(() => {
     if (qSearch === "") setUser([]);
-    else
+    else if (!skipOnSelect) {
+      setUserData(undefined);
       fetchUser({ q: search, unitId: null })
         .then((res) => {
           setUser(res.data);
@@ -66,11 +79,32 @@ export default function VPNCreateModal() {
             message: `Error! ${e.message}`,
             color: "red",
           });
-        })
-        .finally(() => {
-          setUserLoading(false);
         });
+    }
+    setUserLoading(false);
+    setSkipOnSelect(false);
   }, [qSearch]);
+
+  useEffect(() => {
+    findSettings("vpn-reminder")
+      .then((res) => {
+        setDuration(res.value ? +res.value : undefined);
+        setInterval(res.params || null);
+      })
+      .catch((e) => {
+        showNotification({
+          title: "Fetch Default Setting",
+          message: `Error! ${e.message}`,
+          color: "red",
+        });
+      });
+  }, []);
+
+  const onSelectItemHandler = (item: AutocompleteItem) => {
+    const { name, nik, email, userId: id, unit } = item;
+    setSkipOnSelect(true);
+    setUserData({ id, name, nik, email, unit });
+  };
 
   return (
     <Modal
@@ -85,10 +119,12 @@ export default function VPNCreateModal() {
         <form>
           <Autocomplete
             data={user.map((us) => ({
-              value: us.id.toString(),
+              value: us.name!,
               name: us.name,
               nik: us.nik,
               email: us.email,
+              userId: us.id,
+              unit: us.unit,
             }))}
             label="User"
             placeholder="NIK / Nama"
@@ -105,9 +141,7 @@ export default function VPNCreateModal() {
               item.nik.toLowerCase().includes(value.toLowerCase().trim()) ||
               item.email.toLowerCase().includes(value.toLowerCase().trim())
             }
-            onItemSubmit={(v) => {
-              console.log(v);
-            }}
+            onItemSubmit={onSelectItemHandler}
           />
           <TextInput
             label="NIK"
@@ -115,6 +149,8 @@ export default function VPNCreateModal() {
             description="NIK PLN Group"
             disabled
             pb={15}
+            value={userData?.nik || ""}
+            onChange={() => {}}
           />
           <TextInput
             disabled
@@ -122,6 +158,8 @@ export default function VPNCreateModal() {
             radius={"md"}
             description="User Email Corporate"
             pb={15}
+            value={userData?.email || ""}
+            onChange={() => {}}
           />
           <TextInput
             disabled
@@ -129,6 +167,8 @@ export default function VPNCreateModal() {
             radius={"md"}
             description="User's Location Unit"
             pb={15}
+            value={userData?.unit?.name || ""}
+            onChange={() => {}}
           />
           <TextInput
             label="Username"
@@ -137,24 +177,41 @@ export default function VPNCreateModal() {
             description="Enter Username for VPN sign in"
             placeholder="VPN Username"
             pb={15}
+            value={username}
+            onChange={(x) => {
+              setUsername(x.target.value);
+            }}
           />
-          <TextInput
+          <PasswordInput
             label="Password"
-            type="password"
-            autoComplete="on"
             required
             radius={"md"}
             description="Enter Password for VPN sign in"
             placeholder="VPN Password"
             pb={15}
+            onChange={(x) => {
+              setPassword(x.target.value);
+            }}
+            value={password}
+            autoComplete="on"
           />
           <TextInput
             label="VPN Duration"
             rightSection={
-              <Select data={["days", "week", "month"]} defaultValue="days" />
+              <Select
+                data={["days", "week", "month"]}
+                value={interval}
+                onChange={(x) => {
+                  setInterval(x);
+                }}
+              />
             }
             rightSectionWidth={130}
             pb={15}
+            value={duration || ""}
+            onChange={(v) => {
+              setDuration(+v.target.value);
+            }}
           />
           <Divider my={20} />
           <Group position="right">
