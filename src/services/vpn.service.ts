@@ -31,3 +31,20 @@ export async function createVPN(data: VPN): Promise<VPN> {
     throw new Error(error.message);
   }
 }
+
+export async function extendsVPN(params: {
+  id: number;
+  duration: number;
+  durationVariant: string;
+}): Promise<VPN> {
+  try {
+    const { id, duration, durationVariant } = params;
+    const result = await axios.patch(`vpn/${id}/extends`, {
+      duration: +duration,
+      interval: durationVariant,
+    });
+    return result.data;
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+}

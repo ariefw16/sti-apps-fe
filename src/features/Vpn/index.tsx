@@ -12,6 +12,7 @@ import {
 } from "../../stores/vpn.store";
 import { PageTitleBreadcrumbs } from "../../types/pagetitle.type";
 import VPNCreateModal from "./components/VPNCreateModal";
+import VPNExtendModal from "./components/VPNExtendModal";
 import VPNListCard from "./components/VPNListCard";
 
 export default function VPNPage() {
@@ -56,6 +57,7 @@ export default function VPNPage() {
         <VPNListCard />
       </Box>
       <VPNCreateModal />
+      <VPNExtendModal />
     </>
   );
 }

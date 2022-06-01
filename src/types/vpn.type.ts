@@ -39,3 +39,8 @@ export interface CreateVPN {
   showModal: boolean;
   data: VPN;
 }
+
+export interface ExtendsVPN {
+  showModal: boolean;
+  data: VPN;
+}

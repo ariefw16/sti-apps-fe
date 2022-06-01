@@ -16,12 +16,12 @@ import {
 import { useDebouncedValue } from "@mantine/hooks";
 import { showNotification } from "@mantine/notifications";
 import { forwardRef, useEffect, useState } from "react";
-import { useRecoilValue, useResetRecoilState } from "recoil";
+import { useRecoilValue, useResetRecoilState, useSetRecoilState } from "recoil";
 import { DeviceFloppy, X } from "tabler-icons-react";
 import { findSettings } from "../../../services/settings.service";
 import { fetchUser } from "../../../services/user.service";
 import { createVPN } from "../../../services/vpn.service";
-import { vpnCreateState } from "../../../stores/vpn.store";
+import { vpnCreateState, vpnListFilterState } from "../../../stores/vpn.store";
 import { Unit } from "../../../types/unit.type";
 import { User } from "../../../types/user.type";
 
@@ -62,6 +62,7 @@ export default function VPNCreateModal() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setLoading] = useState(false);
+  const setFilter = useSetRecoilState(vpnListFilterState);
 
   useEffect(() => {
     if (qSearch !== "") setUserLoading(true);
@@ -130,6 +131,7 @@ export default function VPNCreateModal() {
             message: `Creation VPN for ${res.user?.name} is done`,
             color: "green",
           });
+          setFilter((x) => ({ ...x, refreshToggle: !x.refreshToggle }));
           closeModal();
         })
         .catch((e) => {

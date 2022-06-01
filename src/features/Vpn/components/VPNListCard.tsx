@@ -1,9 +1,10 @@
 import { Paper, Divider, Box, Button, Group, Select } from "@mantine/core";
 import { useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { Plus, Refresh } from "tabler-icons-react";
+import AddButton from "../../../components/common/AddButton";
 import ListFooterCard from "../../../components/common/ListFooterCard";
 import ListHeaderCard from "../../../components/common/ListHeaderCard";
+import RefreshButton from "../../../components/common/RefreshButton";
 import { fetchUnit } from "../../../services/unit.service";
 import {
   vpnCreateState,
@@ -44,32 +45,6 @@ export default function VPNListCard() {
     setFilter((x) => ({ ...x, unitId: vals }));
   };
 
-  const addButton = (
-    <Button
-      leftIcon={<Plus />}
-      size="md"
-      style={{ paddingLeft: 10, paddingRight: 15 }}
-      radius="md"
-      sx={(theme) => ({ fontFamily: theme.fontFamily })}
-      onClick={() => {
-        setCreate((x) => ({ ...x, showModal: true }));
-      }}
-    >
-      Add
-    </Button>
-  );
-  const refreshButton = (
-    <Button
-      size="md"
-      radius={"md"}
-      sx={{ paddingRight: 5, paddingLeft: 5 }}
-      variant="light"
-      color={"green"}
-      onClick={applyToggleRefresh}
-    >
-      <Refresh />
-    </Button>
-  );
   const filterForm = (
     <Box sx={{ display: "flex", flexDirection: "column" }}>
       <Select
@@ -107,10 +82,16 @@ export default function VPNListCard() {
   return (
     <Paper radius={"lg"} p="lg" sx={{ marginTop: 50 }}>
       <ListHeaderCard
-        addButton={addButton}
+        addButton={
+          <AddButton
+            onClick={() => {
+              setCreate((x) => ({ ...x, showModal: true }));
+            }}
+          />
+        }
         setSearch={setSearch}
         search={filter.q}
-        refreshButton={refreshButton}
+        refreshButton={<RefreshButton onClick={applyToggleRefresh} />}
         filterForm={filterForm}
       />
       <VPNTable />

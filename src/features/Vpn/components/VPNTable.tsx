@@ -8,9 +8,9 @@ import {
 } from "@mantine/core";
 import moment from "moment";
 import { useState } from "react";
-import { useRecoilValue } from "recoil";
-import { ChevronDown, Pencil, Trash } from "tabler-icons-react";
-import { vpnListState } from "../../../stores/vpn.store";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { ChevronDown, CodePlus, Pencil, Trash } from "tabler-icons-react";
+import { vpnExtendState, vpnListState } from "../../../stores/vpn.store";
 import { DataToDelete } from "../../../types/common";
 import { VPN } from "../../../types/vpn.type";
 
@@ -28,6 +28,7 @@ export default function VPNTable() {
   const [selection, setSelection] = useState<number[]>([]);
   const vpn = useRecoilValue(vpnListState);
   const rowHeaderStyle = { color: "GrayText", fontWeight: 500 };
+  const setExtends = useSetRecoilState(vpnExtendState);
   //   const setDataDeletion = useSetRecoilState(vpnDeleteState);
   //   const setDataUpdate = useSetRecoilState(vpnUpdateState);
 
@@ -47,6 +48,9 @@ export default function VPNTable() {
   };
   const editButtonHandler = (data: VPN) => {
     // setDataUpdate({ showModal: true, data });
+  };
+  const extendButtonHandler = (data: VPN) => {
+    setExtends({ showModal: true, data });
   };
 
   return (
@@ -104,6 +108,14 @@ export default function VPNTable() {
                       </Button>
                     }
                   >
+                    <Menu.Item
+                      icon={<CodePlus size={14} />}
+                      onClick={() => {
+                        extendButtonHandler(item);
+                      }}
+                    >
+                      Extend Duration
+                    </Menu.Item>
                     <Menu.Item
                       icon={<Pencil size={14} />}
                       onClick={() => {

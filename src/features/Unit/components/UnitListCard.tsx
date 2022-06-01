@@ -2,10 +2,11 @@ import { Box, Button, Divider, Group, Paper, Select } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import { useState, useEffect } from "react";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { Plus, Refresh } from "tabler-icons-react";
+import AddButton from "../../../components/common/AddButton";
 import DeleteDialog from "../../../components/common/DeleteDialog";
 import ListFooterCard from "../../../components/common/ListFooterCard";
 import ListHeaderCard from "../../../components/common/ListHeaderCard";
+import RefreshButton from "../../../components/common/RefreshButton";
 import { deleteUnit, fetchParentUnit } from "../../../services/unit.service";
 import {
   unitDeleteModalState,
@@ -74,18 +75,6 @@ export default function UnitListCard() {
       });
   };
 
-  const addButton = (
-    <Button
-      leftIcon={<Plus />}
-      size="md"
-      style={{ paddingLeft: 10, paddingRight: 15 }}
-      radius="md"
-      sx={(theme) => ({ fontFamily: theme.fontFamily })}
-      onClick={toggleCreateHandler}
-    >
-      Add
-    </Button>
-  );
   const filterForm = (
     <Box sx={{ display: "flex", flexDirection: "column" }}>
       <Select
@@ -119,18 +108,6 @@ export default function UnitListCard() {
       </Group>
     </Box>
   );
-  const refreshButton = (
-    <Button
-      size="md"
-      radius={"md"}
-      sx={{ paddingRight: 5, paddingLeft: 5 }}
-      variant="light"
-      color={"green"}
-      onClick={applyToggleRefresh}
-    >
-      <Refresh />
-    </Button>
-  );
 
   return (
     <>
@@ -139,8 +116,8 @@ export default function UnitListCard() {
           search={filter.search}
           setSearch={searchChangeHandler}
           filterForm={filterForm}
-          addButton={addButton}
-          refreshButton={refreshButton}
+          addButton={<AddButton onClick={toggleCreateHandler} />}
+          refreshButton={<RefreshButton onClick={applyToggleRefresh} />}
         />
         <UnitTable />
         <Divider my="sm" variant="dotted" />

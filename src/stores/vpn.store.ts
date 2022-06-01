@@ -1,5 +1,5 @@
 import { atom } from "recoil";
-import { CreateVPN, VPN, VPNFetchParams } from "../types/vpn.type";
+import { CreateVPN, ExtendsVPN, VPN, VPNFetchParams } from "../types/vpn.type";
 
 export const vpnListState = atom<VPN[]>({
   key: "vpnListState",
@@ -22,4 +22,9 @@ export const vpnCreateState = atom<CreateVPN>({
     showModal: false,
     data: {},
   },
+});
+
+export const vpnExtendState = atom<ExtendsVPN>({
+  key: "vpnExtendState",
+  default: { showModal: false, data: {} },
 });
