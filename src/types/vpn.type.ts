@@ -12,7 +12,7 @@ export interface VPN {
   createdById?: string;
   expiredDate?: Date;
   duration?: string;
-  durationVariant?: "days" | "week" | "month";
+  durationVariant?: string;
 }
 
 export interface VPNFetchParams extends FetchParams {

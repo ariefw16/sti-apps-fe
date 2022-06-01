@@ -17,3 +17,17 @@ export async function fetchVPN(
     throw new Error(error.message);
   }
 }
+
+export async function createVPN(data: VPN): Promise<VPN> {
+  try {
+    const { durationVariant: interval, ...all } = data;
+    const result = await axios.post("vpn", {
+      ...all,
+      interval,
+      userId: +data.userId!,
+    });
+    return result.data;
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+}

@@ -20,6 +20,7 @@ import { useRecoilValue, useResetRecoilState } from "recoil";
 import { DeviceFloppy, X } from "tabler-icons-react";
 import { findSettings } from "../../../services/settings.service";
 import { fetchUser } from "../../../services/user.service";
+import { createVPN } from "../../../services/vpn.service";
 import { vpnCreateState } from "../../../stores/vpn.store";
 import { Unit } from "../../../types/unit.type";
 import { User } from "../../../types/user.type";
@@ -60,6 +61,7 @@ export default function VPNCreateModal() {
   const [interval, setInterval] = useState<string | null>("days");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
     if (qSearch !== "") setUserLoading(true);
@@ -106,6 +108,41 @@ export default function VPNCreateModal() {
     setUserData({ id, name, nik, email, unit });
   };
 
+  const onSubmitFormHandler = () => {
+    if (!userData?.id)
+      showNotification({
+        title: "Creation Failed",
+        message: "Please choose User to create!",
+        color: "red",
+      });
+    else {
+      setLoading(true);
+      createVPN({
+        username,
+        password,
+        userId: userData?.id.toString(),
+        duration: duration?.toString(),
+        durationVariant: interval!,
+      })
+        .then((res) => {
+          showNotification({
+            title: "Creation Success!",
+            message: `Creation VPN for ${res.user?.name} is done`,
+            color: "green",
+          });
+          closeModal();
+        })
+        .catch((e) => {
+          showNotification({
+            title: "Creation Failed!",
+            message: `Error! ${e.message}`,
+            color: "red",
+          });
+        })
+        .finally(() => {});
+    }
+  };
+
   return (
     <Modal
       opened={show}
@@ -114,6 +151,9 @@ export default function VPNCreateModal() {
       size="lg"
       radius="lg"
       overflow="inside"
+      withCloseButton={!isLoading}
+      closeOnClickOutside={!isLoading}
+      closeOnEscape={!isLoading}
     >
       <Box p={20}>
         <form>
@@ -224,7 +264,11 @@ export default function VPNCreateModal() {
             >
               Discard
             </Button>
-            <Button radius={"md"} rightIcon={<DeviceFloppy />} type="submit">
+            <Button
+              radius={"md"}
+              rightIcon={<DeviceFloppy />}
+              onClick={onSubmitFormHandler}
+            >
               Submit
             </Button>
           </Group>
