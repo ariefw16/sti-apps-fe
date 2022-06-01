@@ -139,7 +139,9 @@ export default function VPNCreateModal() {
             color: "red",
           });
         })
-        .finally(() => {});
+        .finally(() => {
+          setLoading(false);
+        });
     }
   };
 
@@ -261,6 +263,7 @@ export default function VPNCreateModal() {
               color={"orange"}
               leftIcon={<X />}
               onClick={closeModal}
+              loading={isLoading}
             >
               Discard
             </Button>
@@ -268,6 +271,7 @@ export default function VPNCreateModal() {
               radius={"md"}
               rightIcon={<DeviceFloppy />}
               onClick={onSubmitFormHandler}
+              loading={isLoading}
             >
               Submit
             </Button>
