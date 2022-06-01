@@ -10,7 +10,12 @@ import moment from "moment";
 import { useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { ChevronDown, CodePlus, Pencil, Trash } from "tabler-icons-react";
-import { vpnExtendState, vpnListState } from "../../../stores/vpn.store";
+import {
+  vpnDeleteState,
+  vpnExtendState,
+  vpnListState,
+  vpnUpdateState,
+} from "../../../stores/vpn.store";
 import { DataToDelete } from "../../../types/common";
 import { VPN } from "../../../types/vpn.type";
 
@@ -29,8 +34,8 @@ export default function VPNTable() {
   const vpn = useRecoilValue(vpnListState);
   const rowHeaderStyle = { color: "GrayText", fontWeight: 500 };
   const setExtends = useSetRecoilState(vpnExtendState);
-  //   const setDataDeletion = useSetRecoilState(vpnDeleteState);
-  //   const setDataUpdate = useSetRecoilState(vpnUpdateState);
+  const setDeletion = useSetRecoilState(vpnDeleteState);
+  const setDataUpdate = useSetRecoilState(vpnUpdateState);
 
   const toggleRow = (id: number) =>
     setSelection((current) =>
@@ -43,11 +48,10 @@ export default function VPNTable() {
       current.length === vpn.length ? [] : vpn.map((item) => item.id!)
     );
   const deleteButtonHandler = (data: DataToDelete) => {
-    console.log(vpn[0].expiredDate);
-    // setDataDeletion({ showModal: true, data });
+    setDeletion({ showModal: true, data });
   };
   const editButtonHandler = (data: VPN) => {
-    // setDataUpdate({ showModal: true, data });
+    setDataUpdate({ showModal: true, data });
   };
   const extendButtonHandler = (data: VPN) => {
     setExtends({ showModal: true, data });

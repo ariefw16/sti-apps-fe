@@ -2,10 +2,17 @@ import { Box, LoadingOverlay } from "@mantine/core";
 import { useDebouncedValue } from "@mantine/hooks";
 import { showNotification } from "@mantine/notifications";
 import { useEffect, useState } from "react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import PageTitleComponent from "../../components/common/PageTitle";
-import { fetchVPN } from "../../services/vpn.service";
 import {
+  useRecoilState,
+  useRecoilValue,
+  useResetRecoilState,
+  useSetRecoilState,
+} from "recoil";
+import DeleteDialog from "../../components/common/DeleteDialog";
+import PageTitleComponent from "../../components/common/PageTitle";
+import { deleteVPN, fetchVPN } from "../../services/vpn.service";
+import {
+  vpnDeleteState,
   vpnListFilterState,
   vpnListRowCountState,
   vpnListState,
@@ -14,13 +21,16 @@ import { PageTitleBreadcrumbs } from "../../types/pagetitle.type";
 import VPNCreateModal from "./components/VPNCreateModal";
 import VPNExtendModal from "./components/VPNExtendModal";
 import VPNListCard from "./components/VPNListCard";
+import VPNUpdateModal from "./components/VPNUpdateModal";
 
 export default function VPNPage() {
   const setVpn = useSetRecoilState(vpnListState);
   const setRowCount = useSetRecoilState(vpnListRowCountState);
-  const filter = useRecoilValue(vpnListFilterState);
+  const [filter, setFilter] = useRecoilState(vpnListFilterState);
   const [q] = useDebouncedValue(filter.q, 300);
   const [loading, setLoading] = useState(false);
+  const deletion = useRecoilValue(vpnDeleteState);
+  const resetDeletion = useResetRecoilState(vpnDeleteState);
 
   const breadcrumbs: PageTitleBreadcrumbs[] = [
     {
@@ -32,7 +42,12 @@ export default function VPNPage() {
 
   useEffect(() => {
     setLoading(true);
-    fetchVPN({})
+    fetchVPN({
+      page: filter.page,
+      limit: filter.limit,
+      q: filter.q,
+      unitId: filter.unitId,
+    })
       .then((res) => {
         setVpn(res.data);
         setRowCount(res.rowCount);
@@ -49,6 +64,26 @@ export default function VPNPage() {
       });
   }, [q, filter.limit, filter.page, filter.refreshToggle]);
 
+  const deleteVPNHandler = () => {
+    deleteVPN(deletion.data.id)
+      .then(() => {
+        showNotification({
+          title: "Delete VPN",
+          message: "VPN Deletion success!",
+          color: "green",
+        });
+        resetDeletion();
+        setFilter((f) => ({ ...f, refreshToggle: !f.refreshToggle }));
+      })
+      .catch((e) => {
+        showNotification({
+          title: "Delete VPN",
+          message: `Error! ${e.message}`,
+          color: "red",
+        });
+      });
+  };
+
   return (
     <>
       <PageTitleComponent title="VPN Management" breadcrumbs={breadcrumbs} />
@@ -58,6 +93,13 @@ export default function VPNPage() {
       </Box>
       <VPNCreateModal />
       <VPNExtendModal />
+      <DeleteDialog
+        data={deletion.data}
+        open={deletion.showModal}
+        onClose={resetDeletion}
+        onSubmit={deleteVPNHandler}
+      />
+      <VPNUpdateModal />
     </>
   );
 }

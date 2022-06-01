@@ -5,11 +5,17 @@ export async function fetchVPN(
   params: VPNFetchParams
 ): Promise<VPNFetchResult> {
   try {
-    const result = await axios.get("vpn");
+    let query = "";
+    if (params.limit) query += `limit=${params.limit}&`;
+    if (params.page) query += `page=${params.page}&`;
+    if (params.q) query += `q=${params.q}&`;
+    if (params.unitId) query += `unitId=${params.unitId}&`;
+    const result = await axios.get(`vpn?${query}`);
     return {
       data: result.data[0].map((x: any) => ({
         ...x,
         expiredDate: new Date(x.expiredDate),
+        durationVariant: x.interval,
       })),
       rowCount: result.data[1],
     };
@@ -43,6 +49,25 @@ export async function extendsVPN(params: {
       duration: +duration,
       interval: durationVariant,
     });
+    return result.data;
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+}
+
+export async function deleteVPN(id: number) {
+  try {
+    const result = await axios.delete(`vpn/${id}`);
+    return result.data;
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+}
+
+export async function updateVPN(params: VPN): Promise<VPN> {
+  try {
+    const { id, ...data } = params;
+    const result = await axios.patch(`vpn/${id}`, { ...data });
     return result.data;
   } catch (error: any) {
     throw new Error(error.message);

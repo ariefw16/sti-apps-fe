@@ -1,3 +1,4 @@
+import { DataToDelete } from "./common";
 import { FetchParams } from "./fetch.type";
 import { User } from "./user.type";
 
@@ -41,6 +42,16 @@ export interface CreateVPN {
 }
 
 export interface ExtendsVPN {
+  showModal: boolean;
+  data: VPN;
+}
+
+export interface DeleteVPN {
+  showModal: boolean;
+  data: DataToDelete;
+}
+
+export interface UpdateVPN {
   showModal: boolean;
   data: VPN;
 }
