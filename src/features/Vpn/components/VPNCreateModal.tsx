@@ -18,12 +18,12 @@ import { showNotification } from "@mantine/notifications";
 import { forwardRef, useEffect, useState } from "react";
 import { useRecoilValue, useResetRecoilState, useSetRecoilState } from "recoil";
 import { DeviceFloppy, X } from "tabler-icons-react";
-import { findSettings } from "../../../services/settings.service";
-import { fetchUser } from "../../../services/user.service";
-import { createVPN } from "../../../services/vpn.service";
-import { vpnCreateState, vpnListFilterState } from "../../../stores/vpn.store";
-import { Unit } from "../../../types/unit.type";
-import { User } from "../../../types/user.type";
+import { findSettings } from "../../Settings/utils/service";
+import { fetchUser } from "../../Users/utils/service";
+import { createVPN } from "../utils/service";
+import { vpnCreateState, vpnListFilterState } from "../utils/store";
+import { Unit } from "../../Unit/utils/type";
+import { User } from "../../Users/utils/type";
 
 interface ItemProps extends SelectItemProps {
   name: string;

@@ -12,10 +12,10 @@ import {
   unitDeleteModalState,
   unitEditModalState,
   unitListState,
-} from "../../../stores/unit.store";
+} from "../utils/store";
 import { ChevronDown, Pencil, Trash } from "tabler-icons-react";
 import { DataToDelete } from "../../../types/common";
-import { Unit } from "../../../types/unit.type";
+import { Unit } from "../utils/type";
 
 const useStyles = createStyles((theme) => ({
   rowSelected: {

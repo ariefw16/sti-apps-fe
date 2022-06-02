@@ -4,13 +4,13 @@ import { showNotification } from "@mantine/notifications";
 import { useEffect, useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import PageTitle from "../../components/common/PageTitle";
-import { fetchUnit } from "../../services/unit.service";
+import { fetchUnit } from "./utils/service";
 import {
   unitFilterState,
   unitListCountState,
   unitListState,
   unitPagingFilterState,
-} from "../../stores/unit.store";
+} from "./utils/store";
 import { PageTitleBreadcrumbs } from "../../types/pagetitle.type";
 import UnitListCard from "./components/UnitListCard";
 

@@ -14,13 +14,10 @@ import { useEffect, useState } from "react";
 import { useRecoilValue, useResetRecoilState, useSetRecoilState } from "recoil";
 import { DeviceFloppy, UserPlus, X } from "tabler-icons-react";
 import { z } from "zod";
-import { fetchUnit } from "../../../services/unit.service";
-import { createUser } from "../../../services/user.service";
-import {
-  userCreateState,
-  userListFilterState,
-} from "../../../stores/user.store";
-import { UserCreateData } from "../../../types/user.type";
+import { fetchUnit } from "../../Unit/utils/service";
+import { createUser } from "../utils/service";
+import { userCreateState, userListFilterState } from "../utils/store";
+import { UserCreateData } from "../utils/type";
 
 const schema = z.object({
   name: z.string().min(1),

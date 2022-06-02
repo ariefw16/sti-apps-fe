@@ -1,12 +1,7 @@
 import axios from "axios";
-import { DataToDelete } from "../types/common";
-import { FetchResult } from "../types/fetch.type";
-import {
-  User,
-  UserCreateData,
-  UserFilter,
-  UserUpdateData,
-} from "../types/user.type";
+import { DataToDelete } from "../../../types/common";
+import { FetchResult } from "../../../types/fetch.type";
+import { User, UserCreateData, UserFilter, UserUpdateData } from "./type";
 
 export async function fetchUser(
   params: UserFilter

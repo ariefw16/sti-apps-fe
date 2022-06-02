@@ -11,9 +11,9 @@ import { showNotification } from "@mantine/notifications";
 import { useEffect, useState } from "react";
 import { useRecoilValue, useResetRecoilState, useSetRecoilState } from "recoil";
 import { DeviceFloppy, X } from "tabler-icons-react";
-import { findSettings } from "../../../services/settings.service";
-import { extendsVPN } from "../../../services/vpn.service";
-import { vpnExtendState, vpnListFilterState } from "../../../stores/vpn.store";
+import { findSettings } from "../../Settings/utils/service";
+import { extendsVPN } from "../utils/service";
+import { vpnExtendState, vpnListFilterState } from "../utils/store";
 
 export default function VPNExtendModal() {
   const extendsData = useRecoilValue(vpnExtendState);
@@ -75,6 +75,7 @@ export default function VPNExtendModal() {
       withCloseButton={!isLoading}
       closeOnClickOutside={!isLoading}
       closeOnEscape={!isLoading}
+      size={"sm"}
     >
       <Box pt={20}>
         <TextInput

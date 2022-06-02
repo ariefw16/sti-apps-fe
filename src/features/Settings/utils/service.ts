@@ -1,5 +1,5 @@
 import axios from "axios";
-import { SettingsData } from "../types/settings.type";
+import { SettingsData } from "./type";
 
 export async function fetchSettings() {
   try {

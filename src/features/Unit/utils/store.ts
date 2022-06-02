@@ -1,6 +1,6 @@
 import { atom } from "recoil";
-import { FetchPagingFilter } from "../types/fetch.type";
-import { DeleteUnit, Unit, UnitFilter, UpdateUnit } from "../types/unit.type";
+import { FetchPagingFilter } from "../../../types/fetch.type";
+import { DeleteUnit, Unit, UnitFilter, UpdateUnit } from "./type";
 
 export const unitListState = atom<Unit[]>({
   key: "unitListState",

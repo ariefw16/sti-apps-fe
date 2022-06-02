@@ -11,9 +11,9 @@ import { showNotification } from "@mantine/notifications";
 import { useEffect } from "react";
 import { useRecoilValue } from "recoil";
 import { z } from "zod";
-import { saveSettings } from "../../../services/settings.service";
-import { notificationSettingState } from "../../../stores/settings.store";
-import { VpnNotificationSetting } from "../../../types/settings.type";
+import { saveSettings } from "../utils/service";
+import { notificationSettingState } from "../utils/store";
+import { VpnNotificationSetting } from "../utils/type";
 
 const vpnSchema = z.object({
   reminderVals: z.string(),

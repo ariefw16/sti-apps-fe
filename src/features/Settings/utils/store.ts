@@ -1,5 +1,5 @@
 import { atom, selector } from "recoil";
-import { SettingsData } from "../types/settings.type";
+import { SettingsData } from "./type";
 
 export const settingsState = atom<SettingsData[]>({
   key: "settingsState",

@@ -10,13 +10,13 @@ import {
 } from "recoil";
 import DeleteDialog from "../../components/common/DeleteDialog";
 import PageTitleComponent from "../../components/common/PageTitle";
-import { deleteVPN, fetchVPN } from "../../services/vpn.service";
+import { deleteVPN, fetchVPN } from "./utils/service";
 import {
   vpnDeleteState,
   vpnListFilterState,
   vpnListRowCountState,
   vpnListState,
-} from "../../stores/vpn.store";
+} from "./utils/store";
 import { PageTitleBreadcrumbs } from "../../types/pagetitle.type";
 import VPNCreateModal from "./components/VPNCreateModal";
 import VPNExtendModal from "./components/VPNExtendModal";

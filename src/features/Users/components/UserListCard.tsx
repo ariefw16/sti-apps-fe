@@ -5,12 +5,12 @@ import AddButton from "../../../components/common/AddButton";
 import ListFooterCard from "../../../components/common/ListFooterCard";
 import ListHeaderCard from "../../../components/common/ListHeaderCard";
 import RefreshButton from "../../../components/common/RefreshButton";
-import { fetchUnit } from "../../../services/unit.service";
+import { fetchUnit } from "../../Unit/utils/service";
 import {
   userCreateState,
   userListCountState,
   userListFilterState,
-} from "../../../stores/user.store";
+} from "../utils/store";
 import UserListTable from "./UserListTable";
 
 export default function UserListCard() {

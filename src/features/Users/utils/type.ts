@@ -1,6 +1,6 @@
-import { DataToDelete } from "./common";
-import { FetchParams } from "./fetch.type";
-import { Unit } from "./unit.type";
+import { DataToDelete } from "../../../types/common";
+import { FetchParams } from "../../../types/fetch.type";
+import { Unit } from "../../Unit/utils/type";
 
 export interface User {
   id: number;

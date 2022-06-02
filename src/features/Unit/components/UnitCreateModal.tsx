@@ -10,10 +10,10 @@ import {
 } from "@mantine/core";
 import { useForm, zodResolver } from "@mantine/form";
 import { useRecoilState } from "recoil";
-import { unitListState } from "../../../stores/unit.store";
+import { unitListState } from "../utils/store";
 import { z } from "zod";
-import { CreateUnit } from "../../../types/unit.type";
-import { saveUnit } from "../../../services/unit.service";
+import { CreateUnit } from "../utils/type";
+import { saveUnit } from "../utils/service";
 import { showNotification } from "@mantine/notifications";
 
 const useStyles = createStyles((theme) => ({

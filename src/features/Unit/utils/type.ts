@@ -1,5 +1,5 @@
-import { DataToDelete } from "./common";
-import { FetchParams } from "./fetch.type";
+import { DataToDelete } from "../../../types/common";
+import { FetchParams } from "../../../types/fetch.type";
 
 export interface Unit {
   id?: number;

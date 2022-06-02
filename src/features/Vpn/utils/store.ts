@@ -6,7 +6,7 @@ import {
   UpdateVPN,
   VPN,
   VPNFetchParams,
-} from "../types/vpn.type";
+} from "./type";
 
 export const vpnListState = atom<VPN[]>({
   key: "vpnListState",

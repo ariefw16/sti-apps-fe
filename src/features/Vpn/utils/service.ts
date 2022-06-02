@@ -1,5 +1,5 @@
 import axios from "axios";
-import { VPN, VPNFetchParams, VPNFetchResult } from "../types/vpn.type";
+import { VPN, VPNFetchParams, VPNFetchResult } from "./type";
 
 export async function fetchVPN(
   params: VPNFetchParams

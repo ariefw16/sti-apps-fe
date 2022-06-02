@@ -7,15 +7,15 @@ import DeleteDialog from "../../../components/common/DeleteDialog";
 import ListFooterCard from "../../../components/common/ListFooterCard";
 import ListHeaderCard from "../../../components/common/ListHeaderCard";
 import RefreshButton from "../../../components/common/RefreshButton";
-import { deleteUnit, fetchParentUnit } from "../../../services/unit.service";
+import { deleteUnit, fetchParentUnit } from "../utils/service";
 import {
   unitDeleteModalState,
   unitFilterState,
   unitListCountState,
   unitListState,
   unitPagingFilterState,
-} from "../../../stores/unit.store";
-import { UnitParent } from "../../../types/unit.type";
+} from "../utils/store";
+import { UnitParent } from "../utils/type";
 import UnitCreateModal from "./UnitCreateModal";
 import UnitEditModal from "./UnitEditModal";
 import { UnitTable } from "./UnitTable";

@@ -15,9 +15,9 @@ import {
   vpnExtendState,
   vpnListState,
   vpnUpdateState,
-} from "../../../stores/vpn.store";
+} from "../utils/store";
 import { DataToDelete } from "../../../types/common";
-import { VPN } from "../../../types/vpn.type";
+import { VPN } from "../utils/type";
 
 const useStyles = createStyles((theme) => ({
   rowSelected: {

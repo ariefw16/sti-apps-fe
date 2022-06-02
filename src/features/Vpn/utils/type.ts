@@ -1,6 +1,6 @@
-import { DataToDelete } from "./common";
-import { FetchParams } from "./fetch.type";
-import { User } from "./user.type";
+import { DataToDelete } from "../../../types/common";
+import { FetchParams } from "../../../types/fetch.type";
+import { User } from "../../Users/utils/type";
 
 export interface VPN {
   id?: number;

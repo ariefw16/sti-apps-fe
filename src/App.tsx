@@ -6,12 +6,16 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import AppLayout from "./components/layout/AppLayout";
 import { NothingFoundBackground } from "./components/layout/AppLayout/error-404";
 import DashboardPage from "./features/Dashboard";
+import DeviceTypePage from "./features/DeviceType";
 import SettingPage from "./features/Settings";
 import UnitPage from "./features/Unit";
 import UserPage from "./features/Users";
 import VPNPage from "./features/Vpn";
-import { fetchSettings } from "./services/settings.service";
-import { settingsState, settingsTriggerState } from "./stores/settings.store";
+import { fetchSettings } from "./features/Settings/utils/service";
+import {
+  settingsState,
+  settingsTriggerState,
+} from "./features/Settings/utils/store";
 
 function App() {
   axios.defaults.baseURL = "http://localhost:3400/";
@@ -41,6 +45,7 @@ function App() {
           <Route path="/unit" element={<UnitPage />} />
           <Route path="/settings" element={<SettingPage />} />
           <Route path="/vpn" element={<VPNPage />} />
+          <Route path="/device-type" element={<DeviceTypePage />} />
         </Route>
         <Route path="*" element={<NothingFoundBackground />} />
       </Routes>

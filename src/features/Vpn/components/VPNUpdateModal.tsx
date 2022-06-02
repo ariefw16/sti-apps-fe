@@ -11,8 +11,8 @@ import { showNotification } from "@mantine/notifications";
 import { useEffect, useState } from "react";
 import { useRecoilValue, useResetRecoilState, useSetRecoilState } from "recoil";
 import { DeviceFloppy, X } from "tabler-icons-react";
-import { updateVPN } from "../../../services/vpn.service";
-import { vpnListFilterState, vpnUpdateState } from "../../../stores/vpn.store";
+import { updateVPN } from "../utils/service";
+import { vpnListFilterState, vpnUpdateState } from "../utils/store";
 
 export default function VPNUpdateModal() {
   const updation = useRecoilValue(vpnUpdateState);

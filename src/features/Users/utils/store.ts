@@ -5,7 +5,7 @@ import {
   UserDelete,
   UserFilter,
   UserUpdateModal,
-} from "../types/user.type";
+} from "./type";
 
 export const userListState = atom<User[]>({
   key: "userListState",

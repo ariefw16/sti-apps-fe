@@ -1,12 +1,7 @@
 import axios from "axios";
-import { DataToDelete } from "../types/common";
-import { FetchResult } from "../types/fetch.type";
-import {
-  CreateUnit,
-  Unit,
-  UnitFetchParams,
-  UnitParent,
-} from "../types/unit.type";
+import { DataToDelete } from "../../../types/common";
+import { FetchResult } from "../../../types/fetch.type";
+import { CreateUnit, Unit, UnitFetchParams, UnitParent } from "./type";
 
 export async function fetchUnit(
   params: UnitFetchParams

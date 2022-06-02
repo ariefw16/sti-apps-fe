@@ -13,9 +13,9 @@ import {
   userDeleteState,
   userListState,
   userUpdateState,
-} from "../../../stores/user.store";
+} from "../utils/store";
 import { DataToDelete } from "../../../types/common";
-import { UserUpdateData } from "../../../types/user.type";
+import { UserUpdateData } from "../utils/type";
 
 const useStyles = createStyles((theme) => ({
   rowSelected: {

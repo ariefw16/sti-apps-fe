@@ -14,12 +14,12 @@ import {
   unitEditModalState,
   unitFilterState,
   unitListState,
-} from "../../../stores/unit.store";
+} from "../utils/store";
 import { z } from "zod";
-import { CreateUnit, Unit } from "../../../types/unit.type";
+import { CreateUnit, Unit } from "../utils/type";
 import { zodResolver, useForm } from "@mantine/form";
 import { useEffect, useState } from "react";
-import { updateUnit } from "../../../services/unit.service";
+import { updateUnit } from "../utils/service";
 import { showNotification } from "@mantine/notifications";
 
 const useStyles = createStyles((theme) => ({

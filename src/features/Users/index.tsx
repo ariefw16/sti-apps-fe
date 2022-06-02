@@ -5,13 +5,13 @@ import { useEffect, useState } from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import DeleteDialog from "../../components/common/DeleteDialog";
 import PageTitleComponent from "../../components/common/PageTitle";
-import { deleteUser, fetchUser } from "../../services/user.service";
+import { deleteUser, fetchUser } from "./utils/service";
 import {
   userDeleteState,
   userListCountState,
   userListFilterState,
   userListState,
-} from "../../stores/user.store";
+} from "./utils/store";
 import { PageTitleBreadcrumbs } from "../../types/pagetitle.type";
 import UserCreateModal from "./components/UserCreateModal";
 import UserListCard from "./components/UserListCard";
