@@ -1,3 +1,5 @@
+import { DataToDelete } from "../../../types/common";
+
 export interface DeviceType {
   id?: number;
   name?: string;
@@ -17,4 +19,14 @@ export interface DeviceTypeSpecChoice {
   id?: number;
   value?: string;
   deviceTypeSpecId?: number;
+}
+
+export interface DeviceTypeUpdate {
+  showModal: boolean;
+  data: DeviceType;
+}
+
+export interface DeviceTypeDelete {
+  showModal: boolean;
+  data: DataToDelete;
 }

@@ -7,10 +7,14 @@ import {
   Table,
 } from "@mantine/core";
 import { useState } from "react";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { ChevronDown, Eye, Pencil, Trash } from "tabler-icons-react";
 import { DataToDelete } from "../../../types/common";
-import { deviceTypeListState } from "../utils/store";
+import {
+  deviceTypeDeleteModalState,
+  deviceTypeListState,
+  deviceTypeUpdateModalState,
+} from "../utils/store";
 import { DeviceType } from "../utils/type";
 
 const useStyles = createStyles((theme) => ({
@@ -27,8 +31,8 @@ export default function DeviceTypeTable() {
   const [selection, setSelection] = useState<number[]>([]);
   const deviceType = useRecoilValue(deviceTypeListState);
   const rowHeaderStyle = { color: "GrayText", fontWeight: 500 };
-  // const setDeletion = useSetRecoilState(vpnDeleteState);
-  // const setDataUpdate = useSetRecoilState(vpnUpdateState);
+  const setDeletion = useSetRecoilState(deviceTypeDeleteModalState);
+  const setDataUpdate = useSetRecoilState(deviceTypeUpdateModalState);
 
   const toggleRow = (id: number) =>
     setSelection((current) =>
@@ -43,10 +47,10 @@ export default function DeviceTypeTable() {
         : deviceType.map((item) => item.id!)
     );
   const deleteButtonHandler = (data: DataToDelete) => {
-    //   setDeletion({ showModal: true, data });
+    setDeletion({ showModal: true, data });
   };
   const editButtonHandler = (data: DeviceType) => {
-    //   setDataUpdate({ showModal: true, data });
+    setDataUpdate({ showModal: true, data });
   };
 
   return (
