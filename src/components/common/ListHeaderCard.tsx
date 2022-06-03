@@ -8,8 +8,16 @@ export default function ListHeaderCard(props: {
   filterForm?: JSX.Element;
   addButton?: JSX.Element;
   refreshButton?: JSX.Element;
+  noFilterButton?: boolean;
 }) {
-  const { search, setSearch, filterForm, addButton, refreshButton } = props;
+  const {
+    search,
+    setSearch,
+    filterForm,
+    addButton,
+    refreshButton,
+    noFilterButton,
+  } = props;
   const [openFilter, setOpenFilter] = useState(false);
 
   const popoverBtn = (
@@ -47,22 +55,24 @@ export default function ListHeaderCard(props: {
         value={search}
       />
       <Group>
-        <Popover
-          target={popoverBtn}
-          opened={openFilter}
-          onClose={() => {
-            setOpenFilter(false);
-          }}
-          position="bottom"
-          title="Filter Options"
-          withCloseButton
-          transition="pop-top-right"
-          placement="end"
-          shadow={"xl"}
-          radius="md"
-        >
-          {filterForm}
-        </Popover>
+        {!noFilterButton && (
+          <Popover
+            target={popoverBtn}
+            opened={openFilter}
+            onClose={() => {
+              setOpenFilter(false);
+            }}
+            position="bottom"
+            title="Filter Options"
+            withCloseButton
+            transition="pop-top-right"
+            placement="end"
+            shadow={"xl"}
+            radius="md"
+          >
+            {filterForm}
+          </Popover>
+        )}
         {addButton}
         {refreshButton}
       </Group>
