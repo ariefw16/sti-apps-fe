@@ -17,7 +17,7 @@ export default function AppLayout() {
         },
       })}
     >
-      <Box sx={{ padding: 10 }}>
+      <Box sx={{ padding: 20 }}>
         <Outlet />
       </Box>
     </AppShell>

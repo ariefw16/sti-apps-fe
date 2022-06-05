@@ -34,3 +34,8 @@ export const deviceTypeDeleteModalState = atom<DeviceTypeDelete>({
   key: "deviceTypeDeleteModalState",
   default: { showModal: false, data: { id: 0, name: "" } },
 });
+
+export const deviceTypeState = atom<DeviceType>({
+  key: "deviceTypeState",
+  default: {},
+});
