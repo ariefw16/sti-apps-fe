@@ -14,7 +14,10 @@ import {
   deviceTypeState,
   specsCreateModalState,
   specsDeleteModalState,
+  specsUpdateModalState,
 } from "../../utils/store";
+import { DeviceType } from "../../utils/type";
+import UpdateSpecsModal from "./UpdateSpecsModal";
 
 export default function DeviceTypeViewSpecification() {
   const [deviceType, setDeviceType] = useRecoilState(deviceTypeState);
@@ -22,6 +25,7 @@ export default function DeviceTypeViewSpecification() {
   const setDeletion = useSetRecoilState(specsDeleteModalState);
   const specsDeletion = useRecoilValue(specsDeleteModalState);
   const resetSpecsDeletion = useResetRecoilState(specsDeleteModalState);
+  const setUpdation = useSetRecoilState(specsUpdateModalState);
 
   const createSpecsButtonHandler = () => {
     setCreateSpecs((c) => ({ ...c, showModal: true }));
@@ -50,6 +54,9 @@ export default function DeviceTypeViewSpecification() {
           color: "red",
         });
       });
+  };
+  const editButtonHandler = (data: DeviceType) => {
+    setUpdation({ showModal: true, data });
   };
 
   return (
@@ -86,7 +93,7 @@ export default function DeviceTypeViewSpecification() {
                   <Menu.Item
                     icon={<Pencil size={14} />}
                     onClick={() => {
-                      // editButtonHandler(item);
+                      editButtonHandler(dt);
                     }}
                   >
                     Update
@@ -127,6 +134,7 @@ export default function DeviceTypeViewSpecification() {
         data={specsDeletion.data}
         onSubmit={specsDeletionHandler}
       />
+      <UpdateSpecsModal />
     </>
   );
 }

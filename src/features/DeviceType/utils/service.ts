@@ -79,3 +79,15 @@ export async function deleteSpecsDeviceType(id: number): Promise<number> {
     throw new Error(error.message);
   }
 }
+
+export async function updateSpecsDeviceType(
+  specs: DeviceTypeSpec
+): Promise<DeviceType> {
+  try {
+    const data: DeviceTypeSpec = { ...specs };
+    const res = await axios.patch("device-type/spec", { data: [data] });
+    return res.data[0][0];
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+}

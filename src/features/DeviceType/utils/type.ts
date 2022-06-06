@@ -40,3 +40,8 @@ export interface DeviceTypeSpecsDelete {
   showModal: boolean;
   data: DataToDelete;
 }
+
+export interface DeviceTypeSpecsUpdate {
+  showModal: boolean;
+  data: DeviceTypeSpec;
+}

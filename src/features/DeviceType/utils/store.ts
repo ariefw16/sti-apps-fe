@@ -5,6 +5,7 @@ import {
   DeviceTypeDelete,
   DeviceTypeSpecsCreate,
   DeviceTypeSpecsDelete,
+  DeviceTypeSpecsUpdate,
   DeviceTypeUpdate,
 } from "./type";
 
@@ -59,5 +60,13 @@ export const specsDeleteModalState = atom<DeviceTypeSpecsDelete>({
   default: {
     showModal: false,
     data: { id: 0, name: "" },
+  },
+});
+
+export const specsUpdateModalState = atom<DeviceTypeSpecsUpdate>({
+  key: "specsUpdateModalState",
+  default: {
+    showModal: false,
+    data: {},
   },
 });
