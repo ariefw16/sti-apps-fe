@@ -1,7 +1,7 @@
 import { Paper, Title, Divider, TextInput, Group, Button } from "@mantine/core";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { Trash, Pencil } from "tabler-icons-react";
-import { deviceTypeDeleteModalState, deviceTypeState } from "../utils/store";
+import { deviceTypeDeleteModalState, deviceTypeState } from "../../utils/store";
 
 export default function ViewGeneralDeviceType() {
   const setDeletiion = useSetRecoilState(deviceTypeDeleteModalState);
@@ -23,6 +23,7 @@ export default function ViewGeneralDeviceType() {
         description="Device Type Name"
         disabled
         variant="filled"
+        value={deviceType.name || ""}
       />
       <Divider my={10} variant="dotted" />
       <Group position="right">
@@ -31,10 +32,13 @@ export default function ViewGeneralDeviceType() {
           color="red"
           variant="subtle"
           onClick={deleteButtonHandler}
+          radius="lg"
         >
           Delete
         </Button>
-        <Button leftIcon={<Pencil />}>Update</Button>
+        <Button leftIcon={<Pencil />} radius="md">
+          Update
+        </Button>
       </Group>
     </Paper>
   );

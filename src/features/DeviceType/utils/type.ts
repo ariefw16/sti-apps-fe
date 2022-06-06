@@ -30,3 +30,13 @@ export interface DeviceTypeDelete {
   showModal: boolean;
   data: DataToDelete;
 }
+
+export interface DeviceTypeSpecsCreate {
+  showModal: boolean;
+  data: DeviceTypeSpec;
+}
+
+export interface DeviceTypeSpecsDelete {
+  showModal: boolean;
+  data: DataToDelete;
+}

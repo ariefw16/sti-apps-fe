@@ -1,19 +1,15 @@
-import {
-  Button,
-  Divider,
-  Grid,
-  Group,
-  Paper,
-  TextInput,
-  Title,
-} from "@mantine/core";
+import { Grid, Paper } from "@mantine/core";
+import { showNotification } from "@mantine/notifications";
 import { useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { useRecoilValue, useResetRecoilState, useSetRecoilState } from "recoil";
-import { Pencil, Trash } from "tabler-icons-react";
 import DeleteDialog from "../../components/common/DeleteDialog";
 import PageTitleComponent from "../../components/common/PageTitle";
 import { PageTitleBreadcrumbs } from "../../types/pagetitle.type";
-import ViewGeneralDeviceType from "./components/ViewGeneral";
+import CreateSpecsModal from "./components/DetailView/CreateSpecsModal";
+import ViewGeneralDeviceType from "./components/DetailView/ViewGeneral";
+import DeviceTypeViewSpecification from "./components/DetailView/ViewSpecification";
+import { fetchSingleDeviceType } from "./utils/service";
 import { deviceTypeDeleteModalState, deviceTypeState } from "./utils/store";
 
 export default function DeviceTypeDetailPage() {
@@ -25,8 +21,23 @@ export default function DeviceTypeDetailPage() {
   const deletion = useRecoilValue(deviceTypeDeleteModalState);
   const resetDeletion = useResetRecoilState(deviceTypeDeleteModalState);
   const setDeviceType = useSetRecoilState(deviceTypeState);
+  const { id } = useParams();
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    fetchSingleDeviceType(+id!)
+      .then((res) => {
+        setDeviceType(res);
+      })
+      .catch((e) => {
+        showNotification({
+          title: "Fetch Device Type",
+          message: `Error! ${e.message}`,
+          color: "red",
+        });
+      });
+  }, []);
+
+  const deletionHandler = () => {};
 
   return (
     <>
@@ -39,15 +50,19 @@ export default function DeviceTypeDetailPage() {
           <ViewGeneralDeviceType />
         </Grid.Col>
         <Grid.Col span={5}>
-          <Paper p={"lg"} radius="lg"></Paper>
+          <Paper p={"lg"} radius="lg">
+            <DeviceTypeViewSpecification />
+          </Paper>
         </Grid.Col>
       </Grid>
       <DeleteDialog
         open={deletion.showModal}
         onClose={resetDeletion}
         data={deletion.data}
-        onSubmit={undefined}
+        onSubmit={deletionHandler}
       />
+
+      <CreateSpecsModal />
     </>
   );
 }
