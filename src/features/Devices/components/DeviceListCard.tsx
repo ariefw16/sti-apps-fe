@@ -5,6 +5,7 @@ import ListFooterCard from "../../../components/common/ListFooterCard";
 import ListHeaderCard from "../../../components/common/ListHeaderCard";
 import RefreshButton from "../../../components/common/RefreshButton";
 import { deviceListCountState, deviceListFilterState } from "../utils/store";
+import DeviceTable from "./DeviceTable";
 
 export default function DeviceListCard() {
   const [filter, setFilter] = useRecoilState(deviceListFilterState);
@@ -38,6 +39,7 @@ export default function DeviceListCard() {
         setSearch={setSearch}
         search={filter.q}
       />
+      <DeviceTable />
       <Divider my="sm" variant="dotted" />
       <ListFooterCard
         onPageChange={pageChangeHandler}
