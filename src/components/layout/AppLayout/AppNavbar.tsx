@@ -22,7 +22,7 @@ const mockdata = [
     icon: CalendarStats,
     links: [
       { label: "Overview", link: "/tasks" },
-      { label: "Devices", link: "/my-tasks" },
+      { label: "Devices", link: "/device" },
       { label: "Incidents", link: "/personnel-tasks" },
       { label: "Device Type", link: "/device-type" },
     ],

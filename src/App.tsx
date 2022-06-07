@@ -17,6 +17,7 @@ import {
   settingsTriggerState,
 } from "./features/Settings/utils/store";
 import DeviceTypeDetailPage from "./features/DeviceType/detail";
+import DevicePage from "./features/Devices";
 
 function App() {
   axios.defaults.baseURL = "http://localhost:3400/";
@@ -48,6 +49,7 @@ function App() {
           <Route path="/vpn" element={<VPNPage />} />
           <Route path="/device-type" element={<DeviceTypePage />} />
           <Route path="/device-type/:id" element={<DeviceTypeDetailPage />} />
+          <Route path="/device" element={<DevicePage />} />
         </Route>
         <Route path="*" element={<NothingFoundBackground />} />
       </Routes>
