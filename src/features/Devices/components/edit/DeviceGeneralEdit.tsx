@@ -68,6 +68,7 @@ export default function DeviceGeneralEdit() {
   }, []);
 
   const submitFormHandler = (data: CreateDevice) => {
+    data.deviceSpecs = device.DeviceSpecs;
     //check all mandatory field is filled
     if (
       device.DeviceSpecs?.filter((f) => f.deviceTypeSpec?.isMandatory).some(
