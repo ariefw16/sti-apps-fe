@@ -13,3 +13,12 @@ export async function fetchDevice(
     throw new Error(error.message);
   }
 }
+
+export async function deleteDevice(id: number) {
+  try {
+    const result = await axios.delete(`device/${id}`);
+    return result.data;
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+}

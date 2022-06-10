@@ -1,5 +1,6 @@
 import { Divider, Paper } from "@mantine/core";
-import { useRecoilState } from "recoil";
+import { useNavigate } from "react-router-dom";
+import { useRecoilState, useRecoilValue } from "recoil";
 import AddButton from "../../../components/common/AddButton";
 import ListFooterCard from "../../../components/common/ListFooterCard";
 import ListHeaderCard from "../../../components/common/ListHeaderCard";
@@ -9,7 +10,8 @@ import DeviceTable from "./DeviceTable";
 
 export default function DeviceListCard() {
   const [filter, setFilter] = useRecoilState(deviceListFilterState);
-  const [rowCount, setRowCount] = useRecoilState(deviceListCountState);
+  const rowCount = useRecoilValue(deviceListCountState);
+  const navigate = useNavigate();
 
   const setSearch = (txt: string) => {
     setFilter((x) => ({ ...x, q: txt }));
@@ -31,7 +33,7 @@ export default function DeviceListCard() {
         addButton={
           <AddButton
             onClick={() => {
-              // setShowCreateModal(true);
+              navigate("/device/create");
             }}
           />
         }

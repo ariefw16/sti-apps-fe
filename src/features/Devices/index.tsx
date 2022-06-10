@@ -12,7 +12,7 @@ import DeleteDialog from "../../components/common/DeleteDialog";
 import PageTitleComponent from "../../components/common/PageTitle";
 import { PageTitleBreadcrumbs } from "../../types/pagetitle.type";
 import DeviceListCard from "./components/DeviceListCard";
-import { fetchDevice } from "./utils/service";
+import { deleteDevice, fetchDevice } from "./utils/service";
 import {
   deviceDeleteModalState,
   deviceListCountState,
@@ -52,7 +52,25 @@ export default function DevicePage() {
       });
   }, [filter.limit, filter.page, filter.refreshToggle, q]);
 
-  const deleteDeviceHandler = () => {};
+  const deleteDeviceHandler = () => {
+    deleteDevice(deletion.data.id)
+      .then(() => {
+        resetDeletion();
+        showNotification({
+          title: "Device Deletion",
+          message: "Deletion success!",
+          color: "green",
+        });
+        setFilter((x) => ({ ...x, refreshToggle: !x.refreshToggle }));
+      })
+      .catch((e) => {
+        showNotification({
+          title: "Device Deletion",
+          message: `Error! ${e.message}`,
+          color: "red",
+        });
+      });
+  };
 
   return (
     <>

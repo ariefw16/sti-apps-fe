@@ -1,5 +1,5 @@
 import { atom } from "recoil";
-import { DeleteDevice, Device, DeviceFetchParams } from "./type";
+import { DeleteDevice, Device, DeviceFetchParams, DeviceSpec } from "./type";
 
 export const deviceListState = atom<Device[]>({
   key: "deviceListState",
@@ -22,4 +22,9 @@ export const deviceDeleteModalState = atom<DeleteDevice>({
     showModal: false,
     data: { id: 0, name: "" },
   },
+});
+
+export const deviceSpecCreateState = atom<DeviceSpec[]>({
+  key: "deviceSpecCreateState",
+  default: [],
 });

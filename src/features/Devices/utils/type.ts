@@ -19,6 +19,7 @@ export interface DeviceSpec {
   id?: number;
   name?: string;
   value?: string;
+  specType?: string;
   deviceTypeSpec?: DeviceTypeSpec;
 }
 
@@ -27,4 +28,13 @@ export interface DeviceFetchParams extends FetchParams {}
 export interface DeleteDevice {
   showModal: boolean;
   data: DataToDelete;
+}
+
+export interface CreateDevice {
+  name?: string;
+  ipAddress?: string;
+  isSpare?: boolean;
+  unitId?: string;
+  deviceTypeId?: number;
+  DeviceSpecs?: DeviceSpec[];
 }
