@@ -13,7 +13,7 @@ export default function DeviceSpecsCardDetail() {
         <TextInput
           label="Device Type"
           description="Device Type to specify specs"
-          value={device.deviceType?.name}
+          defaultValue={device.deviceType?.name}
           disabled
         />
       </Paper>
@@ -26,7 +26,7 @@ export default function DeviceSpecsCardDetail() {
               label={sp.name}
               key={sp.deviceTypeSpec?.id}
               my={"md"}
-              value={sp.value}
+              defaultValue={sp.value}
               disabled
             />
           ))}

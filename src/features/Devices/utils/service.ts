@@ -43,3 +43,16 @@ export async function fetchSingleDevice(id: number): Promise<Device> {
     throw new Error(error.message);
   }
 }
+
+export async function updateDevice(params: CreateDevice): Promise<Device> {
+  try {
+    const { id, ...data } = params;
+    const res = await axios.patch(`device/${id}`, {
+      ...data,
+      unitId: +data.unitId!,
+    });
+    return res.data;
+  } catch (error: any) {
+    throw Error(error.message);
+  }
+}

@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import PageTitleComponent from "../../components/common/PageTitle";
 import { PageTitleBreadcrumbs } from "../../types/pagetitle.type";
+import DeviceGeneralCard from "./components/detail/DeviceGeneralCard";
 import DeviceSpecsCardDetail from "./components/detail/DeviceSpecsCardDetail";
 import { fetchSingleDevice } from "./utils/service";
 import { deviceDetailState } from "./utils/store";
@@ -57,7 +58,9 @@ export default function DetailDevicePage() {
           <Grid.Col span={4}>
             <DeviceSpecsCardDetail />
           </Grid.Col>
-          <Grid.Col span={8}></Grid.Col>
+          <Grid.Col span={8}>
+            <DeviceGeneralCard />
+          </Grid.Col>
         </Grid>
       </Box>
     </>

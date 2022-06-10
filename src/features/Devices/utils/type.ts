@@ -38,4 +38,5 @@ export interface CreateDevice {
   unitId?: string;
   deviceTypeId?: number;
   deviceSpecs?: DeviceSpec[];
+  id?: number;
 }

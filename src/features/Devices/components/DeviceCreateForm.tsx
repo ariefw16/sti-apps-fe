@@ -114,7 +114,14 @@ export default function DeviceCreateForm() {
         />
         <Divider variant="dotted" my={"md"} />
         <Group position="apart">
-          <Button color={"orange"} leftIcon={<ArrowLeft />} radius="md">
+          <Button
+            color={"orange"}
+            leftIcon={<ArrowLeft />}
+            radius="md"
+            onClick={() => {
+              navigate("/device");
+            }}
+          >
             Back
           </Button>
           <Button type="submit" radius={"md"} rightIcon={<DeviceFloppy />}>
