@@ -36,6 +36,7 @@ export default function DeviceTypeSpecsCard() {
               specType: sp.specType,
               name: sp.name,
               deviceTypeSpec: sp,
+              deviceTypeSpecId: sp.id,
             }))
           );
         setDeviceTypeId(+value);

@@ -60,8 +60,12 @@ export default function DeviceCreateForm() {
           color: "red",
         });
       else {
-        data.DeviceSpecs = deviceSpec;
+        data.deviceSpecs = deviceSpec.map((sp) => {
+          const { deviceTypeSpec, ...data } = sp;
+          return data;
+        });
         data.deviceTypeId = deviceTypeId;
+        // console.log(data);
         createDevice(data)
           .then(() => {
             navigate("/device");

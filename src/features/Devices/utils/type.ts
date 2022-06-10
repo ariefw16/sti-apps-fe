@@ -21,6 +21,7 @@ export interface DeviceSpec {
   value?: string;
   specType?: string;
   deviceTypeSpec?: DeviceTypeSpec;
+  deviceTypeSpecId?: number;
 }
 
 export interface DeviceFetchParams extends FetchParams {}
@@ -36,5 +37,5 @@ export interface CreateDevice {
   isSpare?: boolean;
   unitId?: string;
   deviceTypeId?: number;
-  DeviceSpecs?: DeviceSpec[];
+  deviceSpecs?: DeviceSpec[];
 }

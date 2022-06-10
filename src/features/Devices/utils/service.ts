@@ -34,3 +34,12 @@ export async function createDevice(data: CreateDevice) {
     throw new Error(error.message);
   }
 }
+
+export async function fetchSingleDevice(id: number): Promise<Device> {
+  try {
+    const result = await axios.get(`/device/${id}`);
+    return result.data;
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+}

@@ -7,8 +7,9 @@ import {
   Table,
 } from "@mantine/core";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { ChevronDown, CodePlus, Pencil, Trash } from "tabler-icons-react";
+import { ChevronDown, CodePlus, Eye, Pencil, Trash } from "tabler-icons-react";
 import { DataToDelete } from "../../../types/common";
 import { deviceDeleteModalState, deviceListState } from "../utils/store";
 
@@ -27,6 +28,7 @@ export default function DeviceTable() {
   const rowHeaderStyle = { color: "GrayText", fontWeight: 500 };
   const device = useRecoilValue(deviceListState);
   const setDeletion = useSetRecoilState(deviceDeleteModalState);
+  const navigate = useNavigate();
 
   const toggleRow = (id: number) =>
     setSelection((current) =>
@@ -96,9 +98,17 @@ export default function DeviceTable() {
                     }
                   >
                     <Menu.Item
+                      icon={<Eye size={14} />}
+                      onClick={() => {
+                        navigate(`/device/${item.id}`);
+                      }}
+                    >
+                      View
+                    </Menu.Item>
+                    <Menu.Item
                       icon={<Pencil size={14} />}
                       onClick={() => {
-                        // editButtonHandler(item);
+                        navigate(`/device/${item.id}/edit`);
                       }}
                     >
                       Update

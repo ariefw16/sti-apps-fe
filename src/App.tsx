@@ -19,6 +19,8 @@ import {
 import DeviceTypeDetailPage from "./features/DeviceType/detail";
 import DevicePage from "./features/Devices";
 import CreateDevicePage from "./features/Devices/create";
+import EditDevicePage from "./features/Devices/edit";
+import DetailDevicePage from "./features/Devices/detail";
 
 function App() {
   axios.defaults.baseURL = "http://localhost:3400/";
@@ -52,6 +54,8 @@ function App() {
           <Route path="/device-type/:id" element={<DeviceTypeDetailPage />} />
           <Route path="/device" element={<DevicePage />} />
           <Route path="/device/create" element={<CreateDevicePage />} />
+          <Route path="/device/:id/edit" element={<EditDevicePage />} />
+          <Route path="/device/:id" element={<DetailDevicePage />} />
         </Route>
         <Route path="*" element={<NothingFoundBackground />} />
       </Routes>

@@ -33,3 +33,8 @@ export const deviceTypeIdCreateState = atom<number>({
   key: "deviceTypeIdCreateState",
   default: undefined,
 });
+
+export const deviceDetailState = atom<Device>({
+  key: "deviceDetailState",
+  default: {},
+});
