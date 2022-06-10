@@ -1,19 +1,19 @@
 import { Paper, Title, Divider, Select, TextInput } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import { useState, useEffect } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import {
   fetchDeviceType,
   fetchSingleDeviceType,
 } from "../../DeviceType/utils/service";
-import { deviceSpecCreateState } from "../utils/store";
-import { DeviceSpec } from "../utils/type";
+import { deviceSpecCreateState, deviceTypeIdCreateState } from "../utils/store";
 
 export default function DeviceTypeSpecsCard() {
   const [typeOptions, setTypeOptions] = useState<
     { label: string; value: string }[]
   >([]);
   const [specs, setSpecs] = useRecoilState(deviceSpecCreateState);
+  const setDeviceTypeId = useSetRecoilState(deviceTypeIdCreateState);
 
   useEffect(() => {
     fetchDeviceType({}).then((res) => {
@@ -38,7 +38,7 @@ export default function DeviceTypeSpecsCard() {
               deviceTypeSpec: sp,
             }))
           );
-        console.log(res);
+        setDeviceTypeId(+value);
       })
       .catch((e) => {
         showNotification({
@@ -50,7 +50,7 @@ export default function DeviceTypeSpecsCard() {
   };
   const specsOnChangeHandler = (vals: string, id: number) => {
     setSpecs((sp) => {
-      const ret = sp.map((s) => s);
+      const ret = sp.map((s) => ({ ...s }));
       const idx = ret.findIndex((s) => s.deviceTypeSpec?.id === id);
       ret[idx].value = vals;
       return ret;

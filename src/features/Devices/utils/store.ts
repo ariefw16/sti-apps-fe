@@ -28,3 +28,8 @@ export const deviceSpecCreateState = atom<DeviceSpec[]>({
   key: "deviceSpecCreateState",
   default: [],
 });
+
+export const deviceTypeIdCreateState = atom<number>({
+  key: "deviceTypeIdCreateState",
+  default: undefined,
+});

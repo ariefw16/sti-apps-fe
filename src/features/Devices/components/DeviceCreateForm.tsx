@@ -9,10 +9,16 @@ import {
   Title,
 } from "@mantine/core";
 import { useForm, zodResolver } from "@mantine/form";
+import { showNotification } from "@mantine/notifications";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { ArrowLeft, DeviceFloppy } from "tabler-icons-react";
 import { z } from "zod";
-import { deviceSpecCreateState } from "../utils/store";
+import { SelectOptions } from "../../../types/common";
+import { fetchUnit } from "../../Unit/utils/service";
+import { createDevice } from "../utils/service";
+import { deviceSpecCreateState, deviceTypeIdCreateState } from "../utils/store";
 import { CreateDevice } from "../utils/type";
 
 const schema = z.object({
@@ -29,8 +35,51 @@ export default function DeviceCreateForm() {
     schema: zodResolver(schema),
   });
   const deviceSpec = useRecoilValue(deviceSpecCreateState);
+  const navigate = useNavigate();
+  const [unitOptions, setUnitOptions] = useState<SelectOptions[]>([]);
+  const deviceTypeId = useRecoilValue(deviceTypeIdCreateState);
 
-  const submitFormHandler = (data: CreateDevice) => {};
+  useEffect(() => {
+    fetchUnit({ parentId: null }).then((res) => {
+      setUnitOptions(
+        res.data.map((u) => ({ label: u.name!, value: u.id!.toString() }))
+      );
+    });
+  }, []);
+
+  const submitFormHandler = (data: CreateDevice) => {
+    if (deviceSpec.length > 0)
+      if (
+        deviceSpec
+          .filter((d) => d.deviceTypeSpec?.isMandatory)
+          .some((d) => d.value === "")
+      )
+        showNotification({
+          title: "Complete Form",
+          message: "Fill required Specs Field",
+          color: "red",
+        });
+      else {
+        data.DeviceSpecs = deviceSpec;
+        data.deviceTypeId = deviceTypeId;
+        createDevice(data)
+          .then(() => {
+            navigate("/device");
+            showNotification({
+              title: "Create Device",
+              message: "Creation success!",
+              color: "green",
+            });
+          })
+          .catch((e) => {
+            showNotification({
+              title: "Create Device",
+              message: `Error! ${e.message}`,
+              color: "red",
+            });
+          });
+      }
+  };
 
   return (
     <Paper p={20} radius="lg">
@@ -48,7 +97,8 @@ export default function DeviceCreateForm() {
           my={"sm"}
           label="Unit"
           description="Select unit where this device is located"
-          data={[]}
+          data={unitOptions}
+          required
           {...form.getInputProps("unitId")}
         />
         <Checkbox label="This Device is a spare" my={"md"} />

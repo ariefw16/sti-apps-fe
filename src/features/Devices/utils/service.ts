@@ -1,6 +1,6 @@
 import axios from "axios";
 import { FetchResult } from "../../../types/fetch.type";
-import { Device, DeviceFetchParams } from "./type";
+import { CreateDevice, Device, DeviceFetchParams } from "./type";
 
 export async function fetchDevice(
   params: DeviceFetchParams
@@ -17,6 +17,18 @@ export async function fetchDevice(
 export async function deleteDevice(id: number) {
   try {
     const result = await axios.delete(`device/${id}`);
+    return result.data;
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+}
+
+export async function createDevice(data: CreateDevice) {
+  try {
+    const result = await axios.post("device", {
+      ...data,
+      unitId: +data.unitId!,
+    });
     return result.data;
   } catch (error: any) {
     throw new Error(error.message);
