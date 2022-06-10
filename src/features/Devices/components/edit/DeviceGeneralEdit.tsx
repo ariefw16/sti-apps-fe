@@ -68,23 +68,35 @@ export default function DeviceGeneralEdit() {
   }, []);
 
   const submitFormHandler = (data: CreateDevice) => {
-    updateDevice({ ...data, id: +id! })
-      .then((res) => {
-        showNotification({
-          title: "Update Device",
-          message: "Update Data device success!",
-          color: "green",
-        });
-        resetDevice();
-        navigate(`/device/${id}`);
-      })
-      .catch((e) => {
-        showNotification({
-          title: "Update Device",
-          message: `Error! ${e.message}`,
-          color: "red",
-        });
+    //check all mandatory field is filled
+    if (
+      device.DeviceSpecs?.filter((f) => f.deviceTypeSpec?.isMandatory).some(
+        (s) => s.value === ""
+      )
+    )
+      showNotification({
+        title: "WARNING!",
+        message: "Please fill all required specs Field!",
+        color: "red",
       });
+    else
+      updateDevice({ ...data, id: +id! })
+        .then((res) => {
+          showNotification({
+            title: "Update Device",
+            message: "Update Data device success!",
+            color: "green",
+          });
+          resetDevice();
+          navigate(`/device/${id}`);
+        })
+        .catch((e) => {
+          showNotification({
+            title: "Update Device",
+            message: `Error! ${e.message}`,
+            color: "red",
+          });
+        });
   };
 
   return (

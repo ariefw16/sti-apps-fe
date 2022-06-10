@@ -7,6 +7,7 @@ import PageTitleComponent from "../../components/common/PageTitle";
 import { PageTitleBreadcrumbs } from "../../types/pagetitle.type";
 import DeviceSpecsCardDetail from "./components/detail/DeviceSpecsCardDetail";
 import DeviceGeneralEdit from "./components/edit/DeviceGeneralEdit";
+import DeviceSpecsEditCard from "./components/edit/DeviceSpecsEditCard";
 import { fetchSingleDevice } from "./utils/service";
 import { deviceDetailState } from "./utils/store";
 
@@ -58,7 +59,7 @@ export default function EditDevicePage() {
         <LoadingOverlay visible={loading} />
         <Grid mt={50}>
           <Grid.Col span={4}>
-            <DeviceSpecsCardDetail />
+            <DeviceSpecsEditCard />
           </Grid.Col>
           <Grid.Col span={8}>
             <DeviceGeneralEdit />
