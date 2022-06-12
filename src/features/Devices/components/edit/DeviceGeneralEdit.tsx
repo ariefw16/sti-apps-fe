@@ -141,7 +141,7 @@ export default function DeviceGeneralEdit() {
             leftIcon={<X />}
             radius="md"
             onClick={() => {
-              navigate("/device");
+              navigate(-1);
             }}
           >
             Cancel

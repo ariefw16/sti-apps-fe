@@ -24,7 +24,11 @@ export interface DeviceSpec {
   deviceTypeSpecId?: number;
 }
 
-export interface DeviceFetchParams extends FetchParams {}
+export interface DeviceFetchParams extends FetchParams {
+  unitId?: string | null;
+  deviceTypeId?: string | null;
+  isSpare?: string | null;
+}
 
 export interface DeleteDevice {
   showModal: boolean;

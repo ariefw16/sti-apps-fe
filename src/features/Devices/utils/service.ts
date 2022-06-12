@@ -6,8 +6,21 @@ export async function fetchDevice(
   params: DeviceFetchParams
 ): Promise<FetchResult<Device[]>> {
   try {
-    const { q = "", limit = "", page = "" } = params;
-    const result = await axios.get(`device?q=${q}&limit=${limit}&page=${page}`);
+    let {
+      q = "",
+      limit = "",
+      page = "",
+      deviceTypeId = "",
+      unitId = "",
+      isSpare = "",
+    } = params;
+    if (unitId === null) unitId = "";
+    if (deviceTypeId === null) deviceTypeId = "";
+    if (isSpare === null) isSpare = "";
+    const result = await axios.get(
+      `device?q=${q}&limit=${limit}&page=${page}` +
+        `&isSpare=${isSpare}&unitId=${unitId}&deviceTypeId=${deviceTypeId}`
+    );
     return { data: result.data[0], rowCount: result.data[1] };
   } catch (error: any) {
     throw new Error(error.message);

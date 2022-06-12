@@ -6,6 +6,8 @@ import ListFooterCard from "../../../components/common/ListFooterCard";
 import ListHeaderCard from "../../../components/common/ListHeaderCard";
 import RefreshButton from "../../../components/common/RefreshButton";
 import { deviceListCountState, deviceListFilterState } from "../utils/store";
+import DeviceListFilter from "./DeviceListFilter";
+// import DeviceListFilter from "./DeviceListFilter";
 import DeviceTable from "./DeviceTable";
 
 export default function DeviceListCard() {
@@ -29,7 +31,6 @@ export default function DeviceListCard() {
   return (
     <Paper radius={"lg"} p="lg" sx={{ marginTop: 50 }}>
       <ListHeaderCard
-        noFilterButton
         addButton={
           <AddButton
             onClick={() => {
@@ -40,6 +41,7 @@ export default function DeviceListCard() {
         refreshButton={<RefreshButton onClick={applyToggleRefresh} />}
         setSearch={setSearch}
         search={filter.q}
+        filterForm={<DeviceListFilter />}
       />
       <DeviceTable />
       <Divider my="sm" variant="dotted" />
