@@ -1,11 +1,5 @@
 import React, { forwardRef } from "react";
-import {
-  UnstyledButton,
-  Group,
-  Avatar,
-  Text,
-  createStyles,
-} from "@mantine/core";
+import { UnstyledButton, Group, Avatar, Text } from "@mantine/core";
 import { ChevronRight } from "tabler-icons-react";
 
 interface UserButtonProps {

@@ -44,17 +44,9 @@ export default function AppLayout() {
   }, []);
 
   useEffect(() => {
-    fetchSettings()
-      .then((res) => {
-        setSettings(res);
-      })
-      .catch((e) => {
-        showNotification({
-          title: "Fetch Global Settings",
-          message: `Error! ${e.message}`,
-          color: "red",
-        });
-      });
+    fetchSettings().then((res) => {
+      setSettings(res);
+    });
   }, [settingsTrigger]);
 
   return (

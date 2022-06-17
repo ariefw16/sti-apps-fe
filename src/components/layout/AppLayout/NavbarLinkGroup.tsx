@@ -9,7 +9,6 @@ import {
 } from "@mantine/core";
 import {
   Icon as TablerIcon,
-  CalendarStats,
   ChevronLeft,
   ChevronRight,
 } from "tabler-icons-react";
