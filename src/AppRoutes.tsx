@@ -19,6 +19,8 @@ import AuthLayout from "./components/layout/AuthLayout";
 
 function App() {
   axios.defaults.baseURL = "http://localhost:3400/";
+  const token = localStorage.getItem("accessToken");
+  axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
   return (
     <BrowserRouter>

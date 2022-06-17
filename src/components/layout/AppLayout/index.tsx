@@ -26,7 +26,6 @@ export default function AppLayout() {
       const token = localStorage.getItem("accessToken");
       if (token === null || token === "") navigate("/auth");
       else {
-        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
         fetchProfile()
           .then((res) => {
             setAuth({ accessToken: token, user: res });
