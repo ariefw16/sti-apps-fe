@@ -23,7 +23,7 @@ const mockdata = [
     links: [
       { label: "Overview", link: "/tasks" },
       { label: "Devices", link: "/device" },
-      { label: "Incidents", link: "/personnel-tasks" },
+      { label: "Incidents", link: "/incident" },
       { label: "Device Type", link: "/device-type" },
     ],
   },
