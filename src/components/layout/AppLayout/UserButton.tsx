@@ -1,4 +1,4 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import {
   UnstyledButton,
   Group,
@@ -8,22 +8,6 @@ import {
 } from "@mantine/core";
 import { ChevronRight } from "tabler-icons-react";
 
-const useStyles = createStyles((theme) => ({
-  user: {
-    display: "block",
-    width: "100%",
-    padding: theme.spacing.md,
-    color: theme.colorScheme === "dark" ? theme.colors.dark[0] : theme.black,
-
-    "&:hover": {
-      backgroundColor:
-        theme.colorScheme === "dark"
-          ? theme.colors.dark[8]
-          : theme.colors.gray[0],
-    },
-  },
-}));
-
 interface UserButtonProps {
   image: string;
   name: string;
@@ -31,17 +15,26 @@ interface UserButtonProps {
   icon?: React.ReactNode;
 }
 
-export function UserButton({
-  image,
-  name,
-  email,
-  icon,
-  ...others
-}: UserButtonProps) {
-  const { classes } = useStyles();
+export const UserButton = forwardRef<HTMLButtonElement, UserButtonProps>(
+  ({ image, name, email, icon, ...others }: UserButtonProps, ref) => (
+    <UnstyledButton
+      ref={ref}
+      sx={(theme) => ({
+        display: "block",
+        width: "100%",
+        padding: theme.spacing.md,
+        color:
+          theme.colorScheme === "dark" ? theme.colors.dark[0] : theme.black,
 
-  return (
-    <UnstyledButton className={classes.user} {...others}>
+        "&:hover": {
+          backgroundColor:
+            theme.colorScheme === "dark"
+              ? theme.colors.dark[8]
+              : theme.colors.gray[0],
+        },
+      })}
+      {...others}
+    >
       <Group>
         <Avatar src={image} radius="xl" />
 
@@ -55,8 +48,8 @@ export function UserButton({
           </Text>
         </div>
 
-        {icon || <ChevronRight size={14} />}
+        {icon || <ChevronRight size={16} />}
       </Group>
     </UnstyledButton>
-  );
-}
+  )
+);

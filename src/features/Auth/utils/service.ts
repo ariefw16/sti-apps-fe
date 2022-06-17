@@ -10,3 +10,9 @@ export async function login(params: AuthParams): Promise<AuthData> {
     throw new Error(error.message);
   }
 }
+
+export function logout(callback: any) {
+  axios.defaults.headers.common["Authorization"] = "";
+  localStorage.setItem("accessToken", "");
+  callback();
+}
