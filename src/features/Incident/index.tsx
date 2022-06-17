@@ -1,3 +1,19 @@
+import PageTitleComponent from "../../components/common/PageTitle";
+import { PageTitleBreadcrumbs } from "../../types/pagetitle.type";
+
 export default function IncidentPage() {
-  return <div>IncidentPage</div>;
+  const breadcrumb: PageTitleBreadcrumbs[] = [
+    {
+      label: "Home",
+      to: "/",
+    },
+    {
+      label: "Incidents",
+    },
+  ];
+  return (
+    <>
+      <PageTitleComponent title="Incidents" breadcrumbs={breadcrumb} />
+    </>
+  );
 }

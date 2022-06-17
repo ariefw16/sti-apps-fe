@@ -51,3 +51,12 @@ export async function updateUser(data: UserUpdateData) {
     throw new Error(error.message);
   }
 }
+
+export async function fetchProfile(): Promise<User> {
+  try {
+    const res = await axios.get(`user/profile`);
+    return res.data;
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+}
