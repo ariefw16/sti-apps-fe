@@ -1,3 +1,4 @@
+import { DataToDelete } from "../../../types/common";
 import { FetchParams } from "../../../types/fetch.type";
 import { Device } from "../../Devices/utils/type";
 import { Unit } from "../../Unit/utils/type";
@@ -43,3 +44,8 @@ export interface IncidentActivity {
 }
 
 export interface IncidentFetchParams extends FetchParams {}
+
+export interface IncidentDeletion {
+  showModal: boolean;
+  data: DataToDelete;
+}

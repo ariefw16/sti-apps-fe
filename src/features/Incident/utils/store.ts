@@ -1,5 +1,5 @@
 import { atom } from "recoil";
-import { Incident, IncidentFetchParams } from "./type";
+import { Incident, IncidentDeletion, IncidentFetchParams } from "./type";
 
 export const incidentListState = atom<Incident[]>({
   key: "incidentListState",
@@ -14,4 +14,12 @@ export const incidentListFilterState = atom<IncidentFetchParams>({
 export const incidentListCountState = atom({
   key: "incidentListCountState",
   default: 0,
+});
+
+export const incidentDeletionState = atom<IncidentDeletion>({
+  key: "incidentDeletionState",
+  default: {
+    showModal: false,
+    data: { id: 0, name: "" },
+  },
 });

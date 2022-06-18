@@ -15,3 +15,15 @@ export async function fetchIncidents(
     throw new Error(error.message);
   }
 }
+
+export async function updateIncident(
+  id: number,
+  data: Incident
+): Promise<Incident> {
+  try {
+    const res = await axios.patch(`incident/${id}`, data);
+    return res.data;
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+}
