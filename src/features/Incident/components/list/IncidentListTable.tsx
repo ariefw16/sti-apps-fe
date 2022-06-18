@@ -20,7 +20,11 @@ import {
   Plus,
 } from "tabler-icons-react";
 import { updateIncident } from "../../utils/service";
-import { incidentListFilterState, incidentListState } from "../../utils/store";
+import {
+  incidentActivityCreationState,
+  incidentListFilterState,
+  incidentListState,
+} from "../../utils/store";
 
 const useStyles = createStyles((theme) => ({
   rowSelected: {
@@ -38,6 +42,7 @@ export default function IncidentsTable() {
   const incident = useRecoilValue(incidentListState);
   const navigate = useNavigate();
   const setFilter = useSetRecoilState(incidentListFilterState);
+  const setActivityCreation = useSetRecoilState(incidentActivityCreationState);
 
   const toggleRow = (id: number) =>
     setSelection((current) =>
@@ -161,7 +166,10 @@ export default function IncidentsTable() {
                     <Menu.Item
                       icon={<Plus size={14} />}
                       onClick={() => {
-                        navigate(`/device/${item.id}/edit`);
+                        setActivityCreation({
+                          showModal: true,
+                          data: { incidentId: item.id, incident: item },
+                        });
                       }}
                     >
                       Add Activity

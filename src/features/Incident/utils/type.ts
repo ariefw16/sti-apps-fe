@@ -49,3 +49,8 @@ export interface IncidentDeletion {
   showModal: boolean;
   data: DataToDelete;
 }
+
+export interface ActivityCreation {
+  showModal: boolean;
+  data: IncidentActivity;
+}

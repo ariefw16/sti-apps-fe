@@ -8,6 +8,7 @@ import {
   incidentListFilterState,
   incidentListCountState,
 } from "../../utils/store";
+import AddActivityModal from "../AddActivityModal";
 import IncidentsTable from "./IncidentListTable";
 
 export default function IncidentListCard() {
@@ -28,22 +29,25 @@ export default function IncidentListCard() {
   };
 
   return (
-    <Paper radius={"lg"} p="lg" sx={{ marginTop: 50 }}>
-      <ListHeaderCard
-        refreshButton={<RefreshButton onClick={applyToggleRefresh} />}
-        setSearch={setSearch}
-        search={filter.q}
-        filterForm={<DeviceListFilter />}
-      />
-      <IncidentsTable />
-      <Divider my="sm" variant="dotted" />
-      <ListFooterCard
-        onPageChange={pageChangeHandler}
-        onRowPerPageChange={rowsChangeHandler}
-        rows={rowCount}
-        page={filter.page}
-        rowsPerPage={filter.limit?.toString()}
-      />
-    </Paper>
+    <>
+      <Paper radius={"lg"} p="lg" sx={{ marginTop: 50 }}>
+        <ListHeaderCard
+          refreshButton={<RefreshButton onClick={applyToggleRefresh} />}
+          setSearch={setSearch}
+          search={filter.q}
+          filterForm={<DeviceListFilter />}
+        />
+        <IncidentsTable />
+        <Divider my="sm" variant="dotted" />
+        <ListFooterCard
+          onPageChange={pageChangeHandler}
+          onRowPerPageChange={rowsChangeHandler}
+          rows={rowCount}
+          page={filter.page}
+          rowsPerPage={filter.limit?.toString()}
+        />
+      </Paper>
+      <AddActivityModal />
+    </>
   );
 }
