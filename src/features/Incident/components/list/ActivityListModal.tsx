@@ -1,13 +1,9 @@
 import { Modal, Timeline, Text } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
+import moment from "moment";
 import { useEffect } from "react";
 import { useRecoilState, useResetRecoilState } from "recoil";
-import {
-  GitBranch,
-  GitCommit,
-  GitPullRequest,
-  MessageDots,
-} from "tabler-icons-react";
+import { MessageDots } from "tabler-icons-react";
 import { fetchActivity } from "../../utils/service";
 import { activityListModalState } from "../../utils/store";
 
@@ -47,13 +43,15 @@ export default function ActivityListModal() {
             key={dt.id}
           >
             <Text color="dimmed" size="sm">
+              Update From{" "}
               <Text variant="gradient" component="span" inherit>
-                Update From {dt.user?.name} :
+                {dt.user?.name} :
               </Text>{" "}
               {dt.description || "(no detail information)"}
             </Text>
             <Text size="xs" mt={4}>
-              12 minutes ago
+              {moment(dt.activityDate).fromNow()} (
+              {moment(dt.activityDate).format("DD-MM-YYYY HH:mm:ss")})
             </Text>
           </Timeline.Item>
         ))}
