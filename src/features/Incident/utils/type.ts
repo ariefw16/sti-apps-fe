@@ -54,3 +54,9 @@ export interface ActivityCreation {
   showModal: boolean;
   data: IncidentActivity;
 }
+
+export interface ActivityListModal {
+  showModal: boolean;
+  data?: IncidentActivity[];
+  incidentId?: number;
+}

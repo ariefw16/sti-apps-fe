@@ -40,3 +40,14 @@ export async function addActivity(
     throw new Error(e.message);
   }
 }
+
+export async function fetchActivity(
+  incidentId: number
+): Promise<IncidentActivity[]> {
+  try {
+    const result = await axios.get(`incident/activity/${incidentId}`);
+    return result.data;
+  } catch (e: any) {
+    throw new Error(e.message);
+  }
+}

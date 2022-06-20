@@ -9,6 +9,7 @@ import {
   incidentListCountState,
 } from "../../utils/store";
 import AddActivityModal from "../AddActivityModal";
+import ActivityListModal from "./ActivityListModal";
 import IncidentsTable from "./IncidentListTable";
 
 export default function IncidentListCard() {
@@ -48,6 +49,7 @@ export default function IncidentListCard() {
         />
       </Paper>
       <AddActivityModal />
+      <ActivityListModal />
     </>
   );
 }

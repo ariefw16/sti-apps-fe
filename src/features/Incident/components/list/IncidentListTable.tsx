@@ -17,10 +17,12 @@ import {
   Check,
   ChevronDown,
   Eye,
+  ListDetails,
   Plus,
 } from "tabler-icons-react";
 import { updateIncident } from "../../utils/service";
 import {
+  activityListModalState,
   incidentActivityCreationState,
   incidentListFilterState,
   incidentListState,
@@ -43,6 +45,7 @@ export default function IncidentsTable() {
   const navigate = useNavigate();
   const setFilter = useSetRecoilState(incidentListFilterState);
   const setActivityCreation = useSetRecoilState(incidentActivityCreationState);
+  const setActivityList = useSetRecoilState(activityListModalState);
 
   const toggleRow = (id: number) =>
     setSelection((current) =>
@@ -162,6 +165,17 @@ export default function IncidentsTable() {
                       }}
                     >
                       View
+                    </Menu.Item>
+                    <Menu.Item
+                      icon={<ListDetails size={14} />}
+                      onClick={() => {
+                        setActivityList({
+                          showModal: true,
+                          incidentId: item.id,
+                        });
+                      }}
+                    >
+                      View Activity List
                     </Menu.Item>
                     <Menu.Item
                       icon={<Plus size={14} />}

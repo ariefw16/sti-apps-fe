@@ -1,6 +1,7 @@
 import { atom } from "recoil";
 import {
   ActivityCreation,
+  ActivityListModal,
   Incident,
   IncidentDeletion,
   IncidentFetchParams,
@@ -34,5 +35,14 @@ export const incidentActivityCreationState = atom<ActivityCreation>({
   default: {
     showModal: false,
     data: {},
+  },
+});
+
+export const activityListModalState = atom<ActivityListModal>({
+  key: "activityListModalState",
+  default: {
+    showModal: false,
+    data: [],
+    incidentId: undefined,
   },
 });
