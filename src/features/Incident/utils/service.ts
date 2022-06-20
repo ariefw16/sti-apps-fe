@@ -1,6 +1,6 @@
 import axios from "axios";
 import { FetchResult } from "../../../types/fetch.type";
-import { Incident, IncidentFetchParams } from "./type";
+import { Incident, IncidentActivity, IncidentFetchParams } from "./type";
 
 export async function fetchIncidents(
   params: IncidentFetchParams
@@ -25,5 +25,18 @@ export async function updateIncident(
     return res.data;
   } catch (error: any) {
     throw new Error(error.message);
+  }
+}
+
+export async function addActivity(
+  props: IncidentActivity
+): Promise<IncidentActivity> {
+  try {
+    const result = await axios.post(`incident/activity/${props.incidentId}`, {
+      ...props,
+    });
+    return result.data;
+  } catch (e: any) {
+    throw new Error(e.message);
   }
 }
