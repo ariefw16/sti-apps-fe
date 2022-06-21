@@ -51,3 +51,12 @@ export async function fetchActivity(
     throw new Error(e.message);
   }
 }
+
+export async function fetchSingleIncident(id: number): Promise<Incident> {
+  try {
+    const res = await axios.get(`incident/${id}`);
+    return res.data;
+  } catch (e: any) {
+    throw new Error(e.message);
+  }
+}

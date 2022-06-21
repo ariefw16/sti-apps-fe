@@ -4,7 +4,7 @@ import { useForm, zodResolver } from "@mantine/form";
 import { showNotification } from "@mantine/notifications";
 import moment from "moment";
 import { useState } from "react";
-import { useRecoilState, useResetRecoilState } from "recoil";
+import { useRecoilValue, useResetRecoilState } from "recoil";
 import { Calendar } from "tabler-icons-react";
 import { z } from "zod";
 import GroupButtonModal from "../../../components/common/GroupButtonModal";
@@ -17,8 +17,9 @@ const schema = z.object({
   name: z.string().min(3),
 });
 
-export default function AddActivityModal() {
-  const [activity, setActivity] = useRecoilState(incidentActivityCreationState);
+export default function AddActivityModal(props: { afterSubmit?: any }) {
+  const { afterSubmit } = props;
+  const activity = useRecoilValue(incidentActivityCreationState);
   const resetCreation = useResetRecoilState(incidentActivityCreationState);
   const [loading, setLoading] = useState(false);
   const form = useForm<IncidentActivity>({
@@ -41,6 +42,7 @@ export default function AddActivityModal() {
           color: "green",
         });
         resetCreation();
+        afterSubmit();
       })
       .catch((e) => {
         showNotification({

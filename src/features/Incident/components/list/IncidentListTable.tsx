@@ -161,7 +161,7 @@ export default function IncidentsTable() {
                     <Menu.Item
                       icon={<Eye size={14} />}
                       onClick={() => {
-                        navigate(`/device/${item.id}`);
+                        navigate(`/incident/${item.id}`);
                       }}
                     >
                       View

@@ -46,3 +46,8 @@ export const activityListModalState = atom<ActivityListModal>({
     incidentId: undefined,
   },
 });
+
+export const incidentDetailState = atom<Incident>({
+  key: "incidentDetailState",
+  default: {},
+});

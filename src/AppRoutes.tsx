@@ -16,6 +16,7 @@ import DetailDevicePage from "./features/Devices/detail";
 import IncidentPage from "./features/Incident";
 import LoginPage from "./features/Auth/login";
 import AuthLayout from "./components/layout/AuthLayout";
+import DetailIncidentPage from "./features/Incident/detail";
 
 function App() {
   axios.defaults.baseURL = "http://localhost:3400/";
@@ -38,6 +39,7 @@ function App() {
           <Route path="/device/:id/edit" element={<EditDevicePage />} />
           <Route path="/device/:id" element={<DetailDevicePage />} />
           <Route path="/incident" element={<IncidentPage />} />
+          <Route path="/incident/:id" element={<DetailIncidentPage />} />
         </Route>
         <Route path="/auth" element={<AuthLayout />}>
           <Route index element={<LoginPage />} />
