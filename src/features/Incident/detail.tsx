@@ -115,7 +115,7 @@ export default function DetailIncidentPage() {
             mt={40}
           >
             <Tabs.Tab label="General Info" icon={<InfoCircle size={14} />}>
-              <GeneralInfo incident={detail} />
+              <GeneralInfo incident={detail} setTrigger={setTrigger} />
             </Tabs.Tab>
             <Tabs.Tab label="Device Info" icon={<Tools size={14} />}>
               <DeviceInfo device={detail.device} />
