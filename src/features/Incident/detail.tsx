@@ -14,6 +14,9 @@ import PageTitleComponent from "../../components/common/PageTitle";
 import { PageTitleBreadcrumbs } from "../../types/pagetitle.type";
 import AddActivityModal from "./components/AddActivityModal";
 import ActivityTimeline from "./components/detail/ActivityTimeline";
+import DeviceInfo from "./components/detail/DeviceInfo";
+import GeneralInfo from "./components/detail/GeneralInfo";
+import LogDetail from "./components/detail/LogDetail";
 import { fetchSingleIncident } from "./utils/service";
 import {
   incidentActivityCreationState,
@@ -39,7 +42,6 @@ export default function DetailIncidentPage() {
       fetchSingleIncident(+id)
         .then((res) => {
           setDetail(res);
-          console.log(detail);
         })
         .catch((e) => {
           showNotification({
@@ -69,13 +71,58 @@ export default function DetailIncidentPage() {
       />
       <Grid>
         <Grid.Col span={7}>
-          <Tabs variant="default" mt={40} ml={20} mr={20}>
-            <Tabs.Tab
-              label="General Info"
-              icon={<InfoCircle size={14} />}
-            ></Tabs.Tab>
-            <Tabs.Tab label="Device Info" icon={<Tools size={14} />}></Tabs.Tab>
-            <Tabs.Tab label="Logs" icon={<Notebook size={14} />}></Tabs.Tab>
+          <Tabs
+            variant="unstyled"
+            styles={(theme) => ({
+              tabControl: {
+                backgroundColor:
+                  theme.colorScheme === "dark"
+                    ? theme.colors.dark[6]
+                    : theme.white,
+                color:
+                  theme.colorScheme === "dark"
+                    ? theme.colors.dark[0]
+                    : theme.colors.gray[9],
+                border: `1px solid ${
+                  theme.colorScheme === "dark"
+                    ? theme.colors.dark[6]
+                    : theme.colors.gray[4]
+                }`,
+                fontSize: theme.fontSizes.sm,
+                padding: `${theme.spacing.lg}px ${theme.spacing.xl}px`,
+
+                "&:not(:first-of-type)": {
+                  borderLeft: 0,
+                },
+
+                "&:first-of-type": {
+                  borderTopLeftRadius: theme.radius.md,
+                  borderBottomLeftRadius: theme.radius.md,
+                },
+
+                "&:last-of-type": {
+                  borderTopRightRadius: theme.radius.md,
+                  borderBottomRightRadius: theme.radius.md,
+                },
+              },
+
+              tabActive: {
+                backgroundColor: theme.colors.blue[4],
+                borderColor: theme.colors.blue[7],
+                color: theme.white,
+              },
+            })}
+            mt={40}
+          >
+            <Tabs.Tab label="General Info" icon={<InfoCircle size={14} />}>
+              <GeneralInfo incident={detail} />
+            </Tabs.Tab>
+            <Tabs.Tab label="Device Info" icon={<Tools size={14} />}>
+              <DeviceInfo device={detail.device} />
+            </Tabs.Tab>
+            <Tabs.Tab label="Logs" icon={<Notebook size={14} />}>
+              <LogDetail log={detail.incidentLog} />
+            </Tabs.Tab>
           </Tabs>
         </Grid.Col>
         <Grid.Col span={5} mt={40}>
@@ -84,6 +131,7 @@ export default function DetailIncidentPage() {
               color={"lime"}
               leftIcon={<Plus />}
               onClick={addActivityButtonHandler}
+              radius="md"
             >
               Add Activity
             </Button>
