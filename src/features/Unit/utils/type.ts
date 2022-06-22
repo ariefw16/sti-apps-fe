@@ -1,11 +1,13 @@
 import { DataToDelete } from "../../../types/common";
 import { FetchParams } from "../../../types/fetch.type";
+import { User } from "../../Users/utils/type";
 
 export interface Unit {
   id?: number;
   name?: string;
   parent?: Unit;
   childs?: Unit[];
+  user?: User[];
 }
 
 export interface UnitFetchParams extends FetchParams {
