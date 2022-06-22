@@ -1,6 +1,5 @@
-import { AppShell, Box } from "@mantine/core";
+import { AppShell, Box, ScrollArea } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
-import axios from "axios";
 import { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
@@ -50,6 +49,7 @@ export default function AppLayout() {
 
   return (
     <AppShell
+      fixed
       navbar={<AppNavbar />}
       styles={(theme) => ({
         main: {
@@ -59,9 +59,11 @@ export default function AppLayout() {
         },
       })}
     >
-      <Box sx={{ padding: 20 }}>
-        <Outlet />
-      </Box>
+      <ScrollArea>
+        <Box sx={{ padding: 20 }}>
+          <Outlet />
+        </Box>
+      </ScrollArea>
     </AppShell>
   );
 }

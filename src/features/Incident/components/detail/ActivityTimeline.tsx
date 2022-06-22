@@ -9,7 +9,13 @@ export default function ActivityTimeline(props: {
   const { activity } = props;
 
   return (
-    <Timeline active={4} bulletSize={24} lineWidth={2} ml={20} mt={20}>
+    <Timeline
+      active={activity?.length}
+      bulletSize={24}
+      lineWidth={2}
+      ml={20}
+      mt={20}
+    >
       {activity?.map((dt) => (
         <Timeline.Item
           title={dt.name}

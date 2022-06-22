@@ -6,6 +6,7 @@ import { useRecoilState, useResetRecoilState } from "recoil";
 import { MessageDots } from "tabler-icons-react";
 import { fetchActivity } from "../../utils/service";
 import { activityListModalState } from "../../utils/store";
+import ActivityTimeline from "../detail/ActivityTimeline";
 
 export default function ActivityListModal() {
   const [modal, setModal] = useRecoilState(activityListModalState);
@@ -35,27 +36,7 @@ export default function ActivityListModal() {
       title="Incident Activity List"
       size="lg"
     >
-      <Timeline active={4} bulletSize={24} lineWidth={2}>
-        {modal.data?.map((dt) => (
-          <Timeline.Item
-            title={dt.name}
-            bullet={<MessageDots size={12} />}
-            key={dt.id}
-          >
-            <Text color="dimmed" size="sm">
-              Update From{" "}
-              <Text variant="gradient" component="span" inherit>
-                {dt.user?.name} :
-              </Text>{" "}
-              {dt.description || "(no detail information)"}
-            </Text>
-            <Text size="xs" mt={4}>
-              {moment(dt.activityDate).fromNow()} (
-              {moment(dt.activityDate).format("DD-MM-YYYY HH:mm:ss")})
-            </Text>
-          </Timeline.Item>
-        ))}
-      </Timeline>
+      <ActivityTimeline activity={modal.data} />
     </Modal>
   );
 }

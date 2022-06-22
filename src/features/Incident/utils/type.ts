@@ -43,7 +43,11 @@ export interface IncidentActivity {
   incidentId?: number;
 }
 
-export interface IncidentFetchParams extends FetchParams {}
+export interface IncidentFetchParams extends FetchParams {
+  unitId?: string | null;
+  isDone?: string | null;
+  deviceTypeId?: string | null;
+}
 
 export interface IncidentDeletion {
   showModal: boolean;

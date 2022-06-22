@@ -6,9 +6,19 @@ export async function fetchIncidents(
   params: IncidentFetchParams
 ): Promise<FetchResult<Incident[]>> {
   try {
-    const { q = "", limit = "", page = "" } = params;
+    let {
+      q = "",
+      limit = 15,
+      page = "",
+      isDone,
+      deviceTypeId,
+      unitId,
+    } = params;
+    if (unitId === null || unitId === undefined) unitId = "";
+    if (deviceTypeId === null || deviceTypeId === undefined) deviceTypeId = "";
+    if (isDone === null || isDone === undefined) isDone = "";
     const result = await axios.get(
-      `incident?q=${q}&page=${page}&limit=${limit}`
+      `incident?q=${q}&page=${page}&limit=${limit}&unitId=${unitId}&deviceTypeId=${deviceTypeId}&isDone=${isDone}`
     );
     return { data: result.data[0], rowCount: result.data[1] };
   } catch (error: any) {

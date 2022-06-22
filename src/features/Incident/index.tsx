@@ -16,7 +16,7 @@ import {
 export default function IncidentPage() {
   const [loading, setLoading] = useState(false);
   const [filter, setFilter] = useRecoilState(incidentListFilterState);
-  const q = useDebouncedValue(filter.q, 300);
+  const [q] = useDebouncedValue(filter.q, 300);
   const setIncident = useSetRecoilState(incidentListState);
   const setCount = useSetRecoilState(incidentListCountState);
   const breadcrumb: PageTitleBreadcrumbs[] = [

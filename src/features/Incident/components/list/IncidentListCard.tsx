@@ -3,13 +3,13 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import ListFooterCard from "../../../../components/common/ListFooterCard";
 import ListHeaderCard from "../../../../components/common/ListHeaderCard";
 import RefreshButton from "../../../../components/common/RefreshButton";
-import DeviceListFilter from "../../../Devices/components/DeviceListFilter";
 import {
   incidentListFilterState,
   incidentListCountState,
 } from "../../utils/store";
 import AddActivityModal from "../AddActivityModal";
 import ActivityListModal from "./ActivityListModal";
+import IncidentListFilter from "./IncidentListFilter";
 import IncidentsTable from "./IncidentListTable";
 
 export default function IncidentListCard() {
@@ -36,7 +36,7 @@ export default function IncidentListCard() {
           refreshButton={<RefreshButton onClick={applyToggleRefresh} />}
           setSearch={setSearch}
           search={filter.q}
-          filterForm={<DeviceListFilter />}
+          filterForm={<IncidentListFilter />}
         />
         <IncidentsTable />
         <Divider my="sm" variant="dotted" />
