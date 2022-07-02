@@ -17,7 +17,7 @@ const mockdata = [
     links: [
       { label: "Overview", link: "/services" },
       { label: "VPN", link: "/vpn" },
-      { label: "Zoom", link: "/zoom-request" },
+      { label: "Zoom Account", link: "/zoom-account" },
     ],
   },
   {
@@ -57,9 +57,8 @@ export function AppNavbar() {
       marginLeft: -theme.spacing.md,
       marginRight: -theme.spacing.md,
       color: isDarkMode ? theme.white : theme.black,
-      borderBottom: `1px solid ${
-        isDarkMode ? theme.colors.dark[4] : theme.colors.gray[3]
-      }`,
+      borderBottom: `1px solid ${isDarkMode ? theme.colors.dark[4] : theme.colors.gray[3]
+        }`,
     },
 
     links: {
@@ -76,9 +75,8 @@ export function AppNavbar() {
       marginLeft: -theme.spacing.md,
       marginRight: -theme.spacing.md,
       marginBottom: -theme.spacing.md,
-      borderTop: `1px solid ${
-        isDarkMode ? theme.colors.dark[4] : theme.colors.gray[3]
-      }`,
+      borderTop: `1px solid ${isDarkMode ? theme.colors.dark[4] : theme.colors.gray[3]
+        }`,
     },
   }));
   const { classes } = useStyles();
