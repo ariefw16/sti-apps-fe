@@ -53,16 +53,22 @@ export default function AppLayout() {
     <AppShell
       fixed
       navbar={<AppNavbar />}
-      header={<MediaQuery largerThan="sm" styles={{ display: 'none' }}>
+      header={
         <Header height={70} p="md">
-          <Burger
-            opened={opened}
-            onClick={() => setOpened((o) => !o)}
-            size="sm"
-            mr="xl"
-          />
+          <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
+
+            <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
+              <Burger
+                opened={opened}
+                onClick={() => setOpened((o) => !o)}
+                size="sm"
+                mr="xl"
+              />
+            </MediaQuery>
+
+            <Text>STI Applications Portal</Text>
+          </div>
         </Header>
-      </MediaQuery>
       }
       styles={(theme) => ({
         main: {

@@ -53,15 +53,6 @@ export function AppNavbar() {
       paddingBottom: 0,
     },
 
-    header: {
-      padding: theme.spacing.md,
-      paddingTop: 0,
-      marginLeft: -theme.spacing.md,
-      marginRight: -theme.spacing.md,
-      color: isDarkMode ? theme.white : theme.black,
-      borderBottom: `1px solid ${isDarkMode ? theme.colors.dark[4] : theme.colors.gray[3]
-        }`,
-    },
 
     links: {
       marginLeft: -theme.spacing.md,
@@ -69,7 +60,7 @@ export function AppNavbar() {
     },
 
     linksInner: {
-      paddingTop: theme.spacing.xl,
+      //  paddingTop: theme.spacing.xl,
       paddingBottom: theme.spacing.xl,
     },
 
