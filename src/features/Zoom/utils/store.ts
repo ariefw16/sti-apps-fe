@@ -1,4 +1,4 @@
-import { ZoomAccount, ZoomAccountFetchParams } from './type'
+import { ZoomAccount, ZoomAccountDelete, ZoomAccountFetchParams } from './type'
 import { atom } from 'recoil'
 
 export const zoomListState = atom<ZoomAccount[]>({
@@ -13,5 +13,16 @@ export const zoomListCountState = atom({
 
 export const zoomListFilterState = atom<ZoomAccountFetchParams>({
   key: 'zoomListFilterState',
-  default: {}
+  default: {
+    page: 1,
+    limit: 15
+  }
+})
+
+export const zoomAccountDeleteState = atom<ZoomAccountDelete>({
+  key: 'zoomAccountDeleteState',
+  default: {
+    data: { id: 0, name: "" },
+    showModal: false
+  }
 })

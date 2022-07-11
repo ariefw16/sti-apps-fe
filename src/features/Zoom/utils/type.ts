@@ -1,3 +1,4 @@
+import { DataToDelete } from "../../../types/common"
 import { FetchParams } from "../../../types/fetch.type"
 import { Unit } from "../../Unit/utils/type"
 
@@ -15,4 +16,9 @@ export interface ZoomAccount {
 export interface ZoomAccountFetchParams extends FetchParams {
   active?: string | null
   unitId?: string | null
+}
+
+export interface ZoomAccountDelete {
+  showModal: boolean
+  data: DataToDelete
 }

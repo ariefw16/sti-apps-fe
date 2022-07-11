@@ -1,4 +1,4 @@
-import { zoomListState } from "../../utils/store";
+import { zoomAccountDeleteState, zoomListState } from "../../utils/store";
 import {
   Button,
   Checkbox,
@@ -9,10 +9,10 @@ import {
 } from "@mantine/core";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { ChevronDown, Eye, Pencil, Trash } from "tabler-icons-react";
 import { DataToDelete } from "../../../../types/common";
-import { ZoomAccount } from "../../utils/type";
+//import { ZoomAccount } from "../../utils/type";
 
 const useStyles = createStyles((theme) => ({
   rowSelected: {
@@ -29,6 +29,7 @@ export default function ZoomAccountListTable() {
   const account = useRecoilValue(zoomListState);
   const rowHeaderStyle = { color: "GrayText", fontWeight: 500 };
   const navigate = useNavigate();
+  const setDeletion = useSetRecoilState(zoomAccountDeleteState)
 
   const toggleRow = (id: number) =>
     setSelection((current) =>
@@ -42,13 +43,11 @@ export default function ZoomAccountListTable() {
         ? []
         : account.map((item) => item.id!)
     );
-  /*const deleteButtonHandler = (data: DataToDelete) => {
+
+  const deleteButtonHandler = (data: DataToDelete) => {
     setDeletion({ showModal: true, data });
   };
-  const editButtonHandler = (data: ZoomAccount) => {
-    setDataUpdate({ showModal: true, data });
-  };
-*/
+
   return (
     <ScrollArea>
       <Table sx={{ minWidth: 800 }} verticalSpacing="sm">
@@ -104,9 +103,6 @@ export default function ZoomAccountListTable() {
                     >
                       View
                     </Menu.Item>
-                    <Menu.Item icon={<Eye size={14} />} onClick={() => { }}>
-                      Specification Detail
-                    </Menu.Item>
                     <Menu.Item
                       icon={<Pencil size={14} />}
                       onClick={() => {
@@ -119,10 +115,10 @@ export default function ZoomAccountListTable() {
                       icon={<Trash size={14} />}
                       color="red"
                       onClick={() => {
-                        //                       deleteButtonHandler({
-                        //                        id: item.id!,
-                        //                      name: item.name!,
-                        //});
+                        deleteButtonHandler({
+                          id: item.id!,
+                          name: item.name!,
+                        });
                       }}
                     >
                       Delete
