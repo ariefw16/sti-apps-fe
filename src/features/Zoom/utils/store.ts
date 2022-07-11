@@ -26,3 +26,8 @@ export const zoomAccountDeleteState = atom<ZoomAccountDelete>({
     showModal: false
   }
 })
+
+export const zoomAccountCreateLoadingState = atom({
+  key: 'zoomAccountCreateLoadingState',
+  default: false
+})

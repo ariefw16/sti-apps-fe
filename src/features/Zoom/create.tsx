@@ -6,6 +6,11 @@ import ZoomInfoCard from "./components/create/ZoomInfoCard"
 import { z } from "zod";
 import { useForm, zodResolver } from "@mantine/form";
 import { ZoomAccountCreate } from './utils/type'
+import { useRecoilState, useSetRecoilState } from "recoil"
+import { zoomAccountCreateLoadingState, zoomListFilterState } from "./utils/store"
+import { createZoomAccount } from "./utils/service"
+import { showNotification } from "@mantine/notifications"
+import { useNavigate } from "react-router-dom"
 
 const schema = z.object({
   name: z.string().min(3),
@@ -39,9 +44,21 @@ export default function CreateZoomAccountPage() {
       label: 'Create new Account',
     }
   ]
+  const setLoading = useSetRecoilState(zoomAccountCreateLoadingState)
+  const setFilter = useSetRecoilState(zoomListFilterState)
+  const navigate = useNavigate()
 
   const submitFormHandler = (data: ZoomAccountCreate) => {
-    console.log(data)
+    setLoading(true)
+    createZoomAccount(data).then(() => {
+      showNotification({ title: 'Create Zoom Account', message: 'Creating Zoom Account Success!', color: 'green' })
+      setFilter(x => ({ ...x, refreshToggle: !x.refreshToggle }))
+      navigate('/zoom-account')
+    }).catch(e => {
+      showNotification({ title: 'Create Zoom Account', message: `Error! ${e.message}`, color: 'red' })
+    }).finally(() => {
+      setLoading(false)
+    })
   }
 
   return <>
