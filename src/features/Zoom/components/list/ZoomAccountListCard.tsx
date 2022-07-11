@@ -1,5 +1,7 @@
 import { Paper, Divider } from "@mantine/core";
+import { useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
+import AddButton from "../../../../components/common/AddButton";
 import ListFooterCard from "../../../../components/common/ListFooterCard";
 import ListHeaderCard from "../../../../components/common/ListHeaderCard";
 import RefreshButton from "../../../../components/common/RefreshButton";
@@ -9,6 +11,7 @@ import ZoomAccountListTable from "./ZoomListTable";
 export default function ZoomAccountListCard() {
   const rowCount = useRecoilValue(zoomListCountState)
   const [filter, setFilter] = useRecoilState(zoomListFilterState)
+  const navigate = useNavigate()
 
   const setSearch = (txt: string) => {
     setFilter((x) => ({ ...x, q: txt }));
@@ -22,9 +25,14 @@ export default function ZoomAccountListCard() {
   const pageChangeHandler = (value: number) => {
     setFilter((x) => ({ ...x, page: value }));
   };
+  const addButtonHandler = () => {
+    navigate('/zoom-account/create')
+  }
 
   return <Paper radius={"lg"} p="lg" sx={{ marginTop: 50 }}>
-    <ListHeaderCard refreshButton={<RefreshButton onClick={applyToggleRefresh} />} search={filter.q} setSearch={setSearch} />
+    <ListHeaderCard
+      addButton={<AddButton onClick={addButtonHandler} />}
+      refreshButton={<RefreshButton onClick={applyToggleRefresh} />} search={filter.q} setSearch={setSearch} />
     <ZoomAccountListTable />
     <Divider my="sm" variant="dotted" />
     <ListFooterCard

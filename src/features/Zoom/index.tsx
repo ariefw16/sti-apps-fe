@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from "recoil";
 import DeleteDialog from "../../components/common/DeleteDialog";
 import PageTitleComponent from "../../components/common/PageTitle";
-import { DataToDelete } from "../../types/common";
 import { PageTitleBreadcrumbs } from "../../types/pagetitle.type";
 import ZoomAccountListCard from "./components/list/ZoomAccountListCard";
 import { deleteZoomAccount, fetchZoomAccount } from "./utils/service";
@@ -46,6 +45,7 @@ export default function ZoomAccountPage() {
     deleteZoomAccount(deletion.data.id).then(() => {
       showNotification({ title: 'Zoom Account Deletion', message: 'Deletion Success!', color: 'green' })
       resetDeletion()
+      setFilter((x) => ({ ...x, refreshToggle: !x.refreshToggle }))
     }).catch(e => {
       showNotification({ title: 'Zoom Account Deletion', message: `Error! ${e.message}`, color: 'red' })
     }).finally(() => {

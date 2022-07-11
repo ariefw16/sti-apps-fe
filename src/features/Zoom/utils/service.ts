@@ -20,3 +20,12 @@ export async function deleteZoomAccount(id: number): Promise<number> {
     throw new Error(e.message)
   }
 }
+
+export async function fetchSingleZoomAccount(id: number): Promise<ZoomAccount> {
+  try {
+    const res = await axios.get(`zoom-account/${id}`)
+    return res.data
+  } catch (e: any) {
+    throw new Error(e.message)
+  }
+}

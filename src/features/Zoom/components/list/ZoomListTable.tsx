@@ -9,10 +9,9 @@ import {
 } from "@mantine/core";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { ChevronDown, Eye, Pencil, Trash } from "tabler-icons-react";
 import { DataToDelete } from "../../../../types/common";
-//import { ZoomAccount } from "../../utils/type";
 
 const useStyles = createStyles((theme) => ({
   rowSelected: {

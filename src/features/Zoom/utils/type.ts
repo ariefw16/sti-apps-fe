@@ -8,9 +8,13 @@ export interface ZoomAccount {
   email?: string
   accessToken?: string
   secretKey?: string
+  client_id?: string
+  account_id?: string
   lastCheck?: Date
   active?: boolean
   ownerUnit?: Unit
+  unitId?: number
+  tokenExpiredAt?: Date
 }
 
 export interface ZoomAccountFetchParams extends FetchParams {
@@ -21,4 +25,15 @@ export interface ZoomAccountFetchParams extends FetchParams {
 export interface ZoomAccountDelete {
   showModal: boolean
   data: DataToDelete
+}
+
+export interface ZoomAccountCreate {
+  id?: number
+  name?: string
+  email?: string
+  secretKey?: string
+  client_id?: string
+  account_id?: string
+  active?: boolean
+  unitId?: string
 }
