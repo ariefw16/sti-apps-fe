@@ -1,6 +1,6 @@
-import { AppShell, Box, ScrollArea } from "@mantine/core";
+import { AppShell, Box, ScrollArea, Header, MediaQuery, Burger, Text } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { authState } from "../../../features/Auth/utils/store";
@@ -10,6 +10,7 @@ import {
   settingsState,
 } from "../../../features/Settings/utils/store";
 import { fetchProfile } from "../../../features/Users/utils/service";
+import { showBurgerState } from "../../../stores/navbar.store";
 import { darkModeState } from "../../../stores/ui.store";
 import { AppNavbar } from "./AppNavbar";
 
@@ -19,6 +20,7 @@ export default function AppLayout() {
   const setSettings = useSetRecoilState(settingsState);
   const [auth, setAuth] = useRecoilState(authState);
   const navigate = useNavigate();
+  const [opened, setOpened] = useRecoilState(showBurgerState)
 
   useEffect(() => {
     if (!auth.accessToken) {
@@ -51,6 +53,17 @@ export default function AppLayout() {
     <AppShell
       fixed
       navbar={<AppNavbar />}
+      header={<MediaQuery largerThan="sm" styles={{ display: 'none' }}>
+        <Header height={70} p="md">
+          <Burger
+            opened={opened}
+            onClick={() => setOpened((o) => !o)}
+            size="sm"
+            mr="xl"
+          />
+        </Header>
+      </MediaQuery>
+      }
       styles={(theme) => ({
         main: {
           backgroundColor: isDarkMode
@@ -58,6 +71,8 @@ export default function AppLayout() {
             : theme.colors.gray[1],
         },
       })}
+      navbarOffsetBreakpoint="sm"
+      asideOffsetBreakpoint="sm"
     >
       <ScrollArea>
         <Box sx={{ padding: 20 }}>

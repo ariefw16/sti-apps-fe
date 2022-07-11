@@ -13,8 +13,8 @@ import {
   ChevronRight,
 } from "tabler-icons-react";
 import { Link, useNavigate } from "react-router-dom";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { activeMenuState } from "../../../stores/navbar.store";
+import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
+import { activeMenuState, showBurgerState } from "../../../stores/navbar.store";
 import { darkModeState } from "../../../stores/ui.store";
 
 interface LinksGroupProps {
@@ -59,9 +59,8 @@ export function LinksGroup({
       marginLeft: 30,
       fontSize: theme.fontSizes.sm,
       color: isDarkMode ? theme.colors.dark[0] : theme.colors.gray[7],
-      borderLeft: `1px solid ${
-        isDarkMode ? theme.colors.dark[4] : theme.colors.gray[3]
-      }`,
+      borderLeft: `1px solid ${isDarkMode ? theme.colors.dark[4] : theme.colors.gray[3]
+        }`,
 
       "&:hover": {
         backgroundColor: isDarkMode
@@ -81,9 +80,8 @@ export function LinksGroup({
       fontSize: theme.fontSizes.sm,
       color: isDarkMode ? theme.colors.dark[0] : theme.colors.gray[7],
       backgroundColor: isDarkMode ? theme.colors.dark[7] : theme.colors.blue[0],
-      borderLeft: `1px solid ${
-        isDarkMode ? theme.colors.dark[4] : theme.colors.blue[3]
-      }`,
+      borderLeft: `1px solid ${isDarkMode ? theme.colors.dark[4] : theme.colors.blue[3]
+        }`,
 
       "&:hover": {
         backgroundColor: isDarkMode
@@ -119,6 +117,7 @@ export function LinksGroup({
   const navigate = useNavigate();
   const hasLinks = Array.isArray(links);
   const [opened, setOpened] = useState(initiallyOpened || false);
+  const resetBurgerState = useResetRecoilState(showBurgerState)
   const ChevronIcon = theme.dir === "ltr" ? ChevronRight : ChevronLeft;
   const items = (hasLinks ? links : []).map((link) => (
     <Link
@@ -127,6 +126,7 @@ export function LinksGroup({
       key={link.label}
       onClick={() => {
         setActive(link.link);
+        resetBurgerState()
       }}
     >
       {link.label}
@@ -140,6 +140,7 @@ export function LinksGroup({
   const menuClick = (linkTo?: string) => {
     setOpened((o) => !o);
     if (linkTo) {
+      resetBurgerState()
       setActive(linkTo);
       navigate(linkTo);
     }

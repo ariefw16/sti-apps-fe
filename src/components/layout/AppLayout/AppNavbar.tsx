@@ -7,6 +7,7 @@ import { darkModeState } from "../../../stores/ui.store";
 import { logout } from "../../../features/Auth/utils/service";
 import { authState } from "../../../features/Auth/utils/store";
 import { useNavigate } from "react-router-dom";
+import { showBurgerState } from "../../../stores/navbar.store";
 
 const mockdata = [
   { label: "Dashboard", icon: Gauge, link: "/" },
@@ -42,6 +43,7 @@ const mockdata = [
 ];
 
 export function AppNavbar() {
+  const opened = useRecoilValue(showBurgerState)
   const isDarkMode = useRecoilValue(darkModeState);
   const resetAuth = useResetRecoilState(authState);
   const navigate = useNavigate();
@@ -85,7 +87,7 @@ export function AppNavbar() {
   ));
 
   return (
-    <Navbar width={{ sm: 300 }} p="md" className={classes.navbar}>
+    <Navbar width={{ sm: 300 }} hiddenBreakpoint="sm" hidden={!opened} p="md" className={classes.navbar}>
       <Navbar.Section grow className={classes.links} component={ScrollArea}>
         <div className={classes.linksInner}>{links}</div>
       </Navbar.Section>

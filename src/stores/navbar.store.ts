@@ -11,3 +11,7 @@ export const activeMenuState = atom({
     },
   }),
 });
+
+export const showBurgerState = atom({
+  key: 'showBurgerState', default: false
+})
