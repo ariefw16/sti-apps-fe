@@ -31,3 +31,8 @@ export const zoomAccountCreateLoadingState = atom({
   key: 'zoomAccountCreateLoadingState',
   default: false
 })
+
+export const zoomAccountDetailState = atom<ZoomAccount>({
+  key: 'zoomAccountDetailState',
+  default: {}
+})

@@ -10,8 +10,9 @@ import {
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { ChevronDown, Eye, Pencil, Trash } from "tabler-icons-react";
+import { AccessPoint, ChevronDown, Eye, Pencil, Trash } from "tabler-icons-react";
 import { DataToDelete } from "../../../../types/common";
+import { ZoomAccount } from "../../utils/type";
 
 const useStyles = createStyles((theme) => ({
   rowSelected: {
@@ -46,6 +47,9 @@ export default function ZoomAccountListTable() {
   const deleteButtonHandler = (data: DataToDelete) => {
     setDeletion({ showModal: true, data });
   };
+  const editButtonHandler = (data: ZoomAccount) => {
+    navigate(`/zoom-account/${data.id}/edit`)
+  }
 
   return (
     <ScrollArea>
@@ -97,7 +101,7 @@ export default function ZoomAccountListTable() {
                     <Menu.Item
                       icon={<Eye size={14} />}
                       onClick={() => {
-                        navigate(`/device-type/${item.id}`);
+                        navigate(`/zoom-account/${item.id}`);
                       }}
                     >
                       View
@@ -105,10 +109,20 @@ export default function ZoomAccountListTable() {
                     <Menu.Item
                       icon={<Pencil size={14} />}
                       onClick={() => {
-                        //                       editButtonHandler(item);
+                        editButtonHandler(item);
                       }}
                     >
                       Update
+                    </Menu.Item>
+                    <Menu.Item
+                      icon={<AccessPoint size={14} />}
+                      onClick={() => {
+                        //                       editButtonHandler(item);
+                      }}
+                      color="cyan"
+
+                    >
+                      Test Connection
                     </Menu.Item>
                     <Menu.Item
                       icon={<Trash size={14} />}

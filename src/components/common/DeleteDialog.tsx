@@ -7,10 +7,17 @@ export default function DeleteDialog(props: {
   onClose: any;
   data: DataToDelete;
   onSubmit: any;
+  loading?: boolean
 }) {
-  const { open, onClose, data, onSubmit } = props;
+  const { open, onClose, data, onSubmit, loading = false } = props;
   return (
-    <Modal opened={open} onClose={onClose} withCloseButton={false}>
+    <Modal
+      opened={open}
+      onClose={onClose}
+      withCloseButton={false}
+      closeOnEscape={!loading}
+      closeOnClickOutside={!loading}
+    >
       <Box
         sx={{
           display: "flex",
@@ -27,10 +34,10 @@ export default function DeleteDialog(props: {
           </Title>
         </Group>
         <Group position="center" sx={{ marginTop: 30 }}>
-          <Button color="red" onClick={onSubmit}>
+          <Button color="red" onClick={onSubmit} loading={loading}>
             Yes, Delete it!
           </Button>
-          <Button variant="light" color={"indigo"} onClick={onClose}>
+          <Button variant="light" color={"indigo"} loading={loading} onClick={onClose}>
             No! Cancel
           </Button>
         </Group>

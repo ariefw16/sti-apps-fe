@@ -5,7 +5,6 @@ import { useParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import PageTitleComponent from "../../components/common/PageTitle";
 import { PageTitleBreadcrumbs } from "../../types/pagetitle.type";
-import DeviceSpecsCardDetail from "./components/detail/DeviceSpecsCardDetail";
 import DeviceGeneralEdit from "./components/edit/DeviceGeneralEdit";
 import DeviceSpecsEditCard from "./components/edit/DeviceSpecsEditCard";
 import { fetchSingleDevice } from "./utils/service";

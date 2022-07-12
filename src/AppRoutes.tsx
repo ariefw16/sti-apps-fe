@@ -18,6 +18,9 @@ import LoginPage from "./features/Auth/login";
 import AuthLayout from "./components/layout/AuthLayout";
 import DetailIncidentPage from "./features/Incident/detail";
 import ZoomAccountPage from "./features/Zoom";
+import CreateZoomAccountPage from "./features/Zoom/create";
+import DetailZoomAccount from "./features/Zoom/detail";
+import EditZoomAccountPage from "./features/Zoom/edit";
 
 function App() {
   axios.defaults.baseURL = "http://localhost:3400/";
@@ -42,6 +45,9 @@ function App() {
           <Route path="/incident" element={<IncidentPage />} />
           <Route path="/incident/:id" element={<DetailIncidentPage />} />
           <Route path="/zoom-account" element={<ZoomAccountPage />} />
+          <Route path="/zoom-account/create" element={<CreateZoomAccountPage />} />
+          <Route path="/zoom-account/:id/edit" element={<EditZoomAccountPage />} />
+          <Route path="/zoom-account/:id" element={<DetailZoomAccount />} />
         </Route>
         <Route path="/auth" element={<AuthLayout />}>
           <Route index element={<LoginPage />} />
