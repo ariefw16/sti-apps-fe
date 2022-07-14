@@ -18,6 +18,7 @@ const mockdata = [
     links: [
       { label: "Overview", link: "/services" },
       { label: "VPN", link: "/vpn" },
+      { label: "Meetings", link: '/meetings' },
       { label: "Zoom Account", link: "/zoom-account" },
     ],
   },
