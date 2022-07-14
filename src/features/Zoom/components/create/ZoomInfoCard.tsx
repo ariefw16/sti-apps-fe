@@ -20,17 +20,17 @@ export default function ZoomInfoCard(props: { form: UseFormReturnType<ZoomAccoun
       />
       <TextInput
         my="sm"
-        label="Client ID"
-        description="Client ID from zoom.us to connect Account" placeholder="Input Client ID"
-        disabled={loading}
-        {...form.getInputProps('client_id')}
-      />
-      <TextInput
-        my="sm"
         label="Account ID"
         description="Account ID from zoom.us to connect Account" placeholder="Input Account ID"
         disabled={loading}
         {...form.getInputProps('account_id')}
+      />
+      <TextInput
+        my="sm"
+        label="Client ID"
+        description="Client ID from zoom.us to connect Account" placeholder="Input Client ID"
+        disabled={loading}
+        {...form.getInputProps('client_id')}
       />
       <PasswordInput
         my="sm"
