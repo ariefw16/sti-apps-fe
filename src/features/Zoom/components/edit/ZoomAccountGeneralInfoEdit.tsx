@@ -45,7 +45,12 @@ export default function ZoomAccountGeneralInfoEdit(props: { form: UseFormReturnT
       disabled={loading}
       {...form.getInputProps("unitId")}
     />
-    <Checkbox disabled={loading} label="Account Zoom is Active ? " my={"md"} {...form.getInputProps('active')} />
+    <Checkbox
+      disabled={loading}
+      label="Account Zoom is Active ? " my={"md"}
+      {...form.getInputProps('active')}
+      checked={form.getInputProps("active").value || false}
+    />
     <Divider my="md" variant="dotted" />
     <Group position="apart">
       <Button onClick={cancelButtonHandler} loading={loading} color="orange" leftIcon={<X />} radius="md">Cancel</Button>

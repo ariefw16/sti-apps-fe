@@ -34,14 +34,15 @@ export default function DeviceGeneralCard() {
         disabled
         defaultValue={device.unit?.name}
       />
-      <Checkbox label="This Device is a spare" my={"md"} disabled />
-      <TextInput
-        disabled
-        my={"sm"}
-        label="IP Address"
-        description="Input IP Address to monitor device"
-        defaultValue={device.ipAddress}
-      />
+      <Checkbox label="This Device is a spare" my={"md"} disabled defaultChecked={device.isSpare} />
+      {!device.isSpare && (
+        <TextInput
+          disabled
+          my={"sm"}
+          label="IP Address"
+          description="Input IP Address to monitor device"
+          defaultValue={device.ipAddress}
+        />)}
       <Divider variant="dotted" my={"md"} defaultChecked={device.isSpare} />
       <Group position="apart">
         <Button
