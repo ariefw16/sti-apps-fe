@@ -24,10 +24,12 @@ export default function ZoomAccountGeneralInfoDetail() {
     <Divider my="md" variant="dotted" />
     <TextInput my="sm" label="Zoom Account Name" description="Zoom Account Title / Description"
       value={account.name || ''}
+      variant="filled"
       readOnly
     />
     <TextInput my="sm" label="Unit" description="Select unit where this acount belongs To"
       readOnly
+      variant="filled"
       value={account.ownerUnit?.name || ''}
     />
     <Checkbox

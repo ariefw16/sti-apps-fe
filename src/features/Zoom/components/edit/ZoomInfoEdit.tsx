@@ -4,7 +4,7 @@ import { useRecoilValue } from "recoil";
 import { zoomAccountCreateLoadingState } from "../../utils/store";
 import { ZoomAccountCreate } from "../../utils/type";
 
-export default function ZoomInfoCard(props: { form: UseFormReturnType<ZoomAccountCreate> }) {
+export default function ZoomInfoEdit(props: { form: UseFormReturnType<ZoomAccountCreate> }) {
   const { form } = props
   const loading = useRecoilValue(zoomAccountCreateLoadingState)
   return (
@@ -18,14 +18,14 @@ export default function ZoomInfoCard(props: { form: UseFormReturnType<ZoomAccoun
         disabled={loading}
         {...form.getInputProps('email')}
       />
-      <TextInput
+      <PasswordInput
         my="sm"
         label="Client ID"
         description="Client ID from zoom.us to connect Account" placeholder="Input Client ID"
         disabled={loading}
         {...form.getInputProps('client_id')}
       />
-      <TextInput
+      <PasswordInput
         my="sm"
         label="Account ID"
         description="Account ID from zoom.us to connect Account" placeholder="Input Account ID"

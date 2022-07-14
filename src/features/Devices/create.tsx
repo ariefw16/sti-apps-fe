@@ -1,4 +1,4 @@
-import { Grid, Paper } from "@mantine/core";
+import { Grid } from "@mantine/core";
 import PageTitleComponent from "../../components/common/PageTitle";
 import { PageTitleBreadcrumbs } from "../../types/pagetitle.type";
 import DeviceCreateForm from "./components/DeviceCreateForm";

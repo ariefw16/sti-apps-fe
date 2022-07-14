@@ -29,9 +29,19 @@ export async function fetchSingleZoomAccount(id: number): Promise<ZoomAccount> {
     throw new Error(e.message)
   }
 }
+
 export async function createZoomAccount(data: ZoomAccountCreate): Promise<ZoomAccount> {
   try {
     const result = await axios.post('zoom-account', { ...data, unitId: +data?.unitId! })
+    return result.data
+  } catch (e: any) {
+    throw new Error(e.message)
+  }
+}
+
+export async function updateZoomAccount(props: { id: number, data: ZoomAccountCreate }): Promise<ZoomAccount> {
+  try {
+    const result = await axios.patch(`zoom-account/${props.id}`, { ...props.data, unitId: props.data.unitId ? +props.data?.unitId : undefined })
     return result.data
   } catch (e: any) {
     throw new Error(e.message)

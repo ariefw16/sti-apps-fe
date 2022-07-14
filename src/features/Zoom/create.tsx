@@ -6,7 +6,7 @@ import ZoomInfoCard from "./components/create/ZoomInfoCard"
 import { z } from "zod";
 import { useForm, zodResolver } from "@mantine/form";
 import { ZoomAccountCreate } from './utils/type'
-import { useRecoilState, useSetRecoilState } from "recoil"
+import { useSetRecoilState } from "recoil"
 import { zoomAccountCreateLoadingState, zoomListFilterState } from "./utils/store"
 import { createZoomAccount } from "./utils/service"
 import { showNotification } from "@mantine/notifications"
