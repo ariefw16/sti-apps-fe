@@ -6,6 +6,7 @@ import ListFooterCard from "../../../../components/common/ListFooterCard";
 import ListHeaderCard from "../../../../components/common/ListHeaderCard";
 import RefreshButton from "../../../../components/common/RefreshButton";
 import { meetingListCountState, meetingListFilterState } from "../../utils/store";
+import MeetingFilterForm from "./MeetingFilterForm";
 import MeetingListTable from "./MeetingListTable";
 
 export default function MeetingListCard() {
@@ -32,7 +33,7 @@ export default function MeetingListCard() {
   return <Paper radius={"lg"} p="lg" sx={{ marginTop: 50 }}>
     <ListHeaderCard
       addButton={<AddButton onClick={addButtonHandler} />}
-      refreshButton={<RefreshButton onClick={applyToggleRefresh} />} search={filter.q} setSearch={setSearch} />
+      refreshButton={<RefreshButton onClick={applyToggleRefresh} />} search={filter.q} setSearch={setSearch} filterForm={<MeetingFilterForm />} />
     <MeetingListTable />
     <Divider my="sm" variant="dotted" />
     <ListFooterCard
