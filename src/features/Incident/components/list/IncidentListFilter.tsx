@@ -1,7 +1,7 @@
 import { Box, Button, Divider, Group, Select } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import { useEffect, useState } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { SelectOptions } from "../../../../types/common";
 import { fetchDeviceType } from "../../../DeviceType/utils/service";
 import { fetchUnit } from "../../../Unit/utils/service";
