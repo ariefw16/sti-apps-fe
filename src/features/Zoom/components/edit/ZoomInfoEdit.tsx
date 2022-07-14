@@ -1,12 +1,14 @@
 import { Divider, Paper, Title, TextInput, PasswordInput } from "@mantine/core";
 import { UseFormReturnType } from "@mantine/form/lib/use-form";
 import { useRecoilValue } from "recoil";
-import { zoomAccountCreateLoadingState } from "../../utils/store";
+import { zoomAccountCreateLoadingState, zoomAccountDetailState } from "../../utils/store";
 import { ZoomAccountCreate } from "../../utils/type";
+import moment from 'moment'
 
 export default function ZoomInfoEdit(props: { form: UseFormReturnType<ZoomAccountCreate> }) {
   const { form } = props
   const loading = useRecoilValue(zoomAccountCreateLoadingState)
+  const account = useRecoilValue(zoomAccountDetailState)
   return (
     <Paper p={20} radius="lg">
       <Title order={5}>Account Information</Title>
@@ -38,6 +40,14 @@ export default function ZoomInfoEdit(props: { form: UseFormReturnType<ZoomAccoun
         description="Secret Key from zoom.us to connect Account" placeholder="Enter Secret Key"
         disabled={loading}
         {...form.getInputProps('secretKey')}
+      />
+      <TextInput
+        my="sm"
+        label="Last Connection"
+        description="Last connection established for any features"
+        readOnly
+        variant="filled"
+        value={moment(account.lastCheck).format('DD-MMM-YYYY HH:mm:ss')}
       />
     </Paper>
   )

@@ -1,6 +1,7 @@
 import { Divider, Paper, PasswordInput, TextInput, Title } from "@mantine/core";
 import { useRecoilValue } from "recoil";
 import { zoomAccountDetailState } from "../../utils/store";
+import moment from 'moment'
 
 export default function ZoomAccountInfoDetail() {
   const account = useRecoilValue(zoomAccountDetailState)
@@ -31,6 +32,14 @@ export default function ZoomAccountInfoDetail() {
       readOnly
       variant="filled"
       value={account.account_id || ''}
+    />
+    <TextInput
+      my="sm"
+      label="Last Connection"
+      description="Last connection established for any features"
+      readOnly
+      variant="filled"
+      value={moment(account.lastCheck).format('DD-MMM-YYYY HH:mm:ss')}
     />
   </Paper>
 }
