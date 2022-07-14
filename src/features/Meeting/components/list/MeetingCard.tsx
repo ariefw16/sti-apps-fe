@@ -27,13 +27,16 @@ export default function MeetingListCard() {
     setFilter((x) => ({ ...x, page: value }));
   };
   const addButtonHandler = () => {
-    navigate('/zoom-account/create')
+    navigate('/meetings/create')
   }
 
   return <Paper radius={"lg"} p="lg" sx={{ marginTop: 50 }}>
     <ListHeaderCard
       addButton={<AddButton onClick={addButtonHandler} />}
-      refreshButton={<RefreshButton onClick={applyToggleRefresh} />} search={filter.q} setSearch={setSearch} filterForm={<MeetingFilterForm />} />
+      refreshButton={<RefreshButton onClick={applyToggleRefresh} />}
+      search={filter.q}
+      setSearch={setSearch}
+      filterForm={<MeetingFilterForm />} />
     <MeetingListTable />
     <Divider my="sm" variant="dotted" />
     <ListFooterCard
