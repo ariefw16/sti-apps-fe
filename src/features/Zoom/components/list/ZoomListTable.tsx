@@ -1,4 +1,4 @@
-import { zoomAccountDeleteState, zoomListState } from "../../utils/store";
+import { zoomAccountDeleteState, zoomAccountTestConnectState, zoomListState } from "../../utils/store";
 import {
   Button,
   Checkbox,
@@ -30,6 +30,7 @@ export default function ZoomAccountListTable() {
   const rowHeaderStyle = { color: "GrayText", fontWeight: 500 };
   const navigate = useNavigate();
   const setDeletion = useSetRecoilState(zoomAccountDeleteState)
+  const setConnection = useSetRecoilState(zoomAccountTestConnectState)
 
   const toggleRow = (id: number) =>
     setSelection((current) =>
@@ -117,10 +118,9 @@ export default function ZoomAccountListTable() {
                     <Menu.Item
                       icon={<AccessPoint size={14} />}
                       onClick={() => {
-                        //                       editButtonHandler(item);
+                        setConnection({ showModal: true, id: item.id! })
                       }}
                       color="cyan"
-
                     >
                       Test Connection
                     </Menu.Item>

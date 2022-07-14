@@ -1,4 +1,4 @@
-import { ZoomAccount, ZoomAccountDelete, ZoomAccountFetchParams } from './type'
+import { ZoomAccount, ZoomAccountDelete, ZoomAccountFetchParams, ZoomAccountTestConnection } from './type'
 import { atom } from 'recoil'
 
 export const zoomListState = atom<ZoomAccount[]>({
@@ -35,4 +35,12 @@ export const zoomAccountCreateLoadingState = atom({
 export const zoomAccountDetailState = atom<ZoomAccount>({
   key: 'zoomAccountDetailState',
   default: {}
+})
+
+export const zoomAccountTestConnectState = atom<ZoomAccountTestConnection>({
+  key: 'zoomAccountTestConnectState',
+  default: {
+    showModal: false,
+    id: 0
+  }
 })

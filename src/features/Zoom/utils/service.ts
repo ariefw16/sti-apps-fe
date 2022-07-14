@@ -41,7 +41,17 @@ export async function createZoomAccount(data: ZoomAccountCreate): Promise<ZoomAc
 
 export async function updateZoomAccount(props: { id: number, data: ZoomAccountCreate }): Promise<ZoomAccount> {
   try {
+    if (!props.data.secretKey) delete props.data.secretKey
     const result = await axios.patch(`zoom-account/${props.id}`, { ...props.data, unitId: props.data.unitId ? +props.data?.unitId : undefined })
+    return result.data
+  } catch (e: any) {
+    throw new Error(e.message)
+  }
+}
+
+export async function testZoomAccountConnection(id: number) {
+  try {
+    const result = await axios.get(`zoom-account/tc/${id}`)
     return result.data
   } catch (e: any) {
     throw new Error(e.message)

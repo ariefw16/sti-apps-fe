@@ -37,3 +37,8 @@ export interface ZoomAccountCreate {
   active?: boolean
   unitId?: string
 }
+
+export interface ZoomAccountTestConnection {
+  showModal: boolean,
+  id: number
+}

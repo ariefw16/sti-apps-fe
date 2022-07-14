@@ -10,7 +10,7 @@ export default function ZoomAccountGeneralInfoDetail() {
   const setDeletion = useSetRecoilState(zoomAccountDeleteState)
 
   const backButtonHandler = () => {
-    navigate(-1)
+    navigate('/zoom-account')
   }
   const deleteButtonHandler = () => {
     setDeletion({ showModal: true, data: { id: account.id!, name: account.name! } })

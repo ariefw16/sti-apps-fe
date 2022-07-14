@@ -20,17 +20,17 @@ export default function ZoomInfoEdit(props: { form: UseFormReturnType<ZoomAccoun
       />
       <PasswordInput
         my="sm"
-        label="Client ID"
-        description="Client ID from zoom.us to connect Account" placeholder="Input Client ID"
-        disabled={loading}
-        {...form.getInputProps('client_id')}
-      />
-      <PasswordInput
-        my="sm"
         label="Account ID"
         description="Account ID from zoom.us to connect Account" placeholder="Input Account ID"
         disabled={loading}
         {...form.getInputProps('account_id')}
+      />
+      <PasswordInput
+        my="sm"
+        label="Client ID"
+        description="Client ID from zoom.us to connect Account" placeholder="Input Client ID"
+        disabled={loading}
+        {...form.getInputProps('client_id')}
       />
       <PasswordInput
         my="sm"

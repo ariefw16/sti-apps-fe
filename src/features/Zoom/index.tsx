@@ -6,6 +6,7 @@ import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState 
 import DeleteDialog from "../../components/common/DeleteDialog";
 import PageTitleComponent from "../../components/common/PageTitle";
 import { PageTitleBreadcrumbs } from "../../types/pagetitle.type";
+import TestConnectionModal from "./components/list/TestConnectionModal";
 import ZoomAccountListCard from "./components/list/ZoomAccountListCard";
 import { deleteZoomAccount, fetchZoomAccount } from "./utils/service";
 import { zoomAccountDeleteState, zoomListCountState, zoomListFilterState, zoomListState } from "./utils/store";
@@ -60,5 +61,6 @@ export default function ZoomAccountPage() {
       <ZoomAccountListCard />
     </Box>
     <DeleteDialog data={deletion.data} onClose={resetDeletion} open={deletion.showModal} onSubmit={deleteHandler} />
+    <TestConnectionModal />
   </>
 } 
