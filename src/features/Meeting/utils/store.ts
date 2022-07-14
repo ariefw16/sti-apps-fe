@@ -1,5 +1,5 @@
 import { atom } from "recoil";
-import { Meeting, MeetingsFetchParams } from "./type";
+import { Meeting, MeetingDelete, MeetingsFetchParams } from "./type";
 
 export const meetingListState = atom<Meeting[]>({
   key: 'meetingListState',
@@ -16,5 +16,13 @@ export const meetingListFilterState = atom<MeetingsFetchParams>({
   default: {
     page: 1,
     limit: 15
+  }
+})
+
+export const meetingDeleteState = atom<MeetingDelete>({
+  key: 'meetingDeleteState',
+  default: {
+    showModal: false,
+    data: { id: 0, name: "" }
   }
 })

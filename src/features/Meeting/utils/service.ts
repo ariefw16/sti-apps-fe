@@ -11,3 +11,12 @@ export async function fetchMeeting(params: MeetingsFetchParams): Promise<FetchRe
     throw new Error(e.message)
   }
 }
+
+export async function deleteMeeting(id: number) {
+  try {
+    await axios.delete(`zoom-meeting/${id}`)
+    return id
+  } catch (e: any) {
+    throw new Error(e.message)
+  }
+}

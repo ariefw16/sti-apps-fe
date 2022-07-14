@@ -10,7 +10,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { ChevronDown, Eye, Pencil, Trash } from "tabler-icons-react";
-import { meetingListState } from "../../utils/store";
+import { DataToDelete } from "../../../../types/common";
+import { meetingDeleteState, meetingListState } from "../../utils/store";
 
 const useStyles = createStyles((theme) => ({
   rowSelected: {
@@ -27,6 +28,7 @@ export default function MeetingListTable() {
   const rowHeaderStyle = { color: "GrayText", fontWeight: 500 };
   const navigate = useNavigate();
   const meeting = useRecoilValue(meetingListState)
+  const setDeletion = useSetRecoilState(meetingDeleteState)
 
   const toggleRow = (id: number) =>
     setSelection((current) =>
@@ -40,6 +42,9 @@ export default function MeetingListTable() {
         ? []
         : meeting.map((item) => item.id!)
     );
+  const deleteButtonHandler = (data: DataToDelete) => {
+    setDeletion({ showModal: true, data })
+  }
 
   return (
     <ScrollArea>
@@ -107,6 +112,7 @@ export default function MeetingListTable() {
                       icon={<Trash size={14} />}
                       color="red"
                       onClick={() => {
+                        deleteButtonHandler({ id: item.id!, name: item.name! })
                       }}
                     >
                       Delete

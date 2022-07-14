@@ -2,12 +2,13 @@ import { Box, LoadingOverlay } from "@mantine/core"
 import { useDebouncedValue } from "@mantine/hooks"
 import { showNotification } from "@mantine/notifications"
 import { useEffect, useState } from "react"
-import { useRecoilState, useSetRecoilState } from "recoil"
+import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from "recoil"
+import DeleteDialog from "../../components/common/DeleteDialog"
 import PageTitleComponent from "../../components/common/PageTitle"
 import { PageTitleBreadcrumbs } from "../../types/pagetitle.type"
 import MeetingListCard from "./components/list/MeetingCard"
-import { fetchMeeting } from "./utils/service"
-import { meetingListCountState, meetingListFilterState, meetingListState } from "./utils/store"
+import { deleteMeeting, fetchMeeting } from "./utils/service"
+import { meetingDeleteState, meetingListCountState, meetingListFilterState, meetingListState } from "./utils/store"
 
 export default function MeetingPage() {
   const breadcrumbs: PageTitleBreadcrumbs[] = [
@@ -20,15 +21,17 @@ export default function MeetingPage() {
     }
   ]
   const [loading, setLoading] = useState(false)
+  const [loadingDeletion, setLoadingDeletion] = useState(false)
   const setRowCount = useSetRecoilState(meetingListCountState)
   const setMeeting = useSetRecoilState(meetingListState)
   const [filter, setFilter] = useRecoilState(meetingListFilterState)
   const [q] = useDebouncedValue(filter.q, 300)
+  const deletion = useRecoilValue(meetingDeleteState)
+  const resetDeletion = useResetRecoilState(meetingDeleteState)
 
   useEffect(() => {
     setLoading(true)
     fetchMeeting(filter).then(res => {
-      console.log(res)
       setMeeting(res.data)
       setRowCount(res.rowCount)
     })
@@ -38,12 +41,25 @@ export default function MeetingPage() {
       .finally(() => { setLoading(false) })
   }, [filter.page, filter.limit, filter.refreshToggle, q])
 
+  const deleteHandler = () => {
+    setLoadingDeletion(true)
+    deleteMeeting(deletion.data.id).then(() => {
+      showNotification({ title: 'Delete Meetings', message: `Deletion Meetings Done!`, color: 'green' })
+      setFilter(x => ({ ...x, refreshToggle: !x.refreshToggle }))
+      resetDeletion()
+    }).catch(e => {
+      showNotification({ title: 'Delete Meetings', message: `Error! ${e.message}`, color: 'red' })
+    }).finally(() => {
+      setLoadingDeletion(false)
+    })
+  }
+
   return <>
     <PageTitleComponent breadcrumbs={breadcrumbs} title="Meetings" />
     <Box style={{ position: 'relative' }}>
       <LoadingOverlay visible={loading} />
       <MeetingListCard />
     </Box>
-
+    <DeleteDialog data={deletion.data} onClose={resetDeletion} open={deletion.showModal} onSubmit={deleteHandler} loading={loadingDeletion} />
   </>
 }
