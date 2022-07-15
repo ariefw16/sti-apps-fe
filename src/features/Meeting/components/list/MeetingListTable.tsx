@@ -1,4 +1,5 @@
 import {
+  Badge,
   Button,
   Checkbox,
   createStyles,
@@ -6,6 +7,7 @@ import {
   ScrollArea,
   Table,
 } from "@mantine/core";
+import moment from "moment";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue, useSetRecoilState } from "recoil";
@@ -61,7 +63,11 @@ export default function MeetingListTable() {
                 transitionDuration={0}
               />
             </th>
-            <th style={rowHeaderStyle}>Name</th>
+            <th style={rowHeaderStyle}>Agenda</th>
+            <th style={rowHeaderStyle}>Meeting Time</th>
+            <th style={rowHeaderStyle}>Duration</th>
+            <th style={rowHeaderStyle}>Account</th>
+            <th style={rowHeaderStyle}>Approval Status</th>
             <th style={{ width: 120, ...rowHeaderStyle }}>Actions</th>
           </tr>
         </thead>
@@ -81,6 +87,12 @@ export default function MeetingListTable() {
                   />
                 </td>
                 <td>{item.name}</td>
+                <td>{moment(item.startDate).format('DD-MMM-YYYY HH:mm:ss')}</td>
+                <td>{item.duration} min</td>
+                <td>{item.zoomAccount?.name || '-'}</td>
+                <td>{item.status === 0 ?
+                  <Badge variant="filled" color={"red"}>Waiting approval</Badge>
+                  : <Badge>Approved</Badge>}</td>
                 <td>
                   <Menu
                     control={
