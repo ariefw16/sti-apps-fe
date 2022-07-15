@@ -56,3 +56,11 @@ export interface MeetingCreate {
   participantVideo?: boolean
   waitingRoom?: boolean
 }
+
+export interface MeetingApproval {
+  showModal: boolean
+  data: {
+    name?: string
+    id?: number
+  }
+}

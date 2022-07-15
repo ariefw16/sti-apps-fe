@@ -11,9 +11,9 @@ import moment from "moment";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { ChevronDown, Eye, Pencil, Trash } from "tabler-icons-react";
+import { Check, ChevronDown, Eye, Pencil, Trash } from "tabler-icons-react";
 import { DataToDelete } from "../../../../types/common";
-import { meetingDeleteState, meetingListState } from "../../utils/store";
+import { meetingApprovalState, meetingDeleteState, meetingListState } from "../../utils/store";
 
 const useStyles = createStyles((theme) => ({
   rowSelected: {
@@ -31,6 +31,7 @@ export default function MeetingListTable() {
   const navigate = useNavigate();
   const meeting = useRecoilValue(meetingListState)
   const setDeletion = useSetRecoilState(meetingDeleteState)
+  const setApproval = useSetRecoilState(meetingApprovalState)
 
   const toggleRow = (id: number) =>
     setSelection((current) =>
@@ -46,6 +47,9 @@ export default function MeetingListTable() {
     );
   const deleteButtonHandler = (data: DataToDelete) => {
     setDeletion({ showModal: true, data })
+  }
+  const approvalMenuHandler = (data: { id: number, name: string }) => {
+    setApproval({ showModal: true, data })
   }
 
   return (
@@ -119,6 +123,15 @@ export default function MeetingListTable() {
                       }}
                     >
                       Update
+                    </Menu.Item>
+                    <Menu.Item
+                      icon={<Check size={14} />}
+                      onClick={() => {
+                        approvalMenuHandler({ id: item.id!, name: item.name! })
+                      }}
+                      color="cyan"
+                    >
+                      Approve Meeting
                     </Menu.Item>
                     <Menu.Item
                       icon={<Trash size={14} />}
