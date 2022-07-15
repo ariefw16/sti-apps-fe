@@ -26,3 +26,8 @@ export const meetingDeleteState = atom<MeetingDelete>({
     data: { id: 0, name: "" }
   }
 })
+
+export const meetingCreateLoadingState = atom({
+  key: 'meetingCreateLoadingState',
+  default: false
+})

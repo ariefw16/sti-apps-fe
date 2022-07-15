@@ -40,3 +40,19 @@ export interface MeetingDelete {
   showModal: boolean
   data: DataToDelete
 }
+
+export interface MeetingCreate {
+  name?: string
+  startDate?: Date
+  duration?: number
+  password?: string
+  audio?: string
+  autoRecording?: string
+  enableBreakout?: boolean
+  hostVideo?: boolean
+  joinBeforeHost?: boolean
+  jbhTime?: string
+  muteUponEntry?: boolean
+  participantVideo?: boolean
+  waitingRoom?: boolean
+}

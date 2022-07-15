@@ -1,8 +1,11 @@
+import { Grid } from "@mantine/core"
 import { useForm, zodResolver } from "@mantine/form"
 import { z } from "zod"
 import PageTitleComponent from "../../components/common/PageTitle"
 import { PageTitleBreadcrumbs } from "../../types/pagetitle.type"
+import CreateMeetingButtonGroup from "./components/create/CreateMeetingButtonGroup"
 import MeetingCreateForm from "./components/create/MeetingCreateForm"
+import MeetingCreatePropsForm from "./components/create/MeetingCreatePropsForm"
 import { MeetingCreate } from "./utils/type"
 
 const schema = z.object({
@@ -43,7 +46,7 @@ export default function CreateMeetingPage() {
       enableBreakout: false,
       hostVideo: false,
       joinBeforeHost: true,
-      jbhTime: 0,
+      jbhTime: '0',
       muteUponEntry: true,
       participantVideo: true,
       waitingRoom: false
@@ -58,7 +61,21 @@ export default function CreateMeetingPage() {
   return <>
     <PageTitleComponent breadcrumbs={breadcrumbs} title="Create New Meeting" />
     <form onSubmit={form.onSubmit(submitFormHandler)}>
-      <MeetingCreateForm form={form} />
+      <Grid mt={50}>
+        <Grid.Col sm={12} md={4}>
+          <MeetingCreatePropsForm form={form} />
+        </Grid.Col>
+        <Grid.Col sm={12} md={8}>
+          <Grid>
+            <Grid.Col span={12}>
+              <MeetingCreateForm form={form} />
+            </Grid.Col>
+            <Grid.Col span={12}>
+              <CreateMeetingButtonGroup />
+            </Grid.Col>
+          </Grid>
+        </Grid.Col>
+      </Grid>
     </form>
   </>
 }
