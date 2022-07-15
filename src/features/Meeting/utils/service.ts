@@ -1,6 +1,6 @@
 import axios from "axios";
 import { FetchResult } from "../../../types/fetch.type";
-import { Meeting, MeetingsFetchParams } from "./type";
+import { Meeting, MeetingCreate, MeetingsFetchParams } from "./type";
 
 export async function fetchMeeting(params: MeetingsFetchParams): Promise<FetchResult<Meeting[]>> {
   try {
@@ -18,6 +18,17 @@ export async function deleteMeeting(id: number) {
   try {
     await axios.delete(`zoom-meeting/${id}`)
     return id
+  } catch (e: any) {
+    throw new Error(e.message)
+  }
+}
+
+export async function saveMeeting(data: MeetingCreate): Promise<Meeting> {
+  try {
+    const result = await axios.post('zoom-meeting', {
+      ...data, jbhTime: +data.jbhTime!
+    })
+    return result.data
   } catch (e: any) {
     throw new Error(e.message)
   }

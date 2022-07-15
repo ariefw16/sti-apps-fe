@@ -1,11 +1,16 @@
 import { Grid } from "@mantine/core"
 import { useForm, zodResolver } from "@mantine/form"
+import { showNotification } from "@mantine/notifications"
+import { useNavigate } from "react-router-dom"
+import { useSetRecoilState } from "recoil"
 import { z } from "zod"
 import PageTitleComponent from "../../components/common/PageTitle"
 import { PageTitleBreadcrumbs } from "../../types/pagetitle.type"
 import CreateMeetingButtonGroup from "./components/create/CreateMeetingButtonGroup"
 import MeetingCreateForm from "./components/create/MeetingCreateForm"
 import MeetingCreatePropsForm from "./components/create/MeetingCreatePropsForm"
+import { saveMeeting } from "./utils/service"
+import { meetingCreateLoadingState, meetingListFilterState, meetingListState } from "./utils/store"
 import { MeetingCreate } from "./utils/type"
 
 const schema = z.object({
@@ -18,11 +23,12 @@ const schema = z.object({
   enableBreakout: z.boolean().optional(),
   hostVideo: z.boolean().optional(),
   joinBeforeHost: z.boolean().optional(),
-  jbhTime: z.number().optional(),
+  jbhTime: z.string().optional(),
   muteUponEntry: z.boolean().optional(),
   participantVideo: z.boolean().optional(),
   waitingRoom: z.boolean().optional()
 })
+
 export default function CreateMeetingPage() {
   const breadcrumbs: PageTitleBreadcrumbs[] = [
     {
@@ -53,9 +59,24 @@ export default function CreateMeetingPage() {
     },
     schema: zodResolver(schema)
   })
+  const setLoading = useSetRecoilState(meetingCreateLoadingState)
+  const setFilter = useSetRecoilState(meetingListFilterState)
+  const navigate = useNavigate()
 
   const submitFormHandler = (data: MeetingCreate) => {
-    console.log(data)
+    setLoading(true)
+    saveMeeting(data)
+      .then(() => {
+        showNotification({ title: 'Create Meetings', message: `Meeting Creation success!`, color: 'green' })
+        navigate('/meetings')
+        setFilter(f => ({ ...f, refreshToggle: !f.refreshToggle }))
+      })
+      .catch(e => {
+        showNotification({ title: 'Create Meetings', message: `Error! ${e.message}`, color: 'red' })
+      })
+      .finally(() => {
+        setLoading(false)
+      })
   }
 
   return <>

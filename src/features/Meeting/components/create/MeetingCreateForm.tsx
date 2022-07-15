@@ -22,8 +22,8 @@ export default function MeetingCreateForm(props: { form: UseFormReturnType<Meeti
         {...form.getInputProps('name')}
       />
       <Group >
-        <DatePicker label="Meeting Date" placeholder='Pick Date' required />
-        <TimeInput label="Jam Meeting" placeholder='Pick Time' icon={<Clock />} />
+        <DatePicker label="Meeting Date" placeholder='Pick Date' {...form.getInputProps('startDate')} />
+        <TimeInput label="Jam Meeting" placeholder='Pick Time' icon={<Clock />} {...form.getInputProps('startDate')} />
       </Group>
       <Group my={"sm"}>
         <NumberInput label="Duration (minutes)" placeholder='duration in minutes' description="Meeting Duration estimation" />
