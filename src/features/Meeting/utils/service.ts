@@ -33,3 +33,13 @@ export async function saveMeeting(data: MeetingCreate): Promise<Meeting> {
     throw new Error(e.message)
   }
 }
+
+export async function approveMeeting(data: { id: number, zoomAccountId?: string | null }): Promise<Meeting> {
+  try {
+    const { id, zoomAccountId } = data
+    const result = await axios.post(`zoom-meeting/approve`, { id, zoomAccountId: +zoomAccountId! })
+    return result.data
+  } catch (e: any) {
+    throw new Error(e.response.data.message)
+  }
+}

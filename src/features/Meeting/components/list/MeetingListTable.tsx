@@ -48,7 +48,7 @@ export default function MeetingListTable() {
   const deleteButtonHandler = (data: DataToDelete) => {
     setDeletion({ showModal: true, data })
   }
-  const approvalMenuHandler = (data: { id: number, name: string }) => {
+  const approvalMenuHandler = (data: { id: number, name: string, startDate: Date, duration: number }) => {
     setApproval({ showModal: true, data })
   }
 
@@ -127,7 +127,12 @@ export default function MeetingListTable() {
                     <Menu.Item
                       icon={<Check size={14} />}
                       onClick={() => {
-                        approvalMenuHandler({ id: item.id!, name: item.name! })
+                        approvalMenuHandler({
+                          id: item.id!,
+                          name: item.name!,
+                          startDate: item.startDate!,
+                          duration: item.duration!
+                        })
                       }}
                       color="cyan"
                     >

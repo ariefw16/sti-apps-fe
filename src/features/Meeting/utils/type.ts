@@ -62,5 +62,8 @@ export interface MeetingApproval {
   data: {
     name?: string
     id?: number
+    zoomAccountId?: string | null
+    startDate?: Date
+    duration?: number
   }
 }
