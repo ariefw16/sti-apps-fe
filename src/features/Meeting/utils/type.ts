@@ -67,3 +67,11 @@ export interface MeetingApproval {
     duration?: number
   }
 }
+
+export interface MeetingCancel {
+  showModal: boolean,
+  data: {
+    name?: string,
+    id?: number
+  }
+}

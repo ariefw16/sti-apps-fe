@@ -7,6 +7,7 @@ import DeleteDialog from "../../components/common/DeleteDialog"
 import PageTitleComponent from "../../components/common/PageTitle"
 import { PageTitleBreadcrumbs } from "../../types/pagetitle.type"
 import ApprovalMeetingModal from "./components/ApprovalMeetingModal"
+import CancelMeetingDialog from "./components/CancelMeetingModal"
 import MeetingListCard from "./components/list/MeetingCard"
 import { deleteMeeting, fetchMeeting } from "./utils/service"
 import { meetingDeleteState, meetingListCountState, meetingListFilterState, meetingListState } from "./utils/store"
@@ -63,5 +64,6 @@ export default function MeetingPage() {
     </Box>
     <DeleteDialog data={deletion.data} onClose={resetDeletion} open={deletion.showModal} onSubmit={deleteHandler} loading={loadingDeletion} />
     <ApprovalMeetingModal />
+    <CancelMeetingDialog />
   </>
 }

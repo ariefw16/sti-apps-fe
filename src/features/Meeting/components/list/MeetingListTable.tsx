@@ -11,9 +11,9 @@ import moment from "moment";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { Check, ChevronDown, Eye, Pencil, Trash } from "tabler-icons-react";
+import { Check, ChevronDown, Eye, Pencil, Trash, X } from "tabler-icons-react";
 import { DataToDelete } from "../../../../types/common";
-import { meetingApprovalState, meetingDeleteState, meetingListState } from "../../utils/store";
+import { meetingApprovalState, meetingCancelState, meetingDeleteState, meetingListState } from "../../utils/store";
 
 const useStyles = createStyles((theme) => ({
   rowSelected: {
@@ -32,6 +32,7 @@ export default function MeetingListTable() {
   const meeting = useRecoilValue(meetingListState)
   const setDeletion = useSetRecoilState(meetingDeleteState)
   const setApproval = useSetRecoilState(meetingApprovalState)
+  const setCancel = useSetRecoilState(meetingCancelState)
 
   const toggleRow = (id: number) =>
     setSelection((current) =>
@@ -50,6 +51,9 @@ export default function MeetingListTable() {
   }
   const approvalMenuHandler = (data: { id: number, name: string, startDate: Date, duration: number }) => {
     setApproval({ showModal: true, data })
+  }
+  const cancelMenuHandler = (data: { id: number, name: string }) => {
+    setCancel({ showModal: true, data })
   }
 
   return (
@@ -95,8 +99,8 @@ export default function MeetingListTable() {
                 <td>{item.duration} min</td>
                 <td>{item.zoomAccount?.name || '-'}</td>
                 <td>{item.status === 0 ?
-                  <Badge variant="filled" color={"red"}>Waiting approval</Badge>
-                  : <Badge>Approved</Badge>}</td>
+                  <Badge variant="filled" color={"orange"}>Waiting approval</Badge>
+                  : item.status === 1 ? <Badge>Approved</Badge> : <Badge color={"red"}>Cancelled</Badge>}</td>
                 <td>
                   <Menu
                     control={
@@ -124,20 +128,36 @@ export default function MeetingListTable() {
                     >
                       Update
                     </Menu.Item>
-                    <Menu.Item
-                      icon={<Check size={14} />}
-                      onClick={() => {
-                        approvalMenuHandler({
-                          id: item.id!,
-                          name: item.name!,
-                          startDate: item.startDate!,
-                          duration: item.duration!
-                        })
-                      }}
-                      color="cyan"
-                    >
-                      Approve Meeting
-                    </Menu.Item>
+                    {item.status === 1 &&
+                      (<Menu.Item
+                        icon={<X size={14} />}
+                        onClick={() => {
+                          cancelMenuHandler({
+                            id: item.id!,
+                            name: item.name!,
+                          })
+                        }}
+                        color="red"
+                      >
+                        Cancel Meeting
+                      </Menu.Item>)
+                    }
+                    {item.status === 0 &&
+                      <Menu.Item
+                        icon={<Check size={14} />}
+                        onClick={() => {
+                          approvalMenuHandler({
+                            id: item.id!,
+                            name: item.name!,
+                            startDate: item.startDate!,
+                            duration: item.duration!
+                          })
+                        }}
+                        color="cyan"
+                      >
+                        Approve Meeting
+                      </Menu.Item>
+                    }
                     <Menu.Item
                       icon={<Trash size={14} />}
                       color="red"

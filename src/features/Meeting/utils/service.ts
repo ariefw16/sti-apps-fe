@@ -43,3 +43,12 @@ export async function approveMeeting(data: { id: number, zoomAccountId?: string 
     throw new Error(e.response.data.message)
   }
 }
+
+export async function cancelMeeting(id: number): Promise<Meeting> {
+  try {
+    const result = await axios.post(`zoom-meeting/cancel/${id}`)
+    return result.data
+  } catch (e: any) {
+    throw new Error(e.response.data.message)
+  }
+}
