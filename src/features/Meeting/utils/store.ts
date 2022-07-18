@@ -47,3 +47,8 @@ export const meetingCancelState = atom<MeetingCancel>({
     data: {}
   }
 })
+
+export const meetingDetailState = atom<Meeting>({
+  key: 'meetingDetailState',
+  default: {}
+})

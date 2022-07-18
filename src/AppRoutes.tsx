@@ -23,6 +23,7 @@ import DetailZoomAccount from "./features/Zoom/detail";
 import EditZoomAccountPage from "./features/Zoom/edit";
 import MeetingPage from "./features/Meeting";
 import CreateMeetingPage from "./features/Meeting/create";
+import DetailMeetingPage from "./features/Meeting/detail";
 
 function App() {
   axios.defaults.baseURL = "http://localhost:3400/";
@@ -52,6 +53,7 @@ function App() {
           <Route path="/zoom-account/:id" element={<DetailZoomAccount />} />
           <Route path="/meetings" element={<MeetingPage />} />
           <Route path="/meetings/create" element={<CreateMeetingPage />} />
+          <Route path="/meetings/:id" element={<DetailMeetingPage />} />
         </Route>
         <Route path="/auth" element={<AuthLayout />}>
           <Route index element={<LoginPage />} />

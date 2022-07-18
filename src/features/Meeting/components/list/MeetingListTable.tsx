@@ -116,7 +116,7 @@ export default function MeetingListTable() {
                     <Menu.Item
                       icon={<Eye size={14} />}
                       onClick={() => {
-                        navigate(`/zoom-meeting/${item.id}`);
+                        navigate(`/meetings/${item.id}`);
                       }}
                     >
                       View
