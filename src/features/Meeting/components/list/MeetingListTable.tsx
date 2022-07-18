@@ -121,13 +121,16 @@ export default function MeetingListTable() {
                     >
                       View
                     </Menu.Item>
-                    <Menu.Item
-                      icon={<Pencil size={14} />}
-                      onClick={() => {
-                      }}
-                    >
-                      Update
-                    </Menu.Item>
+                    {
+                      item.status === 0 &&
+                      <Menu.Item
+                        icon={<Pencil size={14} />}
+                        onClick={() => {
+                        }}
+                      >
+                        Update
+                      </Menu.Item>
+                    }
                     {item.status === 1 &&
                       (<Menu.Item
                         icon={<X size={14} />}
