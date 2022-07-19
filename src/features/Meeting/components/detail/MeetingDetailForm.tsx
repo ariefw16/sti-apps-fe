@@ -42,11 +42,11 @@ export default function MeetingDetailForm() {
       />
       <TextInput
         my="sm"
-        label="Meeting Name"
+        label="Status"
         description="Approval Status"
         readOnly
         variant='filled'
-        value={statusMeeting(detail.status!)}
+        value={statusMeeting(detail.status!) || ''}
       />
     </Paper>
   )

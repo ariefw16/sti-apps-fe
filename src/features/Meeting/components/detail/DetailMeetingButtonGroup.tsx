@@ -16,8 +16,19 @@ export default function DetailMeetingButtonGroup() {
   return (
     <Paper p={20} radius="lg">
       <Group position="apart">
-        <Button onClick={backButtonHandler} color="orange" leftIcon={<ArrowLeft />} radius="md">Back</Button>
-        <Button rightIcon={<Pencil />} onClick={updateButtonHandler} radius={"md"}>Update</Button>
+        <Button
+          onClick={backButtonHandler}
+          color="orange"
+          leftIcon={<ArrowLeft />}
+          radius="md"
+        >Back</Button>
+        <Button
+          rightIcon={<Pencil />}
+          onClick={updateButtonHandler}
+          radius={"md"}
+          variant="outline"
+          color={"green"}
+        >Update</Button>
       </Group>
     </Paper>
   )

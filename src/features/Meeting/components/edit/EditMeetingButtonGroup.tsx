@@ -1,7 +1,7 @@
 import { Button, Group, Paper } from "@mantine/core"
 import { useNavigate, useParams } from "react-router-dom"
 import { useRecoilValue } from "recoil"
-import { ArrowLeft, DeviceFloppy } from "tabler-icons-react"
+import { ArrowLeft, DeviceFloppy, X } from "tabler-icons-react"
 import { meetingUpdateLoadingState } from "../../utils/store"
 
 export default function EditMeetingButtonGroup() {
@@ -15,7 +15,7 @@ export default function EditMeetingButtonGroup() {
   return (
     <Paper p={20} radius="lg">
       <Group position="apart">
-        <Button onClick={backButtonHandler} loading={loading} color="orange" leftIcon={<ArrowLeft />} radius="md">Back</Button>
+        <Button onClick={backButtonHandler} loading={loading} color="red" variant="light" leftIcon={<X />} radius="md">Cancel</Button>
         <Button rightIcon={<DeviceFloppy />} type="submit" loading={loading} radius={"md"}>Save</Button>
       </Group>
     </Paper>

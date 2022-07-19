@@ -9,6 +9,11 @@ import { DatePicker, TimeInput } from '@mantine/dates';
 export default function MeetingEditForm(props: { form: UseFormReturnType<MeetingUpdate> }) {
   const { form } = props
   const loading = useRecoilValue(meetingUpdateLoadingState)
+  const statusMeeting = (status: number) => {
+    if (status === 0) return 'Waiting for Approval'
+    if (status === 1) return 'Meeting Approved'
+    if (status === 3) return 'Meeting Cancelled'
+  }
 
   return (
     <Paper p={20} radius="lg" >
@@ -45,6 +50,14 @@ export default function MeetingEditForm(props: { form: UseFormReturnType<Meeting
           disabled={loading}
         />
       </Group>
+      <TextInput
+        my="sm"
+        label="Status"
+        description="Approval Status"
+        readOnly
+        variant='filled'
+        value={statusMeeting(form.getInputProps('status').value) || ''}
+      />
     </Paper>
   )
 }

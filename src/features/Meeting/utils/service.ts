@@ -65,7 +65,8 @@ export async function fetchSingleMeeting(id: number): Promise<Meeting> {
 export async function updateMeeting(props: { id: number, data: MeetingUpdate }): Promise<Meeting> {
   try {
     const { id, data } = props
-    const result = await axios.patch(`zoom-meeting/${id}`, { ...data, jbhTime: +data.jbhTimeString! })
+    const { jbhTimeString, ...params } = data
+    const result = await axios.patch(`zoom-meeting/${id}`, { ...params, jbhTime: +data.jbhTimeString! })
     return result.data
   } catch (e: any) {
     throw new Error(e.response.data.message)

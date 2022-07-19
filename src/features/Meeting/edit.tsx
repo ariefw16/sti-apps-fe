@@ -73,7 +73,6 @@ export default function EditMeetingPage() {
       fetchSingleMeeting(+id!)
         .then(res => {
           setDetail(res)
-          setDefaultFormValues(res)
         })
         .catch(e => {
           showNotification({ title: 'Fetch Meeting', message: `Error! ${e.message}`, color: 'red' })
@@ -82,8 +81,12 @@ export default function EditMeetingPage() {
         })
     }
   }, [id])
+  useEffect(() => {
+    setDefaultFormValues(detail)
+  }, [])
 
   const setDefaultFormValues = (data: Meeting) => {
+    form.setFieldValue('status', data.status || 0)
     form.setFieldValue('name', data.name || '')
     form.setFieldValue('startDate', moment(data.startDate).toDate())
     form.setFieldValue('duration', data.duration || 0)
