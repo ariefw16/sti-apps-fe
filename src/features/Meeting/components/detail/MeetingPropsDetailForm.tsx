@@ -2,7 +2,9 @@ import { Checkbox, Paper, Select, TextInput } from "@mantine/core";
 import { useRecoilState } from "recoil";
 import { meetingDetailState } from "../../utils/store";
 
-export default function MeetingPropsDetailForm() {
+export default function MeetingPropsDetailForm(props: {
+  loading: boolean
+}) {
   const [detail, setDetail] = useRecoilState(meetingDetailState)
 
   return (
@@ -11,46 +13,60 @@ export default function MeetingPropsDetailForm() {
         my="sm"
         label="Meeting Password"
         description="Set password for entrance in meeting" placeholder="Input Password here.."
-        disabled
+        readOnly
+        value={detail.password || ''}
+        variant="filled"
       />
-      <Select
+      <TextInput
         my="lg"
-        data={['both', 'telephony', 'voip']}
         label="Audio"
-        description="Set Audio settings"
+        description="Audio settings"
+        readOnly
+        value={detail.audio || ''}
+        variant="filled"
       />
-      <Select data={['none', 'local', 'cloud']}
+      <TextInput
         label="Auto Record"
         description="Set Auto Recording when the meeting start"
         my="lg"
+        readOnly
+        value={detail.autoRecording || ''}
+        variant="filled"
       />
       <Checkbox label="Enable Breakout room?"
-        defaultChecked={detail.enableBreakout}
         my="lg"
+        readOnly
+        checked={detail.enableBreakout || false}
       />
       <Checkbox label="Turn on Host Video"
-        defaultChecked={detail.hostVideo}
         my="lg"
+        readOnly
+        checked={detail.hostVideo || false}
       />
       <Checkbox label="Participant can join before host ?"
-        defaultChecked={detail.joinBeforeHost}
+        checked={detail.joinBeforeHost || false}
         my="lg"
+        readOnly
       />
       {detail.joinBeforeHost === true &&
         <TextInput
           my="sm"
           label="Join Before Host time"
           description="Join Before Host Timing (0 for anytime)"
-          disabled
+          readOnly
+          value={detail.jbhTime || '0'}
+          variant="filled"
         />
       }
       <Checkbox label="Mute participant upon entry"
-        defaultChecked={detail.muteUponEntry}
+        checked={detail.muteUponEntry || false}
         my="lg"
+        readOnly
       />
       <Checkbox label="Set Participant Video on"
-        defaultChecked={detail.participantVideo}
+        checked={detail.participantVideo || false}
         my="lg"
+        readOnly
       />
     </Paper>
   )

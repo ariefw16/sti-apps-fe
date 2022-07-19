@@ -52,3 +52,12 @@ export async function cancelMeeting(id: number): Promise<Meeting> {
     throw new Error(e.response.data.message)
   }
 }
+
+export async function fetchSingleMeeting(id: number): Promise<Meeting> {
+  try {
+    const result = await axios.get(`zoom-meeting/${id}`)
+    return result.data
+  } catch (e: any) {
+    throw new Error(e.response.data.message)
+  }
+}
