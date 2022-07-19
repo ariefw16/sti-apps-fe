@@ -74,8 +74,6 @@ export default function EditZoomAccountPage() {
     form.setFieldValue('client_id', account.client_id || '')
     form.setFieldValue('email', account.email || '')
     form.setFieldValue('unitId', account.ownerUnit && account.ownerUnit.id ? account.ownerUnit.id.toString() : '')
-    form.setFieldValue('active', account.active)
-    console.log(account.active)
   }, [account])
 
   const formSubmitHandler = (data: ZoomAccountCreate) => {

@@ -75,3 +75,7 @@ export interface MeetingCancel {
     id?: number
   }
 }
+
+export interface MeetingUpdate extends Meeting {
+  jbhTimeString?: string | null
+}

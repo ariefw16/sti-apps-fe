@@ -52,3 +52,8 @@ export const meetingDetailState = atom<Meeting>({
   key: 'meetingDetailState',
   default: {}
 })
+
+export const meetingUpdateLoadingState = atom({
+  key: 'meetingUpdateLoadingState',
+  default: false
+})

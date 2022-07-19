@@ -1,16 +1,36 @@
 import { Grid } from "@mantine/core"
 import { showNotification } from "@mantine/notifications"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { useParams } from "react-router-dom"
-import { useSetRecoilState } from "recoil"
+import { useRecoilState } from "recoil"
 import PageTitleComponent from "../../components/common/PageTitle"
 import { PageTitleBreadcrumbs } from "../../types/pagetitle.type"
-import DetailMeetingButtonGroup from "./components/detail/DetailMeetingButtonGroup"
-import MeetingDetailForm from "./components/detail/MeetingDetailForm"
 import MeetingPropsDetailForm from "./components/detail/MeetingPropsDetailForm"
+import EditMeetingButtonGroup from "./components/edit/EditMeetingButtonGroup"
 import { fetchSingleMeeting } from "./utils/service"
-import { meetingDetailState } from "./utils/store"
+import { meetingDetailState, meetingUpdateLoadingState } from "./utils/store"
+import { z } from 'zod'
+import { useForm, zodResolver } from "@mantine/form"
+import { Meeting, MeetingUpdate } from "./utils/type"
+import MeetingEditForm from "./components/edit/MeetingEditForm"
+import moment from 'moment'
+import MeetingPropsEditForm from "./components/edit/MeetingPropsEditForm"
 
+const schema = z.object({
+  name: z.string().min(3),
+  startDate: z.date(),
+  duration: z.number().gt(0),
+  password: z.string().optional(),
+  audio: z.string(),
+  autoRecording: z.string(),
+  enableBreakout: z.boolean().optional(),
+  hostVideo: z.boolean().optional(),
+  joinBeforeHost: z.boolean().optional(),
+  jbhTime: z.string().optional(),
+  muteUponEntry: z.boolean().optional(),
+  participantVideo: z.boolean().optional(),
+  waitingRoom: z.boolean().optional()
+})
 export default function EditMeetingPage() {
   const breadcrumbs: PageTitleBreadcrumbs[] = [
     {
@@ -25,38 +45,81 @@ export default function EditMeetingPage() {
     }
   ]
   const { id } = useParams()
-  const setDetail = useSetRecoilState(meetingDetailState)
-  const [loading, setLoading] = useState(false)
+  const [detail, setDetail] = useRecoilState(meetingDetailState)
+  const [loading, setLoading] = useRecoilState(meetingUpdateLoadingState)
+
+  const form = useForm<MeetingUpdate>({
+    initialValues: {
+      name: '',
+      startDate: new Date(),
+      duration: 60,
+      password: '',
+      audio: 'both',
+      autoRecording: 'cloud',
+      enableBreakout: false,
+      hostVideo: false,
+      joinBeforeHost: true,
+      jbhTimeString: '0',
+      muteUponEntry: true,
+      participantVideo: true,
+      waitingRoom: false
+    },
+    schema: zodResolver(schema)
+  })
 
   useEffect(() => {
-    setLoading(true)
-    fetchSingleMeeting(+id!)
-      .then(res => {
-        setDetail(res)
-      })
-      .catch(e => {
-        showNotification({ title: 'Fetch Meeting', message: `Error! ${e.message}`, color: 'red' })
-      }).finally(() => {
-        setLoading(false)
-      })
+    if (+id! !== detail.id!) {
+      setLoading(true)
+      fetchSingleMeeting(+id!)
+        .then(res => {
+          setDetail(res)
+          setDefaultFormValues(res)
+        })
+        .catch(e => {
+          showNotification({ title: 'Fetch Meeting', message: `Error! ${e.message}`, color: 'red' })
+        }).finally(() => {
+          setLoading(false)
+        })
+    }
   }, [id])
+
+  const setDefaultFormValues = (data: Meeting) => {
+    form.setFieldValue('name', data.name || '')
+    form.setFieldValue('startDate', moment(data.startDate).toDate())
+    form.setFieldValue('duration', data.duration || 0)
+    form.setFieldValue('password', data.password || '')
+    form.setFieldValue('audio', data.audio || '')
+    form.setFieldValue('autoRecording', data.autoRecording || '')
+    form.setFieldValue('enableBreakout', data.enableBreakout || false)
+    form.setFieldValue('hostVideo', data.hostVideo || false)
+    form.setFieldValue('joinBeforeHost', data.joinBeforeHost || false)
+    form.setFieldValue('jbhTimeString', data.jbhTime?.toString() || '')
+    form.setFieldValue('muteUponEntry', data.muteUponEntry || false)
+    form.setFieldValue('participantVideo', data.participantVideo || false)
+  }
+  const submitFormHandler = (data: MeetingUpdate) => {
+    console.log(data)
+    setLoading(true)
+  }
 
   return <>
     <PageTitleComponent breadcrumbs={breadcrumbs} title="Update / Edit Meeting Data" />
-    <Grid mt={50}>
-      <Grid.Col sm={12} md={4}>
-        <MeetingPropsDetailForm loading={loading} />
-      </Grid.Col>
-      <Grid.Col sm={12} md={8}>
-        <Grid>
-          <Grid.Col span={12}>
-            <MeetingDetailForm />
-          </Grid.Col>
-          <Grid.Col span={12}>
-            <DetailMeetingButtonGroup />
-          </Grid.Col>
-        </Grid>
-      </Grid.Col>
-    </Grid>
+    <form onSubmit={form.onSubmit(submitFormHandler)}>
+      <Grid mt={50}>
+        <Grid.Col sm={12} md={4}>
+          <MeetingPropsEditForm form={form} />
+        </Grid.Col>
+        <Grid.Col sm={12} md={8}>
+          <Grid>
+            <Grid.Col span={12}>
+              <MeetingEditForm form={form} />
+            </Grid.Col>
+            <Grid.Col span={12}>
+              <EditMeetingButtonGroup />
+            </Grid.Col>
+          </Grid>
+        </Grid.Col>
+      </Grid>
+    </form>
   </>
 }
