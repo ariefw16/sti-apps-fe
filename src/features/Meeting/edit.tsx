@@ -1,13 +1,12 @@
 import { Grid } from "@mantine/core"
 import { showNotification } from "@mantine/notifications"
 import { useEffect } from "react"
-import { useParams } from "react-router-dom"
-import { useRecoilState } from "recoil"
+import { useNavigate, useParams } from "react-router-dom"
+import { useRecoilState, useSetRecoilState } from "recoil"
 import PageTitleComponent from "../../components/common/PageTitle"
 import { PageTitleBreadcrumbs } from "../../types/pagetitle.type"
-import MeetingPropsDetailForm from "./components/detail/MeetingPropsDetailForm"
 import EditMeetingButtonGroup from "./components/edit/EditMeetingButtonGroup"
-import { fetchSingleMeeting } from "./utils/service"
+import { fetchSingleMeeting, updateMeeting } from "./utils/service"
 import { meetingDetailState, meetingUpdateLoadingState } from "./utils/store"
 import { z } from 'zod'
 import { useForm, zodResolver } from "@mantine/form"
@@ -46,7 +45,8 @@ export default function EditMeetingPage() {
   ]
   const { id } = useParams()
   const [detail, setDetail] = useRecoilState(meetingDetailState)
-  const [loading, setLoading] = useRecoilState(meetingUpdateLoadingState)
+  const setLoading = useSetRecoilState(meetingUpdateLoadingState)
+  const navigate = useNavigate()
 
   const form = useForm<MeetingUpdate>({
     initialValues: {
@@ -98,8 +98,19 @@ export default function EditMeetingPage() {
     form.setFieldValue('participantVideo', data.participantVideo || false)
   }
   const submitFormHandler = (data: MeetingUpdate) => {
-    console.log(data)
     setLoading(true)
+    updateMeeting({ id: +id!, data })
+      .then(res => {
+        setDetail(res)
+        navigate(`/meetings/${id}`)
+        showNotification({ title: 'Update Meeting', message: 'Meeting update successfully', color: 'green' })
+      })
+      .catch(e => {
+        showNotification({ title: 'Update Meeting', message: `Error! ${e.message}`, color: 'red' })
+      })
+      .finally(() => {
+        setLoading(false)
+      })
   }
 
   return <>

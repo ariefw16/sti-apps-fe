@@ -1,6 +1,6 @@
 import axios from "axios";
 import { FetchResult } from "../../../types/fetch.type";
-import { Meeting, MeetingCreate, MeetingsFetchParams } from "./type";
+import { Meeting, MeetingCreate, MeetingsFetchParams, MeetingUpdate } from "./type";
 
 export async function fetchMeeting(params: MeetingsFetchParams): Promise<FetchResult<Meeting[]>> {
   try {
@@ -56,6 +56,16 @@ export async function cancelMeeting(id: number): Promise<Meeting> {
 export async function fetchSingleMeeting(id: number): Promise<Meeting> {
   try {
     const result = await axios.get(`zoom-meeting/${id}`)
+    return result.data
+  } catch (e: any) {
+    throw new Error(e.response.data.message)
+  }
+}
+
+export async function updateMeeting(props: { id: number, data: MeetingUpdate }): Promise<Meeting> {
+  try {
+    const { id, data } = props
+    const result = await axios.patch(`zoom-meeting/${id}`, { ...data, jbhTime: +data.jbhTimeString! })
     return result.data
   } catch (e: any) {
     throw new Error(e.response.data.message)
