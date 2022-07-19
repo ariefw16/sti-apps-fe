@@ -1,10 +1,13 @@
 import { Button, Group, Paper } from "@mantine/core"
 import { useNavigate, useParams } from "react-router-dom"
-import { ArrowLeft, Pencil } from "tabler-icons-react"
+import { useRecoilValue } from "recoil"
+import { ArrowLeft, Check, Pencil, X } from "tabler-icons-react"
+import { meetingDetailState } from "../../utils/store"
 
 export default function DetailMeetingButtonGroup() {
   const navigate = useNavigate()
   const { id } = useParams()
+  const detail = useRecoilValue(meetingDetailState)
 
   const backButtonHandler = () => {
     navigate(`/meetings`)
@@ -22,13 +25,23 @@ export default function DetailMeetingButtonGroup() {
           leftIcon={<ArrowLeft />}
           radius="md"
         >Back</Button>
-        <Button
-          rightIcon={<Pencil />}
-          onClick={updateButtonHandler}
-          radius={"md"}
-          variant="outline"
-          color={"green"}
-        >Update</Button>
+        {
+          detail.status === 1 &&
+          <Button variant="subtle" leftIcon={<X />}>Cancel Meeting</Button>
+        }
+        {
+          detail.status === 0 &&
+          <Group>
+            <Button variant="subtle" leftIcon={<Check />}>Approve</Button>
+            <Button
+              rightIcon={<Pencil />}
+              onClick={updateButtonHandler}
+              radius={"md"}
+              variant="outline"
+              color={"green"}
+            >Update</Button>
+          </Group>
+        }
       </Group>
     </Paper>
   )
