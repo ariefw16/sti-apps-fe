@@ -13,7 +13,7 @@ export default function ZoomAccountGeneralInfoDetail() {
     navigate('/zoom-account')
   }
   const deleteButtonHandler = () => {
-    setDeletion({ showModal: true, data: { id: account.id!, name: account.name! } })
+    setDeletion({ showModal: true, data: { id: account!.id!, name: account!.name! } })
   }
   const updateButtonHandler = () => {
     navigate(`/zoom-account/${account.id}/edit`)
@@ -22,9 +22,7 @@ export default function ZoomAccountGeneralInfoDetail() {
   return <Paper p={20} radius="lg">
     <Title order={5}>General Information</Title>
     <Divider my="md" variant="dotted" />
-    <TextInput my="sm" label="Zoom Account Name" description="Zoom Account Title / Description"
-      value={account.name || ''}
-      variant="filled"
+    <TextInput my="sm" label="Zoom Account Name" description="Zoom Account Title / Description" value={account.name || ''} variant="filled"
       readOnly
     />
     <TextInput my="sm" label="Unit" description="Select unit where this acount belongs To"

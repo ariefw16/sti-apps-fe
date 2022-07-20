@@ -9,9 +9,9 @@ import { zoomListCountState, zoomListFilterState } from "../../utils/store";
 import ZoomAccountListTable from "./ZoomListTable";
 
 export default function ZoomAccountListCard() {
-  const rowCount = useRecoilValue(zoomListCountState)
-  const [filter, setFilter] = useRecoilState(zoomListFilterState)
-  const navigate = useNavigate()
+  const rowCount = useRecoilValue(zoomListCountState);
+  const [filter, setFilter] = useRecoilState(zoomListFilterState);
+  const navigate = useNavigate();
 
   const setSearch = (txt: string) => {
     setFilter((x) => ({ ...x, q: txt }));
@@ -26,21 +26,26 @@ export default function ZoomAccountListCard() {
     setFilter((x) => ({ ...x, page: value }));
   };
   const addButtonHandler = () => {
-    navigate('/zoom-account/create')
-  }
+    navigate("/zoom-account/create");
+  };
 
-  return <Paper radius={"lg"} p="lg" sx={{ marginTop: 50 }}>
-    <ListHeaderCard
-      addButton={<AddButton onClick={addButtonHandler} />}
-      refreshButton={<RefreshButton onClick={applyToggleRefresh} />} search={filter.q} setSearch={setSearch} />
-    <ZoomAccountListTable />
-    <Divider my="sm" variant="dotted" />
-    <ListFooterCard
-      onPageChange={pageChangeHandler}
-      onRowPerPageChange={rowsChangeHandler}
-      rows={rowCount}
-      page={filter.page}
-      rowsPerPage={filter.limit?.toString()}
-    />
-  </Paper>
+  return (
+    <Paper radius={"lg"} p="lg" sx={{ marginTop: 50 }}>
+      <ListHeaderCard
+        addButton={<AddButton onClick={addButtonHandler} />}
+        refreshButton={<RefreshButton onClick={applyToggleRefresh} />}
+        search={filter.q}
+        setSearch={setSearch}
+      />
+      <ZoomAccountListTable />
+      <Divider my="sm" variant="dotted" />
+      <ListFooterCard
+        onPageChange={pageChangeHandler}
+        onRowPerPageChange={rowsChangeHandler}
+        rows={rowCount}
+        page={filter.page}
+        rowsPerPage={filter.limit?.toString()}
+      />
+    </Paper>
+  );
 }

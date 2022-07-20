@@ -1,4 +1,8 @@
-import { zoomAccountDeleteState, zoomAccountTestConnectState, zoomListState } from "../../utils/store";
+import {
+  zoomAccountDeleteState,
+  zoomAccountTestConnectState,
+  zoomListState,
+} from "../../utils/store";
 import {
   Button,
   Checkbox,
@@ -10,7 +14,13 @@ import {
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { AccessPoint, ChevronDown, Eye, Pencil, Trash } from "tabler-icons-react";
+import {
+  AccessPoint,
+  ChevronDown,
+  Eye,
+  Pencil,
+  Trash,
+} from "tabler-icons-react";
 import { DataToDelete } from "../../../../types/common";
 import { ZoomAccount } from "../../utils/type";
 
@@ -29,8 +39,8 @@ export default function ZoomAccountListTable() {
   const account = useRecoilValue(zoomListState);
   const rowHeaderStyle = { color: "GrayText", fontWeight: 500 };
   const navigate = useNavigate();
-  const setDeletion = useSetRecoilState(zoomAccountDeleteState)
-  const setConnection = useSetRecoilState(zoomAccountTestConnectState)
+  const setDeletion = useSetRecoilState(zoomAccountDeleteState);
+  const setConnection = useSetRecoilState(zoomAccountTestConnectState);
 
   const toggleRow = (id: number) =>
     setSelection((current) =>
@@ -40,17 +50,15 @@ export default function ZoomAccountListTable() {
     );
   const toggleAll = () =>
     setSelection((current) =>
-      current.length === account.length
-        ? []
-        : account.map((item) => item.id!)
+      current.length === account.length ? [] : account.map((item) => item.id!)
     );
 
   const deleteButtonHandler = (data: DataToDelete) => {
     setDeletion({ showModal: true, data });
   };
   const editButtonHandler = (data: ZoomAccount) => {
-    navigate(`/zoom-account/${data.id}/edit`)
-  }
+    navigate(`/zoom-account/${data.id}/edit`);
+  };
 
   return (
     <ScrollArea>
@@ -118,7 +126,7 @@ export default function ZoomAccountListTable() {
                     <Menu.Item
                       icon={<AccessPoint size={14} />}
                       onClick={() => {
-                        setConnection({ showModal: true, id: item.id! })
+                        setConnection({ showModal: true, id: item.id! });
                       }}
                       color="cyan"
                     >
