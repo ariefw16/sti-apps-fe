@@ -18,7 +18,7 @@ const mockdata = [
     links: [
       { label: "Overview", link: "/services" },
       { label: "VPN", link: "/vpn" },
-      { label: "Meetings", link: '/meetings' },
+      { label: "Meetings", link: "/meetings" },
       { label: "Zoom Account", link: "/zoom-account" },
     ],
   },
@@ -37,6 +37,7 @@ const mockdata = [
     icon: Lock,
     links: [
       { label: "Users", link: "/user" },
+      { label: "Groups", link: "/groups" },
       { label: "Units", link: "/unit" },
       { label: "Settings", link: "/settings" },
     ],
@@ -44,7 +45,7 @@ const mockdata = [
 ];
 
 export function AppNavbar() {
-  const opened = useRecoilValue(showBurgerState)
+  const opened = useRecoilValue(showBurgerState);
   const isDarkMode = useRecoilValue(darkModeState);
   const resetAuth = useResetRecoilState(authState);
   const navigate = useNavigate();
@@ -53,7 +54,6 @@ export function AppNavbar() {
       backgroundColor: isDarkMode ? theme.colors.dark[6] : theme.white,
       paddingBottom: 0,
     },
-
 
     links: {
       marginLeft: -theme.spacing.md,
@@ -69,8 +69,9 @@ export function AppNavbar() {
       marginLeft: -theme.spacing.md,
       marginRight: -theme.spacing.md,
       marginBottom: -theme.spacing.md,
-      borderTop: `1px solid ${isDarkMode ? theme.colors.dark[4] : theme.colors.gray[3]
-        }`,
+      borderTop: `1px solid ${
+        isDarkMode ? theme.colors.dark[4] : theme.colors.gray[3]
+      }`,
     },
   }));
   const { classes } = useStyles();
@@ -79,7 +80,13 @@ export function AppNavbar() {
   ));
 
   return (
-    <Navbar width={{ sm: 300 }} hiddenBreakpoint="sm" hidden={!opened} p="md" className={classes.navbar}>
+    <Navbar
+      width={{ sm: 300 }}
+      hiddenBreakpoint="sm"
+      hidden={!opened}
+      p="md"
+      className={classes.navbar}
+    >
       <Navbar.Section grow className={classes.links} component={ScrollArea}>
         <div className={classes.linksInner}>{links}</div>
       </Navbar.Section>

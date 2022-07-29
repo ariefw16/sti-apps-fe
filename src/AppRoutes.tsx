@@ -25,6 +25,7 @@ import MeetingPage from "./features/Meeting";
 import CreateMeetingPage from "./features/Meeting/create";
 import DetailMeetingPage from "./features/Meeting/detail";
 import EditMeetingPage from "./features/Meeting/edit";
+import GroupPage from "./features/Group";
 
 function App() {
   axios.defaults.baseURL = "http://localhost:3400/";
@@ -49,13 +50,20 @@ function App() {
           <Route path="/incident" element={<IncidentPage />} />
           <Route path="/incident/:id" element={<DetailIncidentPage />} />
           <Route path="/zoom-account" element={<ZoomAccountPage />} />
-          <Route path="/zoom-account/create" element={<CreateZoomAccountPage />} />
-          <Route path="/zoom-account/:id/edit" element={<EditZoomAccountPage />} />
+          <Route
+            path="/zoom-account/create"
+            element={<CreateZoomAccountPage />}
+          />
+          <Route
+            path="/zoom-account/:id/edit"
+            element={<EditZoomAccountPage />}
+          />
           <Route path="/zoom-account/:id" element={<DetailZoomAccount />} />
           <Route path="/meetings" element={<MeetingPage />} />
           <Route path="/meetings/create" element={<CreateMeetingPage />} />
           <Route path="/meetings/:id/edit" element={<EditMeetingPage />} />
           <Route path="/meetings/:id" element={<DetailMeetingPage />} />
+          <Route path="/groups" element={<GroupPage />} />
         </Route>
         <Route path="/auth" element={<AuthLayout />}>
           <Route index element={<LoginPage />} />
