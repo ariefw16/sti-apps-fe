@@ -1,6 +1,6 @@
 import { atom } from "recoil";
 import { FetchParams } from "../../../types/fetch.type";
-import { Group } from "./type";
+import { Group, GroupCreate, GroupDelete } from "./type";
 
 export const groupListState = atom<Group[]>({
   key: "groupListState",
@@ -17,5 +17,26 @@ export const groupListFilterState = atom<FetchParams>({
   default: {
     page: 1,
     limit: 15,
+  },
+});
+
+export const groupCreateState = atom<GroupCreate>({
+  key: "groupCreateState",
+  default: {
+    showModal: false,
+    data: {
+      name: "",
+    },
+  },
+});
+
+export const groupDeleteState = atom<GroupDelete>({
+  key: "groupDeleteState",
+  default: {
+    showModal: false,
+    data: {
+      id: 0,
+      name: "",
+    },
   },
 });

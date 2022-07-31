@@ -13,3 +13,21 @@ export async function fetchGroup(
     throw new Error(e.message);
   }
 }
+
+export async function saveGroup(data: Group): Promise<Group> {
+  try {
+    const result = await axios.post("groups", data);
+    return result.data;
+  } catch (e: any) {
+    throw new Error(e.message);
+  }
+}
+
+export async function deleteGroup(id: number): Promise<number> {
+  try {
+    await axios.delete(`groups/${id}`);
+    return id;
+  } catch (e: any) {
+    throw new Error(e.message);
+  }
+}
