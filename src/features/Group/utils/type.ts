@@ -18,3 +18,8 @@ export interface GroupDelete {
   showModal: boolean;
   data: DataToDelete;
 }
+
+export interface GroupUpdate {
+  showModal: boolean;
+  data: Group;
+}

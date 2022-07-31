@@ -7,10 +7,14 @@ import {
   Menu,
   Button,
 } from "@mantine/core";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { ChevronDown, Pencil, Trash, Users } from "tabler-icons-react";
 import { DataToDelete } from "../../../../types/common";
-import { groupListState } from "../../utils/store";
+import {
+  groupDeleteState,
+  groupListState,
+  groupUpdateState,
+} from "../../utils/store";
 import { Group } from "../../utils/type";
 
 const useStyles = createStyles((theme) => ({
@@ -27,6 +31,8 @@ export function GroupListTable() {
   const [selection, setSelection] = useState<number[]>([]);
   const group = useRecoilValue(groupListState);
   const rowHeaderStyle = { color: "GrayText", fontWeight: 500 };
+  const setDeletion = useSetRecoilState(groupDeleteState);
+  const setUpdate = useSetRecoilState(groupUpdateState);
 
   const toggleRow = (id: number) =>
     setSelection((current) =>
@@ -38,8 +44,12 @@ export function GroupListTable() {
     setSelection((current) =>
       current.length === group.length ? [] : group.map((item) => item.id!)
     );
-  const deleteButtonHandler = (data: DataToDelete) => {};
-  const editButtonHandler = (data: Group) => {};
+  const deleteButtonHandler = (data: DataToDelete) => {
+    setDeletion({ showModal: true, data });
+  };
+  const editButtonHandler = (data: Group) => {
+    setUpdate({ showModal: true, data });
+  };
 
   return (
     <ScrollArea>

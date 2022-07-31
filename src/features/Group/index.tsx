@@ -1,17 +1,24 @@
 import PageTitleComponent from "../../components/common/PageTitle";
-import { Box, filterFalsyChildren, LoadingOverlay } from "@mantine/core";
+import { Box, LoadingOverlay } from "@mantine/core";
 import { PageTitleBreadcrumbs } from "../../types/pagetitle.type";
 import { useEffect, useState } from "react";
 import GroupListCard from "./components/list/GroupListCard";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import {
+  useRecoilState,
+  useRecoilValue,
+  useResetRecoilState,
+  useSetRecoilState,
+} from "recoil";
 import {
   groupListCountState,
   groupListFilterState,
   groupListState,
+  groupDeleteState,
 } from "./utils/store";
-import { fetchGroup } from "./utils/service";
+import { deleteGroup, fetchGroup } from "./utils/service";
 import { showNotification } from "@mantine/notifications";
 import { useDebouncedValue } from "@mantine/hooks";
+import DeleteDialog from "../../components/common/DeleteDialog";
 
 export default function GroupPage() {
   const breadcrumbs: PageTitleBreadcrumbs[] = [
@@ -24,10 +31,37 @@ export default function GroupPage() {
     },
   ];
   const [loading, setLoading] = useState(false);
+  const [loadingDeletion, setLoadingDeletion] = useState(false);
   const setGroup = useSetRecoilState(groupListState);
   const setRowCount = useSetRecoilState(groupListCountState);
-  const filter = useRecoilValue(groupListFilterState);
+  const [filter, setFilter] = useRecoilState(groupListFilterState);
   const [q] = useDebouncedValue(filter.q, 300);
+  const deletion = useRecoilValue(groupDeleteState);
+  const resetDeletion = useResetRecoilState(groupDeleteState);
+
+  const deletionSubmitHandler = () => {
+    setLoadingDeletion(true);
+    deleteGroup(deletion.data.id)
+      .then(() => {
+        showNotification({
+          title: "User Group Deletion",
+          message: "User Group Deletion success!",
+          color: "green",
+        });
+        resetDeletion();
+        setFilter((f) => ({ ...f, refreshToggle: !f.refreshToggle }));
+      })
+      .catch((e) => {
+        showNotification({
+          title: "User Group Deletion",
+          message: `Error! ${e.message}`,
+          color: "red",
+        });
+      })
+      .finally(() => {
+        setLoadingDeletion(false);
+      });
+  };
 
   useEffect(() => {
     setLoading(true);
@@ -58,6 +92,13 @@ export default function GroupPage() {
         <LoadingOverlay visible={loading} />
         <GroupListCard />
       </Box>
+      <DeleteDialog
+        open={deletion.showModal}
+        onClose={resetDeletion}
+        data={deletion.data}
+        onSubmit={deletionSubmitHandler}
+        loading={loadingDeletion}
+      />
     </>
   );
 }
