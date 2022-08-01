@@ -18,6 +18,15 @@ export async function fetchUser(
   }
 }
 
+export async function quickFetchUser(q: string): Promise<User[]> {
+  try {
+    const result = await axios.get(`user/quick?q=${q}`);
+    return result.data;
+  } catch (e: any) {
+    throw new Error(e.message);
+  }
+}
+
 export async function createUser(data: UserCreateData) {
   try {
     const response = await axios.post<User>("user", {
@@ -32,7 +41,7 @@ export async function createUser(data: UserCreateData) {
 
 export async function deleteUser(data: DataToDelete) {
   try {
-    const response = await axios.delete(`user/${data.id}`);
+    await axios.delete(`user/${data.id}`);
     return data;
   } catch (error: any) {
     throw new Error(error.message);
