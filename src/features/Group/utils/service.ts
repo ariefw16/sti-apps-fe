@@ -31,3 +31,12 @@ export async function deleteGroup(id: number): Promise<number> {
     throw new Error(e.message);
   }
 }
+
+export async function updateGroup(id: number, data: Group): Promise<Group> {
+  try {
+    const result = await axios.patch(`groups/${id}`, data);
+    return result.data;
+  } catch (e: any) {
+    throw new Error(e.message);
+  }
+}

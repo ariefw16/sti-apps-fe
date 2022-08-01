@@ -101,7 +101,7 @@ export function GroupListTable() {
                     <Menu.Item
                       icon={<Users size={14} />}
                       onClick={() => {
-                        editButtonHandler(item);
+                        // editButtonHandler(item);
                       }}
                     >
                       Manage Members

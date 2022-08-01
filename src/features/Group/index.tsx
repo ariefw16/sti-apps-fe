@@ -19,6 +19,8 @@ import { deleteGroup, fetchGroup } from "./utils/service";
 import { showNotification } from "@mantine/notifications";
 import { useDebouncedValue } from "@mantine/hooks";
 import DeleteDialog from "../../components/common/DeleteDialog";
+import GroupUpdateModal from "./components/list/GroupUpdateModal";
+import GroupCreateModal from "./components/list/GroupCreateModal";
 
 export default function GroupPage() {
   const breadcrumbs: PageTitleBreadcrumbs[] = [
@@ -99,6 +101,8 @@ export default function GroupPage() {
         onSubmit={deletionSubmitHandler}
         loading={loadingDeletion}
       />
+      <GroupUpdateModal />
+      <GroupCreateModal />
     </>
   );
 }

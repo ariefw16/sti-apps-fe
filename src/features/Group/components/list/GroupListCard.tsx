@@ -10,7 +10,6 @@ import {
 import { GroupListTable } from "./GroupListTable";
 import ListFooterCard from "../../../../components/common/ListFooterCard";
 import AddButton from "../../../../components/common/AddButton";
-import GroupCreateModal from "./GroupCreateModal";
 
 export default function GroupListCard() {
   const [filter, setFilter] = useRecoilState(groupListFilterState);
@@ -52,7 +51,6 @@ export default function GroupListCard() {
           page={filter.page}
         />
       </Paper>
-      <GroupCreateModal />
     </>
   );
 }
