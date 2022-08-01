@@ -5,7 +5,7 @@ import { groupListFilterState, groupUpdateState } from "../../utils/store";
 import { useForm } from "@mantine/hooks";
 import { Group } from "../../utils/type";
 import GroupButtonModal from "../../../../components/common/GroupButtonModal";
-import { updateGroup } from "../../utils/service";
+import { fetchSingleGroup, updateGroup } from "../../utils/service";
 import { showNotification } from "@mantine/notifications";
 
 export default function GroupUpdateModal() {
@@ -16,11 +16,15 @@ export default function GroupUpdateModal() {
   const form = useForm<Group>({
     initialValues: {
       name: "",
+      initial: "",
     },
   });
 
   useEffect(() => {
-    form.setFieldValue("name", updation.data.name);
+    fetchSingleGroup(updation.data.id!).then((res) => {
+      form.setFieldValue("name", res.name);
+      form.setFieldValue("initial", res.initial);
+    });
   }, [updation.showModal]);
 
   const submitHandler = (data: Group) => {
@@ -64,6 +68,13 @@ export default function GroupUpdateModal() {
           placeholder="ex: Administrator"
           description="Enter Group Name here .."
           {...form.getInputProps("name")}
+        />
+        <TextInput
+          label="Initial"
+          required
+          placeholder="ex: ADMINISTRATOR"
+          description="Enter Initial here... for app code"
+          {...form.getInputProps("initial")}
         />
         <Divider my={20} />
         <GroupButtonModal onDiscard={resetUpdation} loading={loading} />

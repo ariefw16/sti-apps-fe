@@ -40,3 +40,12 @@ export async function updateGroup(id: number, data: Group): Promise<Group> {
     throw new Error(e.message);
   }
 }
+
+export async function fetchSingleGroup(id: number): Promise<Group> {
+  try {
+    const result = await axios.get(`groups/${id}`);
+    return result.data;
+  } catch (e: any) {
+    throw new Error(e.message);
+  }
+}

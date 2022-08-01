@@ -16,6 +16,7 @@ export default function GroupCreateModal() {
   const form = useForm<Group>({
     initialValues: {
       name: "",
+      initial: "",
     },
   });
 
@@ -59,7 +60,15 @@ export default function GroupCreateModal() {
           required
           placeholder="ex: Administrator"
           description="Enter Group Name here .."
+          my={"sm"}
           {...form.getInputProps("name")}
+        />
+        <TextInput
+          label="Initial"
+          required
+          placeholder="ex: ADMINISTRATOR"
+          description="Initial for App Code"
+          {...form.getInputProps("initial")}
         />
         <Divider my={20} />
         <GroupButtonModal onDiscard={resetCreation} loading={isLoading} />

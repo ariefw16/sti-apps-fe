@@ -21,6 +21,7 @@ import { useDebouncedValue } from "@mantine/hooks";
 import DeleteDialog from "../../components/common/DeleteDialog";
 import GroupUpdateModal from "./components/list/GroupUpdateModal";
 import GroupCreateModal from "./components/list/GroupCreateModal";
+import GroupManageMemberModal from "./components/list/ManageMemberModal";
 
 export default function GroupPage() {
   const breadcrumbs: PageTitleBreadcrumbs[] = [
@@ -103,6 +104,7 @@ export default function GroupPage() {
       />
       <GroupUpdateModal />
       <GroupCreateModal />
+      <GroupManageMemberModal />
     </>
   );
 }

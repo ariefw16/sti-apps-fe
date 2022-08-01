@@ -1,6 +1,12 @@
 import { atom } from "recoil";
 import { FetchParams } from "../../../types/fetch.type";
-import { Group, GroupCreate, GroupDelete, GroupUpdate } from "./type";
+import {
+  Group,
+  GroupCreate,
+  GroupDelete,
+  GroupManageMember,
+  GroupUpdate,
+} from "./type";
 
 export const groupListState = atom<Group[]>({
   key: "groupListState",
@@ -25,6 +31,7 @@ export const groupCreateState = atom<GroupCreate>({
   default: {
     showModal: false,
     data: {
+      initial: "",
       name: "",
     },
   },
@@ -48,5 +55,13 @@ export const groupUpdateState = atom<GroupUpdate>({
     data: {
       name: "",
     },
+  },
+});
+
+export const groupManageMemberState = atom<GroupManageMember>({
+  key: "groupManageMemberState",
+  default: {
+    showModal: false,
+    id: 0,
   },
 });

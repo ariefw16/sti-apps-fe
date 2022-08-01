@@ -13,6 +13,7 @@ import { DataToDelete } from "../../../../types/common";
 import {
   groupDeleteState,
   groupListState,
+  groupManageMemberState,
   groupUpdateState,
 } from "../../utils/store";
 import { Group } from "../../utils/type";
@@ -33,6 +34,7 @@ export function GroupListTable() {
   const rowHeaderStyle = { color: "GrayText", fontWeight: 500 };
   const setDeletion = useSetRecoilState(groupDeleteState);
   const setUpdate = useSetRecoilState(groupUpdateState);
+  const setManageMember = useSetRecoilState(groupManageMemberState);
 
   const toggleRow = (id: number) =>
     setSelection((current) =>
@@ -49,6 +51,9 @@ export function GroupListTable() {
   };
   const editButtonHandler = (data: Group) => {
     setUpdate({ showModal: true, data });
+  };
+  const manageButtonHandler = (id: number) => {
+    setManageMember({ showModal: true, id });
   };
 
   return (
@@ -67,6 +72,7 @@ export function GroupListTable() {
               />
             </th>
             <th style={rowHeaderStyle}>Group Name</th>
+            <th style={rowHeaderStyle}>Total Members</th>
             <th style={{ width: 120, ...rowHeaderStyle }}>Actions</th>
           </tr>
         </thead>
@@ -85,7 +91,8 @@ export function GroupListTable() {
                     transitionDuration={0}
                   />
                 </td>
-                <td>{item.name}</td>
+                <td style={{ width: "50%" }}>{item.name}</td>
+                <td>{item._count?.users}</td>
                 <td>
                   <Menu
                     control={
@@ -101,7 +108,7 @@ export function GroupListTable() {
                     <Menu.Item
                       icon={<Users size={14} />}
                       onClick={() => {
-                        // editButtonHandler(item);
+                        manageButtonHandler(item.id!);
                       }}
                     >
                       Manage Members
