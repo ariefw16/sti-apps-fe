@@ -5,7 +5,7 @@ export interface Group {
   id?: number;
   name?: string;
   initial?: string;
-  users?: { user: User }[];
+  users?: { user: User; id: number }[];
   _count?: {
     users: number;
   };
@@ -32,4 +32,9 @@ export interface GroupUpdate {
 export interface GroupManageMember {
   showModal: boolean;
   id: number;
+}
+
+export interface AddRemoveGroupMember {
+  id: number;
+  userId: number;
 }

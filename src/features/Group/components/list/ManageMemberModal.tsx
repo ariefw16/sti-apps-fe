@@ -18,7 +18,11 @@ import { useRecoilValue, useResetRecoilState } from "recoil";
 import { DeviceFloppy, TrashX, UserPlus } from "tabler-icons-react";
 import { quickFetchUser } from "../../../Users/utils/service";
 import { User } from "../../../Users/utils/type";
-import { fetchSingleGroup } from "../../utils/service";
+import {
+  addMemberToGroup,
+  fetchSingleGroup,
+  removeMemberGroup,
+} from "../../utils/service";
 import { groupManageMemberState } from "../../utils/store";
 import { Group } from "../../utils/type";
 
@@ -49,6 +53,7 @@ export default function GroupManageMemberModal() {
   const [group, setGroup] = useState<Group>();
   const [loading, setLoading] = useState(false);
   const [userLoading, setUserLoading] = useState(false);
+  const [refreshList, setRefreshList] = useState(false);
   const rowHeaderStyle = { color: "GrayText", fontWeight: 500 };
   const [userOptions, setUserOptions] = useState<User[]>([]);
   const [userSearch, setUserSearch] = useState("");
@@ -79,7 +84,7 @@ export default function GroupManageMemberModal() {
           setLoading(false);
         });
     }
-  }, [manage.showModal]);
+  }, [manage.showModal, refreshList]);
 
   useEffect(() => {
     if (qUser === "") setUserOptions([]);
@@ -104,7 +109,48 @@ export default function GroupManageMemberModal() {
     setSelectedUserId(id);
   };
   const addMemberButtonHandler = () => {
-    console.log(selectedUserId);
+    if (selectedUserId)
+      addMemberToGroup({ id: manage.id, userId: selectedUserId })
+        .then(() => {
+          setRefreshList((x) => !x);
+          showNotification({
+            title: "User Added!",
+            message: "User added to A group Member",
+            color: "green",
+          });
+          setUserSearch("");
+        })
+        .catch((e) => {
+          showNotification({
+            title: "Error Add Member",
+            message: `Error! ${e.message}`,
+            color: "red",
+          });
+        });
+    else
+      showNotification({
+        title: "Error Add Member",
+        message: "Select User to Add Member",
+        color: "red",
+      });
+  };
+  const removeMemberButtonHandler = (id: number) => {
+    removeMemberGroup({ userId: id, id: 0 })
+      .then(() => {
+        setRefreshList((x) => !x);
+        showNotification({
+          title: "User Removed!",
+          message: "User removed from A group Member",
+          color: "green",
+        });
+      })
+      .catch((e) => {
+        showNotification({
+          title: "Error Remove Member",
+          message: `Error! ${e.message}`,
+          color: "red",
+        });
+      });
   };
 
   return (
@@ -130,7 +176,7 @@ export default function GroupManageMemberModal() {
         </thead>
         <tbody>
           {group?.users?.map((item) => (
-            <tr>
+            <tr key={item.user.id}>
               <td>{item.user.name}</td>
               <td>{item.user.nik}</td>
               <td>{item.user.email}</td>
@@ -142,6 +188,9 @@ export default function GroupManageMemberModal() {
                   py={1}
                   variant="light"
                   radius={"lg"}
+                  onClick={() => {
+                    removeMemberButtonHandler(item.id);
+                  }}
                 >
                   <TrashX />
                 </Button>

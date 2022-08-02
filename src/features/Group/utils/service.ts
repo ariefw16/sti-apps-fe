@@ -1,6 +1,6 @@
 import axios from "axios";
 import { FetchParams, FetchResult } from "../../../types/fetch.type";
-import { Group } from "./type";
+import { AddRemoveGroupMember, Group } from "./type";
 
 export async function fetchGroup(
   props: FetchParams
@@ -44,6 +44,30 @@ export async function updateGroup(id: number, data: Group): Promise<Group> {
 export async function fetchSingleGroup(id: number): Promise<Group> {
   try {
     const result = await axios.get(`groups/${id}`);
+    return result.data;
+  } catch (e: any) {
+    throw new Error(e.message);
+  }
+}
+
+export async function addMemberToGroup(data: AddRemoveGroupMember) {
+  try {
+    const { id, userId } = data;
+    const userIds: number[] = [];
+    userIds.push(userId);
+    const result = await axios.patch(`groups/user/${id}`, { userIds });
+    return result.data;
+  } catch (e: any) {
+    throw new Error(e.message);
+  }
+}
+
+export async function removeMemberGroup(data: AddRemoveGroupMember) {
+  try {
+    const { userId } = data;
+    const userIds: number[] = [];
+    userIds.push(userId);
+    const result = await axios.post(`groups/user`, { userIds });
     return result.data;
   } catch (e: any) {
     throw new Error(e.message);
