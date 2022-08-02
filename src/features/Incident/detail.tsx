@@ -70,7 +70,7 @@ export default function DetailIncidentPage() {
         breadcrumbs={breadcrumb}
       />
       <Grid>
-        <Grid.Col span={7}>
+        <Grid.Col md={7} sm={12}>
           <Tabs
             variant="unstyled"
             styles={(theme) => ({
@@ -125,7 +125,7 @@ export default function DetailIncidentPage() {
             </Tabs.Tab>
           </Tabs>
         </Grid.Col>
-        <Grid.Col span={5} mt={40}>
+        <Grid.Col sm={12} md={5} mt={40}>
           <Group position="right">
             <Button
               color={"lime"}

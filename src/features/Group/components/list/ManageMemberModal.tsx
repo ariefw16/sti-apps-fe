@@ -58,9 +58,7 @@ export default function GroupManageMemberModal() {
   const [userOptions, setUserOptions] = useState<User[]>([]);
   const [userSearch, setUserSearch] = useState("");
   const [qUser] = useDebouncedValue(userSearch, 300);
-  const [selectedUserId, setSelectedUserId] = useState<number | undefined>(
-    undefined
-  );
+  const [selectedUserId, setSelectedUserId] = useState();
 
   useEffect(() => {
     if (userSearch !== "") setUserLoading(true);
