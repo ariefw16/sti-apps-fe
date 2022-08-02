@@ -1,35 +1,69 @@
 import {
   Autocomplete,
+  Loader,
   Button,
   Divider,
+  SelectItemProps,
   Grid,
   Modal,
   Table,
+  Text,
+  Group as GroupMantine,
+  AutocompleteItem,
 } from "@mantine/core";
 import { useDebouncedValue } from "@mantine/hooks";
 import { showNotification } from "@mantine/notifications";
-import { useEffect, useState } from "react";
+import { useEffect, useState, forwardRef } from "react";
 import { useRecoilValue, useResetRecoilState } from "recoil";
 import { DeviceFloppy, TrashX, UserPlus } from "tabler-icons-react";
-import { SelectOptions } from "../../../../types/common";
 import { quickFetchUser } from "../../../Users/utils/service";
+import { User } from "../../../Users/utils/type";
 import { fetchSingleGroup } from "../../utils/service";
 import { groupManageMemberState } from "../../utils/store";
 import { Group } from "../../utils/type";
+
+interface ItemProps extends SelectItemProps {
+  name: string;
+  nik?: string;
+  email?: string;
+  userId: number;
+}
+const AutoCompleteItem = forwardRef<HTMLDivElement, ItemProps>(
+  ({ value, name, nik, email, userId, ...others }: ItemProps, ref) => (
+    <div ref={ref} {...others}>
+      <GroupMantine noWrap>
+        <div>
+          <Text>{name}</Text>
+          <Text size="xs" color="dimmed">
+            NIK : {nik} ({email})
+          </Text>
+        </div>
+      </GroupMantine>
+    </div>
+  )
+);
 
 export default function GroupManageMemberModal() {
   const manage = useRecoilValue(groupManageMemberState);
   const resetManage = useResetRecoilState(groupManageMemberState);
   const [group, setGroup] = useState<Group>();
   const [loading, setLoading] = useState(false);
+  const [userLoading, setUserLoading] = useState(false);
   const rowHeaderStyle = { color: "GrayText", fontWeight: 500 };
-  const [userOptions, setUserOptions] = useState<SelectOptions[]>([]);
+  const [userOptions, setUserOptions] = useState<User[]>([]);
   const [userSearch, setUserSearch] = useState("");
   const [qUser] = useDebouncedValue(userSearch, 300);
+  const [selectedUserId, setSelectedUserId] = useState<number | undefined>(
+    undefined
+  );
 
   useEffect(() => {
-    setLoading(true);
+    if (userSearch !== "") setUserLoading(true);
+  }, [userSearch]);
+
+  useEffect(() => {
     if (manage.showModal) {
+      setLoading(true);
       fetchSingleGroup(manage.id)
         .then((res) => {
           setGroup(res);
@@ -50,12 +84,9 @@ export default function GroupManageMemberModal() {
   useEffect(() => {
     if (qUser === "") setUserOptions([]);
     else {
-      console.log("masuk");
       quickFetchUser(qUser)
         .then((res) => {
-          setUserOptions(
-            res.map((r) => ({ value: r.id!.toString(), label: r.name! }))
-          );
+          setUserOptions(res);
         })
         .catch((e) => {
           showNotification({
@@ -65,11 +96,15 @@ export default function GroupManageMemberModal() {
           });
         });
     }
-    console.log("skip");
+    setUserLoading(false);
   }, [qUser]);
 
-  const userSearchHandle = (val: string) => {
-    setUserSearch(val);
+  const onSelectItemHandler = (item: AutocompleteItem) => {
+    const { userId: id } = item;
+    setSelectedUserId(id);
+  };
+  const addMemberButtonHandler = () => {
+    console.log(selectedUserId);
   };
 
   return (
@@ -120,15 +155,34 @@ export default function GroupManageMemberModal() {
         <Grid.Col span={8}>
           <Autocomplete
             icon={<UserPlus />}
-            data={userOptions}
-            nothingFound="No User found"
-            placeholder="Search User (NIK / Nama / Email)"
-            onChange={userSearchHandle}
-            autoFocus={false}
+            data={userOptions.map((us) => ({
+              value: us.name!,
+              name: us.name,
+              nik: us.nik,
+              email: us.email,
+              userId: us.id,
+            }))}
+            placeholder="NIK / Nama / Email"
+            rightSection={userLoading ? <Loader size={16} /> : null}
+            value={userSearch}
+            onChange={setUserSearch}
+            itemComponent={AutoCompleteItem}
+            nothingFound="No Data Found"
+            filter={(value, item) =>
+              item.name.toLowerCase().includes(value.toLowerCase().trim()) ||
+              item.nik.toLowerCase().includes(value.toLowerCase().trim()) ||
+              item.email.toLowerCase().includes(value.toLowerCase().trim())
+            }
+            onItemSubmit={onSelectItemHandler}
           />
         </Grid.Col>
         <Grid.Col span={4}>
-          <Button py={1} leftIcon={<DeviceFloppy />} radius={"md"}>
+          <Button
+            py={1}
+            leftIcon={<DeviceFloppy />}
+            radius={"md"}
+            onClick={addMemberButtonHandler}
+          >
             Add Members
           </Button>
         </Grid.Col>

@@ -21,10 +21,11 @@ export default function GroupUpdateModal() {
   });
 
   useEffect(() => {
-    fetchSingleGroup(updation.data.id!).then((res) => {
-      form.setFieldValue("name", res.name);
-      form.setFieldValue("initial", res.initial);
-    });
+    if (updation.showModal)
+      fetchSingleGroup(updation.data.id!).then((res) => {
+        form.setFieldValue("name", res.name);
+        form.setFieldValue("initial", res.initial);
+      });
   }, [updation.showModal]);
 
   const submitHandler = (data: Group) => {
