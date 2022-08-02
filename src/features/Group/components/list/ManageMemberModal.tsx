@@ -91,7 +91,12 @@ export default function GroupManageMemberModal() {
     else {
       quickFetchUser(qUser)
         .then((res) => {
-          setUserOptions(res);
+          if (group && group._count && group?._count!.users! > 0) {
+            const ids = group?.users?.map((m) => m.user.id);
+            setUserOptions(res.filter((f) => !ids?.includes(f.id)));
+          } else {
+            setUserOptions(res);
+          }
         })
         .catch((e) => {
           showNotification({
