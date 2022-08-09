@@ -9,7 +9,7 @@ import {
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { ChevronDown, Eye, Pencil, Trash } from "tabler-icons-react";
+import { ChevronDown, Eye, Trash } from "tabler-icons-react";
 import { DataToDelete } from "../../../../types/common";
 import {
   deviceTemplateDeletionState,
@@ -101,18 +101,10 @@ export default function DeviceTemplateTable() {
                     <Menu.Item
                       icon={<Eye size={14} />}
                       onClick={() => {
-                        navigate(`/device/${item.id}`);
+                        navigate(`/device-template/${item.id}`);
                       }}
                     >
                       View
-                    </Menu.Item>
-                    <Menu.Item
-                      icon={<Pencil size={14} />}
-                      onClick={() => {
-                        navigate(`/device/${item.id}/edit`);
-                      }}
-                    >
-                      Update
                     </Menu.Item>
                     <Menu.Item
                       icon={<Trash size={14} />}
