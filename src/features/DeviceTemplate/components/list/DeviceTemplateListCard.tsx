@@ -13,7 +13,7 @@ import ListFooterCard from "../../../../components/common/ListFooterCard";
 import ListHeaderCard from "../../../../components/common/ListHeaderCard";
 import RefreshButton from "../../../../components/common/RefreshButton";
 import { deviceTypeListCountState } from "../../../DeviceType/utils/store";
-import { fetchDeviceType } from "../../utils/service";
+import { deleteDeviceTemplate, fetchDeviceType } from "../../utils/service";
 import {
   deviceTemplateDeletionState,
   deviceTemplateListFilterState,
@@ -59,6 +59,26 @@ export default function DeviceTemplateListCard() {
   };
   const deleteHandler = () => {
     setDeletionLoading(true);
+    deleteDeviceTemplate(deletion.data.id)
+      .then(() => {
+        resetDeletion();
+        showNotification({
+          title: "Device Template Deletion",
+          message: "Device Template Deletion Success!",
+          color: "green",
+        });
+        applyToggleRefresh();
+      })
+      .catch((e) => {
+        showNotification({
+          title: "Device Template Deletion",
+          message: `Error! ${e.message}`,
+          color: "green",
+        });
+      })
+      .finally(() => {
+        setDeletionLoading(false);
+      });
   };
 
   return (

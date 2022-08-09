@@ -17,3 +17,12 @@ export async function fetchDeviceType(
     throw new Error(e.message);
   }
 }
+
+export async function deleteDeviceTemplate(id: number) {
+  try {
+    await axios.delete(`device-template/${id}`);
+    return id;
+  } catch (e: any) {
+    throw new Error(e.message);
+  }
+}
