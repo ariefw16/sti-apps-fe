@@ -1,5 +1,9 @@
 import { atom } from "recoil";
-import { DeviceTemplate, DeviceTemplateFetchParams } from "./type";
+import {
+  DeleteDeviceTemplate,
+  DeviceTemplate,
+  DeviceTemplateFetchParams,
+} from "./type";
 
 export const deviceTemplateListState = atom<DeviceTemplate[]>({
   key: "deviceTemplateListState",
@@ -16,5 +20,16 @@ export const deviceTemplateListFilterState = atom<DeviceTemplateFetchParams>({
   default: {
     page: 1,
     limit: 15,
+  },
+});
+
+export const deviceTemplateDeletionState = atom<DeleteDeviceTemplate>({
+  key: "deviceTemplateDeletionState",
+  default: {
+    showModal: false,
+    data: {
+      id: 0,
+      name: "",
+    },
   },
 });

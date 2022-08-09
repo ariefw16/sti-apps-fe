@@ -1,3 +1,4 @@
+import { DataToDelete } from "../../../types/common";
 import { FetchParams } from "../../../types/fetch.type";
 import { DeviceType, DeviceTypeSpec } from "../../DeviceType/utils/type";
 
@@ -23,4 +24,9 @@ export interface DeviceTemplateSpec {
 
 export interface DeviceTemplateFetchParams extends FetchParams {
   deviceTypeId?: string | null;
+}
+
+export interface DeleteDeviceTemplate {
+  showModal: boolean;
+  data: DataToDelete;
 }

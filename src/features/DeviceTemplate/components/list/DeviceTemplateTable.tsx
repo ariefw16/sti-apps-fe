@@ -8,10 +8,13 @@ import {
 } from "@mantine/core";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { ChevronDown, Eye, Pencil, Trash } from "tabler-icons-react";
 import { DataToDelete } from "../../../../types/common";
-import { deviceTemplateListState } from "../../utils/store";
+import {
+  deviceTemplateDeletionState,
+  deviceTemplateListState,
+} from "../../utils/store";
 
 const useStyles = createStyles((theme) => ({
   rowSelected: {
@@ -25,6 +28,7 @@ const useStyles = createStyles((theme) => ({
 export default function DeviceTemplateTable() {
   const { classes, cx } = useStyles();
   const [selection, setSelection] = useState<number[]>([]);
+  const setDeletion = useSetRecoilState(deviceTemplateDeletionState);
   const rowHeaderStyle = { color: "GrayText", fontWeight: 500 };
   const template = useRecoilValue(deviceTemplateListState);
   const navigate = useNavigate();
@@ -39,7 +43,9 @@ export default function DeviceTemplateTable() {
     setSelection((current) =>
       current.length === template.length ? [] : template.map((item) => item.id!)
     );
-  const deleteButtonHandler = (data: DataToDelete) => {};
+  const deleteButtonHandler = (data: DataToDelete) => {
+    setDeletion({ showModal: true, data });
+  };
 
   return (
     <ScrollArea>
