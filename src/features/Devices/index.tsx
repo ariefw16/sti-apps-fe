@@ -1,4 +1,4 @@
-import { Box, LoadingOverlay } from "@mantine/core";
+import { Box, LoadingOverlay, Tabs } from "@mantine/core";
 import { useDebouncedValue } from "@mantine/hooks";
 import { showNotification } from "@mantine/notifications";
 import { useEffect, useState } from "react";
@@ -8,8 +8,10 @@ import {
   useResetRecoilState,
   useSetRecoilState,
 } from "recoil";
+import { InfoCircle, Tools } from "tabler-icons-react";
 import DeleteDialog from "../../components/common/DeleteDialog";
 import PageTitleComponent from "../../components/common/PageTitle";
+import TabNav from "../../components/common/TabNav";
 import { PageTitleBreadcrumbs } from "../../types/pagetitle.type";
 import DeviceListCard from "./components/DeviceListCard";
 import { deleteDevice, fetchDevice } from "./utils/service";
@@ -77,7 +79,15 @@ export default function DevicePage() {
       <PageTitleComponent title="Device Management" breadcrumbs={breadcrumb} />
       <Box style={{ position: "relative" }}>
         <LoadingOverlay visible={loading} />
-        <DeviceListCard />
+        <TabNav mt={20} position="right">
+          <Tabs.Tab
+            label="Device Template"
+            icon={<Tools size={14} />}
+          ></Tabs.Tab>
+          <Tabs.Tab label="Devices" icon={<InfoCircle size={14} />}>
+            <DeviceListCard />
+          </Tabs.Tab>
+        </TabNav>
       </Box>
       <DeleteDialog
         open={deletion.showModal}

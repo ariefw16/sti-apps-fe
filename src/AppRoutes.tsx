@@ -26,6 +26,7 @@ import CreateMeetingPage from "./features/Meeting/create";
 import DetailMeetingPage from "./features/Meeting/detail";
 import EditMeetingPage from "./features/Meeting/edit";
 import GroupPage from "./features/Group";
+import DeviceTemplatePage from "./features/DeviceTemplate";
 
 function App() {
   axios.defaults.baseURL = "http://localhost:3400/";

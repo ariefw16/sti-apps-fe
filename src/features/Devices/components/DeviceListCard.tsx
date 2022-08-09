@@ -29,7 +29,7 @@ export default function DeviceListCard() {
   };
 
   return (
-    <Paper radius={"lg"} p="lg" sx={{ marginTop: 50 }}>
+    <Paper radius={"lg"} p="lg" sx={{ marginTop: 20 }}>
       <ListHeaderCard
         addButton={
           <AddButton

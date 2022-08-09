@@ -11,6 +11,7 @@ import {
   Tools,
 } from "tabler-icons-react";
 import PageTitleComponent from "../../components/common/PageTitle";
+import TabNav from "../../components/common/TabNav";
 import { PageTitleBreadcrumbs } from "../../types/pagetitle.type";
 import AddActivityModal from "./components/AddActivityModal";
 import ActivityTimeline from "./components/detail/ActivityTimeline";
@@ -71,49 +72,7 @@ export default function DetailIncidentPage() {
       />
       <Grid>
         <Grid.Col md={7} sm={12}>
-          <Tabs
-            variant="unstyled"
-            styles={(theme) => ({
-              tabControl: {
-                backgroundColor:
-                  theme.colorScheme === "dark"
-                    ? theme.colors.dark[6]
-                    : theme.white,
-                color:
-                  theme.colorScheme === "dark"
-                    ? theme.colors.dark[0]
-                    : theme.colors.gray[9],
-                border: `1px solid ${
-                  theme.colorScheme === "dark"
-                    ? theme.colors.dark[6]
-                    : theme.colors.gray[4]
-                }`,
-                fontSize: theme.fontSizes.sm,
-                padding: `${theme.spacing.lg}px ${theme.spacing.xl}px`,
-
-                "&:not(:first-of-type)": {
-                  borderLeft: 0,
-                },
-
-                "&:first-of-type": {
-                  borderTopLeftRadius: theme.radius.md,
-                  borderBottomLeftRadius: theme.radius.md,
-                },
-
-                "&:last-of-type": {
-                  borderTopRightRadius: theme.radius.md,
-                  borderBottomRightRadius: theme.radius.md,
-                },
-              },
-
-              tabActive: {
-                backgroundColor: theme.colors.blue[4],
-                borderColor: theme.colors.blue[7],
-                color: theme.white,
-              },
-            })}
-            mt={40}
-          >
+          <TabNav mt={40}>
             <Tabs.Tab label="General Info" icon={<InfoCircle size={14} />}>
               <GeneralInfo incident={detail} setTrigger={setTrigger} />
             </Tabs.Tab>
@@ -123,7 +82,7 @@ export default function DetailIncidentPage() {
             <Tabs.Tab label="Logs" icon={<Notebook size={14} />}>
               <LogDetail log={detail.incidentLog} />
             </Tabs.Tab>
-          </Tabs>
+          </TabNav>
         </Grid.Col>
         <Grid.Col sm={12} md={5} mt={40}>
           <Group position="right">
