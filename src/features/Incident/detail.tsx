@@ -1,15 +1,9 @@
-import { Button, Grid, Group, Tabs, Text, Timeline } from "@mantine/core";
+import { Button, Grid, Group, Tabs } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import {
-  InfoCircle,
-  MessageDots,
-  Notebook,
-  Plus,
-  Tools,
-} from "tabler-icons-react";
+import { InfoCircle, Notebook, Plus, Tools } from "tabler-icons-react";
 import PageTitleComponent from "../../components/common/PageTitle";
 import TabNav from "../../components/common/TabNav";
 import { PageTitleBreadcrumbs } from "../../types/pagetitle.type";

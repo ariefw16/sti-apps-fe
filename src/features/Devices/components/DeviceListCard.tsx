@@ -7,7 +7,6 @@ import ListHeaderCard from "../../../components/common/ListHeaderCard";
 import RefreshButton from "../../../components/common/RefreshButton";
 import { deviceListCountState, deviceListFilterState } from "../utils/store";
 import DeviceListFilter from "./DeviceListFilter";
-// import DeviceListFilter from "./DeviceListFilter";
 import DeviceTable from "./DeviceTable";
 
 export default function DeviceListCard() {

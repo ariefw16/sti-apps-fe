@@ -13,6 +13,7 @@ import DeleteDialog from "../../components/common/DeleteDialog";
 import PageTitleComponent from "../../components/common/PageTitle";
 import TabNav from "../../components/common/TabNav";
 import { PageTitleBreadcrumbs } from "../../types/pagetitle.type";
+import DeviceTemplateListCard from "../DeviceTemplate/components/list/DeviceTemplateListCard";
 import DeviceListCard from "./components/DeviceListCard";
 import { deleteDevice, fetchDevice } from "./utils/service";
 import {
@@ -80,10 +81,9 @@ export default function DevicePage() {
       <Box style={{ position: "relative" }}>
         <LoadingOverlay visible={loading} />
         <TabNav mt={20} position="right">
-          <Tabs.Tab
-            label="Device Template"
-            icon={<Tools size={14} />}
-          ></Tabs.Tab>
+          <Tabs.Tab label="Device Template" icon={<Tools size={14} />}>
+            <DeviceTemplateListCard />
+          </Tabs.Tab>
           <Tabs.Tab label="Devices" icon={<InfoCircle size={14} />}>
             <DeviceListCard />
           </Tabs.Tab>
