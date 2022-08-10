@@ -1,10 +1,19 @@
 import { Tabs } from "@mantine/core";
+import { showNotification } from "@mantine/notifications";
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { useSetRecoilState } from "recoil";
 import PageTitleComponent from "../../components/common/PageTitle";
 import TabNav from "../../components/common/TabNav";
 import { PageTitleBreadcrumbs } from "../../types/pagetitle.type";
 import DeviceTemplateDevicesDetail from "./components/detail/DeviceTemplateDevDetail";
 import DeviceTemplateGeneralInfoDetail from "./components/detail/DeviceTemplateGeneralDetail";
 import DeviceTemplateSpecificationsDetail from "./components/detail/DeviceTemplateSpecDetail";
+import { fetchSingleDeviceTemplate } from "./utils/service";
+import {
+  deviceTemplateDetailState,
+  deviceTemplateLoadingDetailState,
+} from "./utils/store";
 
 export default function DetailDeviceTemplate() {
   const breadcrumb: PageTitleBreadcrumbs[] = [
@@ -20,6 +29,27 @@ export default function DetailDeviceTemplate() {
       label: "Device Template",
     },
   ];
+  const { id } = useParams();
+  const setTemplate = useSetRecoilState(deviceTemplateDetailState);
+  const setLoading = useSetRecoilState(deviceTemplateLoadingDetailState);
+
+  useEffect(() => {
+    setLoading(true);
+    fetchSingleDeviceTemplate(+id!)
+      .then((res) => {
+        setTemplate(res);
+      })
+      .catch((e) => {
+        showNotification({
+          title: "Fetch Single Device Type",
+          message: `Error! ${e.message}`,
+          color: "red",
+        });
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [id]);
 
   return (
     <>

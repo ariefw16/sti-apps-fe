@@ -13,7 +13,7 @@ import ListFooterCard from "../../../../components/common/ListFooterCard";
 import ListHeaderCard from "../../../../components/common/ListHeaderCard";
 import RefreshButton from "../../../../components/common/RefreshButton";
 import { deviceTypeListCountState } from "../../../DeviceType/utils/store";
-import { deleteDeviceTemplate, fetchDeviceType } from "../../utils/service";
+import { deleteDeviceTemplate, fetchDeviceTemplate } from "../../utils/service";
 import {
   deviceTemplateDeletionState,
   deviceTemplateListFilterState,
@@ -31,7 +31,7 @@ export default function DeviceTemplateListCard() {
   const [deletionLoading, setDeletionLoading] = useState(false);
 
   useEffect(() => {
-    fetchDeviceType(filter)
+    fetchDeviceTemplate(filter)
       .then((res) => {
         setData(res.data);
         setRowCount(res.rowCount);

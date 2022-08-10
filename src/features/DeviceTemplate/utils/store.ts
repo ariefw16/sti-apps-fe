@@ -33,3 +33,13 @@ export const deviceTemplateDeletionState = atom<DeleteDeviceTemplate>({
     },
   },
 });
+
+export const deviceTemplateDetailState = atom<DeviceTemplate>({
+  key: "deviceTemplateDetailState",
+  default: {},
+});
+
+export const deviceTemplateLoadingDetailState = atom({
+  key: "deviceTemplateLoadingDetailState",
+  default: false,
+});

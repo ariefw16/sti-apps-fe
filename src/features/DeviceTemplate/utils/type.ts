@@ -1,5 +1,6 @@
 import { DataToDelete } from "../../../types/common";
 import { FetchParams } from "../../../types/fetch.type";
+import { Device } from "../../Devices/utils/type";
 import { DeviceType, DeviceTypeSpec } from "../../DeviceType/utils/type";
 
 export interface DeviceTemplate {
@@ -11,6 +12,7 @@ export interface DeviceTemplate {
   _count?: {
     devices?: number;
   };
+  device?: Device[];
 }
 
 export interface DeviceTemplateSpec {
