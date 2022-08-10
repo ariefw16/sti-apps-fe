@@ -13,6 +13,7 @@ export interface Device {
   deviceTypeId?: number;
   deviceType?: DeviceType;
   DeviceSpecs?: DeviceSpec[];
+  serialNumber?: string;
 }
 
 export interface DeviceSpec {

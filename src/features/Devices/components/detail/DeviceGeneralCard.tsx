@@ -34,7 +34,12 @@ export default function DeviceGeneralCard() {
         disabled
         defaultValue={device.unit?.name}
       />
-      <Checkbox label="This Device is a spare" my={"md"} disabled defaultChecked={device.isSpare} />
+      <Checkbox
+        label="This Device is a spare"
+        my={"md"}
+        disabled
+        defaultChecked={device.isSpare}
+      />
       {!device.isSpare && (
         <TextInput
           disabled
@@ -42,7 +47,8 @@ export default function DeviceGeneralCard() {
           label="IP Address"
           description="Input IP Address to monitor device"
           defaultValue={device.ipAddress}
-        />)}
+        />
+      )}
       <Divider variant="dotted" my={"md"} defaultChecked={device.isSpare} />
       <Group position="apart">
         <Button
@@ -50,7 +56,7 @@ export default function DeviceGeneralCard() {
           leftIcon={<ArrowLeft />}
           radius="md"
           onClick={() => {
-            navigate("/device");
+            navigate(-1);
           }}
         >
           Back
@@ -62,7 +68,7 @@ export default function DeviceGeneralCard() {
           radius={"md"}
           rightIcon={<Pencil />}
         >
-          Update
+          Quick Update
         </Button>
       </Group>
     </Paper>

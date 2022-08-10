@@ -1,4 +1,4 @@
-import { Paper, Title, Divider, TextInput, Select } from "@mantine/core";
+import { Paper, Title, Divider, TextInput } from "@mantine/core";
 import { useRecoilValue } from "recoil";
 import { deviceDetailState } from "../../utils/store";
 

@@ -61,9 +61,6 @@ export default function DetailDeviceTemplate() {
         <Tabs.Tab label="General Info">
           <DeviceTemplateGeneralInfoDetail />
         </Tabs.Tab>
-        <Tabs.Tab label="Specifications">
-          <DeviceTemplateSpecificationsDetail />
-        </Tabs.Tab>
         <Tabs.Tab label="Devices">
           <DeviceTemplateDevicesDetail />
         </Tabs.Tab>

@@ -8,11 +8,11 @@ export interface DeviceTemplate {
   name?: string;
   deviceTypeId?: number;
   deviceType?: DeviceType;
-  DeviceTypeSpecs?: DeviceTemplateSpec[];
+  DeviceTemplateSpecs?: DeviceTemplateSpec[];
   _count?: {
     devices?: number;
   };
-  device?: Device[];
+  devices?: Device[];
 }
 
 export interface DeviceTemplateSpec {
