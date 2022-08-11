@@ -8,13 +8,27 @@ import {
   Button,
 } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { ChevronDown, Eye, Pencil } from "tabler-icons-react";
-import { deviceTemplateDetailState } from "../../utils/store";
+import { Device } from "../../../Devices/utils/type";
+import {
+  deviceTemplateDetailState,
+  deviceTemplateQuickUpdateDeviceState,
+} from "../../utils/store";
 
 export default function DeviceTemplateDevicesDetail() {
   const template = useRecoilValue(deviceTemplateDetailState);
   const navigate = useNavigate();
+  const setQuickUpdate = useSetRecoilState(
+    deviceTemplateQuickUpdateDeviceState
+  );
+
+  const updateMenuHandler = (data: Device) => {
+    setQuickUpdate({
+      showModal: true,
+      data,
+    });
+  };
 
   return (
     <Paper mt={20} p={20} radius="lg">
@@ -32,7 +46,7 @@ export default function DeviceTemplateDevicesDetail() {
         <tbody>
           {template.devices &&
             template.devices.map((d) => (
-              <tr>
+              <tr key={d.id}>
                 <td>{d.serialNumber}</td>
                 <td>
                   {d.isSpare ? (
@@ -62,8 +76,13 @@ export default function DeviceTemplateDevicesDetail() {
                     >
                       View
                     </Menu.Item>
-                    <Menu.Item icon={<Pencil size={14} />} onClick={() => {}}>
-                      Update
+                    <Menu.Item
+                      icon={<Pencil size={14} />}
+                      onClick={() => {
+                        updateMenuHandler(d);
+                      }}
+                    >
+                      Quick Update
                     </Menu.Item>
                   </Menu>
                 </td>

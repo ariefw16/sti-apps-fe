@@ -32,3 +32,8 @@ export interface DeleteDeviceTemplate {
   showModal: boolean;
   data: DataToDelete;
 }
+
+export interface QuickUpdateDevice {
+  showModal: boolean;
+  data: Device;
+}

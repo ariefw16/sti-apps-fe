@@ -3,6 +3,7 @@ import {
   DeleteDeviceTemplate,
   DeviceTemplate,
   DeviceTemplateFetchParams,
+  QuickUpdateDevice,
 } from "./type";
 
 export const deviceTemplateListState = atom<DeviceTemplate[]>({
@@ -42,4 +43,15 @@ export const deviceTemplateDetailState = atom<DeviceTemplate>({
 export const deviceTemplateLoadingDetailState = atom({
   key: "deviceTemplateLoadingDetailState",
   default: false,
+});
+
+export const deviceTemplateQuickUpdateDeviceState = atom<QuickUpdateDevice>({
+  key: "deviceTemplateQuickUpdateDeviceState",
+  default: {
+    showModal: false,
+    data: {
+      serialNumber: "",
+      id: 0,
+    },
+  },
 });

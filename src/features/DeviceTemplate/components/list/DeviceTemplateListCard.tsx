@@ -19,6 +19,7 @@ import {
   deviceTemplateListFilterState,
   deviceTemplateListState,
 } from "../../utils/store";
+import QuickUpdateDeviceTemplate from "../detail/QuickUpdateDevice";
 import DeviceTemplateTable from "./DeviceTemplateTable";
 
 export default function DeviceTemplateListCard() {
@@ -106,6 +107,7 @@ export default function DeviceTemplateListCard() {
         onSubmit={deleteHandler}
         loading={deletionLoading}
       />
+      <QuickUpdateDeviceTemplate />
     </>
   );
 }

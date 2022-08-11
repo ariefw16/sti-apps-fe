@@ -9,6 +9,7 @@ import { PageTitleBreadcrumbs } from "../../types/pagetitle.type";
 import DeviceTemplateDevicesDetail from "./components/detail/DeviceTemplateDevDetail";
 import DeviceTemplateGeneralInfoDetail from "./components/detail/DeviceTemplateGeneralDetail";
 import DeviceTemplateSpecificationsDetail from "./components/detail/DeviceTemplateSpecDetail";
+import QuickUpdateDeviceTemplate from "./components/detail/QuickUpdateDevice";
 import { fetchSingleDeviceTemplate } from "./utils/service";
 import {
   deviceTemplateDetailState,
@@ -65,6 +66,7 @@ export default function DetailDeviceTemplate() {
           <DeviceTemplateDevicesDetail />
         </Tabs.Tab>
       </TabNav>
+      <QuickUpdateDeviceTemplate />
     </>
   );
 }
