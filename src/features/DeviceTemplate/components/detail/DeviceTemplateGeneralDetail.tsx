@@ -1,5 +1,16 @@
-import { Divider, Grid, Loader, Paper, TextInput, Title } from "@mantine/core";
+import {
+  Button,
+  Divider,
+  Grid,
+  Group,
+  Loader,
+  Paper,
+  TextInput,
+  Title,
+} from "@mantine/core";
+import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
+import { ArrowLeft, Pencil } from "tabler-icons-react";
 import {
   deviceTemplateDetailState,
   deviceTemplateLoadingDetailState,
@@ -8,6 +19,15 @@ import {
 export default function DeviceTemplateGeneralInfoDetail() {
   const template = useRecoilValue(deviceTemplateDetailState);
   const loading = useRecoilValue(deviceTemplateLoadingDetailState);
+  const navigate = useNavigate();
+  const { id } = useParams();
+
+  const backButtonHandler = () => {
+    navigate(-1);
+  };
+  const updateButtonHandler = () => {
+    navigate(`/device-template/${id}/edit`);
+  };
 
   return (
     <Grid>
@@ -33,6 +53,24 @@ export default function DeviceTemplateGeneralInfoDetail() {
             description="Type of device for this template"
             defaultValue={template.deviceType?.name || ""}
           />
+          <Divider my={"md"} variant="dotted" />
+          <Group position="apart">
+            <Button
+              onClick={backButtonHandler}
+              color="orange"
+              leftIcon={<ArrowLeft />}
+              radius="md"
+            >
+              Back
+            </Button>
+            <Button
+              rightIcon={<Pencil />}
+              radius={"md"}
+              onClick={updateButtonHandler}
+            >
+              Update
+            </Button>
+          </Group>
         </Paper>
       </Grid.Col>
       <Grid.Col lg={4} sm={12}>

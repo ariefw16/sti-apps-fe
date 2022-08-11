@@ -16,7 +16,7 @@ import {
   deviceTemplateQuickUpdateTriggreState,
 } from "./utils/store";
 
-export default function DetailDeviceTemplate() {
+export default function EditDeviceTemplate() {
   const breadcrumb: PageTitleBreadcrumbs[] = [
     {
       label: "Home",
@@ -27,7 +27,7 @@ export default function DetailDeviceTemplate() {
       to: "/device",
     },
     {
-      label: "Device Template",
+      label: "Update Device Template",
     },
   ];
   const { id } = useParams();
@@ -57,7 +57,7 @@ export default function DetailDeviceTemplate() {
     <>
       <PageTitleComponent
         breadcrumbs={breadcrumb}
-        title="Detail Device Template"
+        title="Update Device Template"
       />
       <TabNav mt={30}>
         <Tabs.Tab label="General Info">

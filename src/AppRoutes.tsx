@@ -27,6 +27,8 @@ import DetailMeetingPage from "./features/Meeting/detail";
 import EditMeetingPage from "./features/Meeting/edit";
 import GroupPage from "./features/Group";
 import DetailDeviceTemplate from "./features/DeviceTemplate/detail";
+import EditDeviceTemplate from "./features/DeviceTemplate/edit";
+import CreateDeviceTemplate from "./features/DeviceTemplate/create";
 
 function App() {
   axios.defaults.baseURL = "http://localhost:3400/";
@@ -65,6 +67,14 @@ function App() {
           <Route path="/meetings/:id/edit" element={<EditMeetingPage />} />
           <Route path="/meetings/:id" element={<DetailMeetingPage />} />
           <Route path="/groups" element={<GroupPage />} />
+          <Route
+            path="/device-template/create"
+            element={<CreateDeviceTemplate />}
+          />
+          <Route
+            path="/device-template/:id/edit"
+            element={<EditDeviceTemplate />}
+          />
           <Route
             path="/device-template/:id"
             element={<DetailDeviceTemplate />}
