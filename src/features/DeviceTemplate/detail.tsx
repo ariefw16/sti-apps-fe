@@ -2,7 +2,7 @@ import { Tabs } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import PageTitleComponent from "../../components/common/PageTitle";
 import TabNav from "../../components/common/TabNav";
 import { PageTitleBreadcrumbs } from "../../types/pagetitle.type";
@@ -14,6 +14,7 @@ import { fetchSingleDeviceTemplate } from "./utils/service";
 import {
   deviceTemplateDetailState,
   deviceTemplateLoadingDetailState,
+  deviceTemplateQuickUpdateTriggreState,
 } from "./utils/store";
 
 export default function DetailDeviceTemplate() {
@@ -33,6 +34,7 @@ export default function DetailDeviceTemplate() {
   const { id } = useParams();
   const setTemplate = useSetRecoilState(deviceTemplateDetailState);
   const setLoading = useSetRecoilState(deviceTemplateLoadingDetailState);
+  const trigger = useRecoilValue(deviceTemplateQuickUpdateTriggreState);
 
   useEffect(() => {
     setLoading(true);
@@ -50,7 +52,7 @@ export default function DetailDeviceTemplate() {
       .finally(() => {
         setLoading(false);
       });
-  }, [id]);
+  }, [id, trigger]);
 
   return (
     <>

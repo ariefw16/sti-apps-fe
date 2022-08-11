@@ -55,3 +55,8 @@ export const deviceTemplateQuickUpdateDeviceState = atom<QuickUpdateDevice>({
     },
   },
 });
+
+export const deviceTemplateQuickUpdateTriggreState = atom({
+  key: "deviceTemplateQuickUpdateTriggreState",
+  default: false,
+});

@@ -44,4 +44,5 @@ export interface CreateDevice {
   deviceTypeId?: number;
   deviceSpecs?: DeviceSpec[];
   id?: number;
+  serialNumber?: string;
 }
