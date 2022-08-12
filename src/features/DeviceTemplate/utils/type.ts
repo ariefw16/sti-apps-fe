@@ -15,6 +15,11 @@ export interface DeviceTemplate {
   devices?: Device[];
 }
 
+export interface CreateDeviceTemplate {
+  name?: string;
+  deviceTypeId?: string;
+}
+
 export interface DeviceTemplateSpec {
   id?: number;
   name?: string;
