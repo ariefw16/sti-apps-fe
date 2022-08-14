@@ -1,5 +1,7 @@
 import { atom } from "recoil";
+import { DeviceSpec } from "../../Devices/utils/type";
 import {
+  CreateDeviceTemplate,
   DeleteDeviceTemplate,
   DeviceTemplate,
   DeviceTemplateFetchParams,
@@ -59,4 +61,14 @@ export const deviceTemplateQuickUpdateDeviceState = atom<QuickUpdateDevice>({
 export const deviceTemplateQuickUpdateTriggreState = atom({
   key: "deviceTemplateQuickUpdateTriggreState",
   default: false,
+});
+
+export const deviceTemplateCreateState = atom<CreateDeviceTemplate>({
+  key: "deviceTemplateCreateState",
+  default: {},
+});
+
+export const deviceTemplateSpecCreateState = atom<DeviceSpec[]>({
+  key: "deviceTemplateSpecCreateState",
+  default: [],
 });

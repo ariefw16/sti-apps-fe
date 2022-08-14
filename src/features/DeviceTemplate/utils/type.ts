@@ -18,6 +18,8 @@ export interface DeviceTemplate {
 export interface CreateDeviceTemplate {
   name?: string;
   deviceTypeId?: string;
+  deviceTemplateSpecs?: DeviceTemplateSpec[];
+  devices?: { serialNumber: string }[];
 }
 
 export interface DeviceTemplateSpec {

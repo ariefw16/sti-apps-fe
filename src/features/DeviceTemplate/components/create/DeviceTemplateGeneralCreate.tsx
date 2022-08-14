@@ -1,28 +1,28 @@
-import { Select, Paper, Title, Divider, TextInput } from "@mantine/core";
-import { zodResolver, useForm } from "@mantine/form";
-import { showNotification } from "@mantine/notifications";
-import { useEffect, useState } from "react";
-import { z } from "zod";
-import { SelectOptions } from "../../../../types/common";
 import {
-  fetchDeviceType,
-  fetchSingleDeviceType,
-} from "../../../DeviceType/utils/service";
-import { CreateDeviceTemplate } from "../../utils/type";
+  Select,
+  Paper,
+  Title,
+  Divider,
+  TextInput,
+  Group,
+  Button,
+} from "@mantine/core";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { DeviceFloppy, X } from "tabler-icons-react";
+import { SelectOptions } from "../../../../types/common";
+import { fetchDeviceType } from "../../../DeviceType/utils/service";
+import {
+  deviceTemplateCreateState,
+  deviceTemplateSpecCreateState,
+} from "../../utils/store";
 
-const schema = z.object({
-  name: z.string().min(5),
-  deviceTypeId: z.string().min(1),
-});
 export default function DeviceTemplateGeneralCreate() {
   const [typeOptions, setTypeOptions] = useState<SelectOptions[]>([]);
-  const form = useForm<CreateDeviceTemplate>({
-    initialValues: {
-      name: "",
-      deviceTypeId: "",
-    },
-    schema: zodResolver(schema),
-  });
+  const [data, setData] = useRecoilState(deviceTemplateCreateState);
+  const spec = useRecoilValue(deviceTemplateSpecCreateState);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchDeviceType({}).then((res) => {
@@ -36,27 +36,14 @@ export default function DeviceTemplateGeneralCreate() {
   }, []);
 
   const typeChangeHandler = (value: string) => {
-    fetchSingleDeviceType(+value)
-      .then((res) => {
-        // if (res.DeviceTypeSpec)
-        // setSpecs(
-        //   res.DeviceTypeSpec?.map((sp) => ({
-        //     value: "",
-        //     specType: sp.specType,
-        //     name: sp.name,
-        //     deviceTypeSpec: sp,
-        //     deviceTypeSpecId: sp.id,
-        //   }))
-        // );
-        // setDeviceTypeId(+value);
-      })
-      .catch((e) => {
-        showNotification({
-          title: "Fetch Specification",
-          message: `Error! ${e.message}`,
-          color: "red",
-        });
-      });
+    setData((d) => ({ ...d, deviceTypeId: value }));
+  };
+  const cancelButtonHandler = () => {
+    navigate(-1);
+  };
+  const saveButtonHandler = () => {
+    console.log(data);
+    console.log(spec);
   };
 
   return (
@@ -68,14 +55,39 @@ export default function DeviceTemplateGeneralCreate() {
         label="Name"
         description="Device Template Name, applied to all device"
         placeholder="ex: Unifi HD"
-        {...form.getInputProps("name")}
+        value={data.name || ""}
+        onChange={(e) => {
+          setData((d) => ({ ...d, name: e.target.value }));
+        }}
       />
       <Select
         data={typeOptions}
+        label="Device Type"
+        description="Select to fill specifications"
         placeholder="Select one Device Type"
         clearable
         onChange={typeChangeHandler}
       />
+      <Divider my={"md"} variant="dotted" />
+      <Group position="right">
+        <Button
+          variant="subtle"
+          color={"orange"}
+          leftIcon={<X />}
+          radius="lg"
+          onClick={cancelButtonHandler}
+        >
+          Cancel
+        </Button>
+        <Button
+          variant="outline"
+          radius={"lg"}
+          rightIcon={<DeviceFloppy />}
+          onClick={saveButtonHandler}
+        >
+          Save
+        </Button>
+      </Group>
     </Paper>
   );
 }
