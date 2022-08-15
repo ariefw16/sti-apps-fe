@@ -7,21 +7,30 @@ import {
   Group,
   Button,
 } from "@mantine/core";
+import { showNotification } from "@mantine/notifications";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { DeviceFloppy, X } from "tabler-icons-react";
 import { SelectOptions } from "../../../../types/common";
 import { fetchDeviceType } from "../../../DeviceType/utils/service";
+import { saveDeviceTemplate } from "../../utils/service";
 import {
   deviceTemplateCreateState,
+  deviceTemplateDevsCreateState,
+  deviceTemplateLoadingCreateState,
   deviceTemplateSpecCreateState,
 } from "../../utils/store";
+import { CreateDeviceTemplate } from "../../utils/type";
 
 export default function DeviceTemplateGeneralCreate() {
   const [typeOptions, setTypeOptions] = useState<SelectOptions[]>([]);
   const [data, setData] = useRecoilState(deviceTemplateCreateState);
+  const [loading, setLoading] = useRecoilState(
+    deviceTemplateLoadingCreateState
+  );
   const spec = useRecoilValue(deviceTemplateSpecCreateState);
+  const devices = useRecoilValue(deviceTemplateDevsCreateState);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -42,8 +51,32 @@ export default function DeviceTemplateGeneralCreate() {
     navigate(-1);
   };
   const saveButtonHandler = () => {
-    console.log(data);
-    console.log(spec);
+    setLoading(true);
+    const body: CreateDeviceTemplate = {
+      deviceTemplateSpecs: spec,
+      devices,
+      name: data.name,
+      deviceTypeId: data.deviceTypeId,
+    };
+    saveDeviceTemplate(body)
+      .then((res) => {
+        showNotification({
+          title: "Device Template Creation",
+          message: "Device Template Created successfully!",
+          color: "green",
+        });
+        navigate(`/device-template/${res.id}`);
+      })
+      .catch((e) => {
+        showNotification({
+          title: "Device Template Creation",
+          message: `Error! ${e.message}`,
+          color: "red",
+        });
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   return (
@@ -59,6 +92,7 @@ export default function DeviceTemplateGeneralCreate() {
         onChange={(e) => {
           setData((d) => ({ ...d, name: e.target.value }));
         }}
+        disabled={loading}
       />
       <Select
         data={typeOptions}
@@ -67,6 +101,7 @@ export default function DeviceTemplateGeneralCreate() {
         placeholder="Select one Device Type"
         clearable
         onChange={typeChangeHandler}
+        disabled={loading}
       />
       <Divider my={"md"} variant="dotted" />
       <Group position="right">
@@ -76,6 +111,7 @@ export default function DeviceTemplateGeneralCreate() {
           leftIcon={<X />}
           radius="lg"
           onClick={cancelButtonHandler}
+          loading={loading}
         >
           Cancel
         </Button>
@@ -84,6 +120,7 @@ export default function DeviceTemplateGeneralCreate() {
           radius={"lg"}
           rightIcon={<DeviceFloppy />}
           onClick={saveButtonHandler}
+          loading={loading}
         >
           Save
         </Button>

@@ -9,20 +9,22 @@ import {
   Title,
 } from "@mantine/core";
 import { useEffect, useState } from "react";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { ChevronDown, Pencil, Plus, Trash } from "tabler-icons-react";
 import { SelectOptions } from "../../../../types/common";
 import { fetchUnit } from "../../../Unit/utils/service";
 import {
   deviceTemplateDevsCreateModalState,
   deviceTemplateDevsCreateState,
+  deviceTemplateLoadingCreateState,
 } from "../../utils/store";
 import DevsAddModal from "./DevsAddModal";
 
 export default function DeviceTemplateDevsCreate() {
-  const [data, setData] = useRecoilState(deviceTemplateDevsCreateState);
+  const data = useRecoilValue(deviceTemplateDevsCreateState);
   const setCreateModal = useSetRecoilState(deviceTemplateDevsCreateModalState);
   const [unitOptions, setUnitOptions] = useState<SelectOptions[]>([]);
+  const loading = useRecoilValue(deviceTemplateLoadingCreateState);
 
   useEffect(() => {
     fetchUnit({ parentId: null }).then((res) => {
@@ -45,6 +47,7 @@ export default function DeviceTemplateDevsCreate() {
             onClick={() => {
               setCreateModal(true);
             }}
+            loading={loading}
           >
             Add Device
           </Button>
@@ -83,13 +86,18 @@ export default function DeviceTemplateDevsCreate() {
                       </Button>
                     }
                   >
-                    <Menu.Item icon={<Pencil size={14} />} onClick={() => {}}>
+                    <Menu.Item
+                      icon={<Pencil size={14} />}
+                      onClick={() => {}}
+                      disabled={loading}
+                    >
                       Update
                     </Menu.Item>
                     <Menu.Item
                       icon={<Trash size={14} />}
                       color="red"
                       onClick={() => {}}
+                      disabled={loading}
                     >
                       Delete
                     </Menu.Item>

@@ -1,6 +1,10 @@
 import axios from "axios";
 import { FetchResult } from "../../../types/fetch.type";
-import { DeviceTemplate, DeviceTemplateFetchParams } from "./type";
+import {
+  CreateDeviceTemplate,
+  DeviceTemplate,
+  DeviceTemplateFetchParams,
+} from "./type";
 
 export async function fetchDeviceTemplate(
   params: DeviceTemplateFetchParams
@@ -32,6 +36,20 @@ export async function fetchSingleDeviceTemplate(
 ): Promise<DeviceTemplate> {
   try {
     const result = await axios.get(`device-template/${id}`);
+    return result.data;
+  } catch (e: any) {
+    throw new Error(e.message);
+  }
+}
+
+export async function saveDeviceTemplate(
+  data: CreateDeviceTemplate
+): Promise<DeviceTemplate> {
+  try {
+    const result = await axios.post("device-template", {
+      ...data,
+      deviceTypeId: data.deviceTypeId ? +data.deviceTypeId : undefined,
+    });
     return result.data;
   } catch (e: any) {
     throw new Error(e.message);

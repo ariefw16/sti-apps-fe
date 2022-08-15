@@ -83,3 +83,8 @@ export const deviceTemplateDevsCreateModalState = atom({
   key: "deviceTemplateDevsCreateModalState",
   default: false,
 });
+
+export const deviceTemplateLoadingCreateState = atom({
+  key: "deviceTemplateLoadingCreateState",
+  default: false,
+});

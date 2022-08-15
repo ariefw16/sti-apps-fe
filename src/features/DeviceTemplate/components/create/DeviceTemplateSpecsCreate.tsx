@@ -5,12 +5,14 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { fetchSingleDeviceType } from "../../../DeviceType/utils/service";
 import {
   deviceTemplateCreateState,
+  deviceTemplateLoadingCreateState,
   deviceTemplateSpecCreateState,
 } from "../../utils/store";
 
 export default function DeviceTemplateSpecsCreate() {
   const typeId = useRecoilValue(deviceTemplateCreateState).deviceTypeId;
   const [spec, setSpec] = useRecoilState(deviceTemplateSpecCreateState);
+  const loading = useRecoilValue(deviceTemplateLoadingCreateState);
 
   useEffect(() => {
     if (typeId)
@@ -52,6 +54,7 @@ export default function DeviceTemplateSpecsCreate() {
       {spec &&
         spec.map((sp) => (
           <TextInput
+            disabled={loading}
             label={sp.name}
             key={sp.deviceTypeSpec?.id}
             my={"md"}
