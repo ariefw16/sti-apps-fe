@@ -4,6 +4,7 @@ import {
   CreateDeviceTemplate,
   DeleteDeviceTemplate,
   DeviceTemplate,
+  DeviceTemplateDevsCreate,
   DeviceTemplateFetchParams,
   QuickUpdateDevice,
 } from "./type";
@@ -71,4 +72,14 @@ export const deviceTemplateCreateState = atom<CreateDeviceTemplate>({
 export const deviceTemplateSpecCreateState = atom<DeviceSpec[]>({
   key: "deviceTemplateSpecCreateState",
   default: [],
+});
+
+export const deviceTemplateDevsCreateState = atom<DeviceTemplateDevsCreate[]>({
+  key: "deviceTemplateDevsCreateState",
+  default: [],
+});
+
+export const deviceTemplateDevsCreateModalState = atom({
+  key: "deviceTemplateDevsCreateModalState",
+  default: false,
 });
