@@ -22,7 +22,7 @@ export interface CreateDeviceTemplate {
 
 export interface DeviceTemplateDevsCreate {
   serialNumber: string;
-  unitId?: string;
+  unitId?: string | null;
   unitName?: string;
   isSpare?: boolean;
   ipAddress?: string;

@@ -1,4 +1,5 @@
 import {
+  Badge,
   Button,
   Divider,
   Group,
@@ -7,8 +8,11 @@ import {
   Table,
   Title,
 } from "@mantine/core";
+import { useEffect, useState } from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { ChevronDown, Pencil, Plus, Trash } from "tabler-icons-react";
+import { SelectOptions } from "../../../../types/common";
+import { fetchUnit } from "../../../Unit/utils/service";
 import {
   deviceTemplateDevsCreateModalState,
   deviceTemplateDevsCreateState,
@@ -18,6 +22,15 @@ import DevsAddModal from "./DevsAddModal";
 export default function DeviceTemplateDevsCreate() {
   const [data, setData] = useRecoilState(deviceTemplateDevsCreateState);
   const setCreateModal = useSetRecoilState(deviceTemplateDevsCreateModalState);
+  const [unitOptions, setUnitOptions] = useState<SelectOptions[]>([]);
+
+  useEffect(() => {
+    fetchUnit({ parentId: null }).then((res) => {
+      setUnitOptions(
+        res.data.map((d) => ({ value: d.id!.toString(), label: d.name! }))
+      );
+    });
+  }, []);
 
   return (
     <>
@@ -47,10 +60,16 @@ export default function DeviceTemplateDevsCreate() {
             </tr>
           </thead>
           <tbody>
-            {data.map((d) => (
-              <tr>
+            {data.map((d, idx) => (
+              <tr key={idx}>
                 <td>{d.serialNumber}</td>
-                <td>{d.isSpare}</td>
+                <td>
+                  {d.isSpare ? (
+                    <Badge color={"indigo"}>Yes</Badge>
+                  ) : (
+                    <Badge color={"orange"}>No</Badge>
+                  )}
+                </td>
                 <td>{d.unitName}</td>
                 <td>
                   <Menu
@@ -81,7 +100,7 @@ export default function DeviceTemplateDevsCreate() {
           </tbody>
         </Table>
       </Paper>
-      <DevsAddModal />
+      <DevsAddModal unitOptions={unitOptions} />
     </>
   );
 }

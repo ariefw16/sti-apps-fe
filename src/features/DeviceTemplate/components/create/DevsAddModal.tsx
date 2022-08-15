@@ -7,21 +7,46 @@ import {
   TextInput,
 } from "@mantine/core";
 import { useState } from "react";
-import { useRecoilValue, useResetRecoilState } from "recoil";
+import { useRecoilValue, useResetRecoilState, useSetRecoilState } from "recoil";
 import { DeviceFloppy, X } from "tabler-icons-react";
-import { deviceTemplateDevsCreateModalState } from "../../utils/store";
+import { SelectOptions } from "../../../../types/common";
+import {
+  deviceTemplateDevsCreateModalState,
+  deviceTemplateDevsCreateState,
+} from "../../utils/store";
 
-export default function DevsAddModal() {
+export default function DevsAddModal(props: { unitOptions: SelectOptions[] }) {
+  const { unitOptions } = props;
   const showModal = useRecoilValue(deviceTemplateDevsCreateModalState);
   const resetModal = useResetRecoilState(deviceTemplateDevsCreateModalState);
+  const setDevices = useSetRecoilState(deviceTemplateDevsCreateState);
   const [sn, setSn] = useState("");
   const [isSpare, setIsSpare] = useState<string | null>("1");
-  const [unitId, setUnitId] = useState("");
+  const [unitId, setUnitId] = useState<string | null>("");
+
+  const resetForm = () => {
+    setSn("");
+    setIsSpare("1");
+    setUnitId("");
+    resetModal();
+  };
+  const saveButtonHandler = () => {
+    setDevices((d) => [
+      ...d,
+      {
+        serialNumber: sn,
+        unitId,
+        isSpare: isSpare === "1",
+        unitName: unitOptions.find((f) => f.value === unitId)?.label,
+      },
+    ]);
+    resetForm();
+  };
 
   return (
     <Modal
       opened={showModal}
-      onClose={resetModal}
+      onClose={resetForm}
       size="lg"
       radius={"lg"}
       title="Add Devices to Device Template"
@@ -51,18 +76,15 @@ export default function DevsAddModal() {
         }}
       />
       <Select
-        data={[
-          { label: "Yes, this device is a Spare", value: "1" },
-          { label: "No.", value: "0" },
-        ]}
+        data={unitOptions}
         placeholder="Select Options"
         label="Unit"
         sx={{ width: 300 }}
         radius="md"
         my="md"
-        value={isSpare}
+        value={unitId}
         onChange={(v) => {
-          setIsSpare(v);
+          setUnitId(v);
         }}
       />
       <Divider variant="dotted" my="md" />
@@ -76,7 +98,12 @@ export default function DevsAddModal() {
         >
           Discard
         </Button>
-        <Button radius={"md"} rightIcon={<DeviceFloppy />} type="submit">
+        <Button
+          radius={"md"}
+          rightIcon={<DeviceFloppy />}
+          type="submit"
+          onClick={saveButtonHandler}
+        >
           Save
         </Button>
       </Group>
