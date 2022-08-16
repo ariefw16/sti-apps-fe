@@ -89,14 +89,3 @@ export const deviceTemplateLoadingCreateState = atom({
   key: "deviceTemplateLoadingCreateState",
   default: false,
 });
-
-export const deviceTemplateRemoveDeviceState = atom<DeleteDeviceFromTemplate>({
-  key: "deviceTemplateRemoveDeviceState",
-  default: {
-    showModal: false,
-    data: {
-      id: 0,
-      name: "",
-    },
-  },
-});
