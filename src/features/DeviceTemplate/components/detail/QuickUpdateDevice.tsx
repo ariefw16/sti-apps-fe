@@ -13,17 +13,18 @@ import { useRecoilValue, useResetRecoilState, useSetRecoilState } from "recoil";
 import { DeviceFloppy, X } from "tabler-icons-react";
 import { SelectOptions } from "../../../../types/common";
 import { updateDevice } from "../../../Devices/utils/service";
-import { fetchUnit } from "../../../Unit/utils/service";
 import {
   deviceTemplateQuickUpdateDeviceState,
   deviceTemplateQuickUpdateTriggreState,
 } from "../../utils/store";
 
-export default function QuickUpdateDeviceTemplate() {
+export default function QuickUpdateDeviceTemplate(props: {
+  unitOptions: SelectOptions[];
+}) {
+  const { unitOptions } = props;
   const data = useRecoilValue(deviceTemplateQuickUpdateDeviceState);
   const resetModal = useResetRecoilState(deviceTemplateQuickUpdateDeviceState);
   const setTrigger = useSetRecoilState(deviceTemplateQuickUpdateTriggreState);
-  const [unitSelection, setUnitSelection] = useState<SelectOptions[]>([]);
   const [sn, setSn] = useState("");
   const [unitId, setUnitId] = useState<string>();
   const [spare, setSpare] = useState<string | null>(null);
@@ -35,19 +36,6 @@ export default function QuickUpdateDeviceTemplate() {
     setUnitId(data.data.unitId?.toString());
     setSpare(isSpare);
     setIpAddress(data.data.ipAddress);
-    fetchUnit({ parentId: null })
-      .then((res) => {
-        setUnitSelection(
-          res.data.map((d) => ({ value: d.id!.toString(), label: d.name! }))
-        );
-      })
-      .catch((e) => {
-        showNotification({
-          title: "Fetch Unit",
-          message: `Error! ${e.message}`,
-          color: "red",
-        });
-      });
   }, [data.data.id]);
 
   const isSpare = () => (data.data.isSpare ? "1" : "0");
@@ -134,7 +122,7 @@ export default function QuickUpdateDeviceTemplate() {
         )}
       </Grid>
       <Select
-        data={unitSelection || []}
+        data={unitOptions || []}
         placeholder="Select Options"
         label="Unit :"
         radius="md"

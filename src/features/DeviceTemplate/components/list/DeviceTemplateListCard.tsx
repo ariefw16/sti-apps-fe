@@ -91,6 +91,7 @@ export default function DeviceTemplateListCard() {
           refreshButton={<RefreshButton onClick={applyToggleRefresh} />}
           setSearch={setSearch}
           search={filter.q}
+          noFilterButton
           addButton={
             <AddButton
               onClick={() => {

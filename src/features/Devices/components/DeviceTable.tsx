@@ -61,6 +61,7 @@ export default function DeviceTable() {
             </th>
             <th style={rowHeaderStyle}>Name</th>
             <th style={rowHeaderStyle}>Type</th>
+            <th style={rowHeaderStyle}>S/N</th>
             <th style={rowHeaderStyle}>IP Address</th>
             <th style={rowHeaderStyle}>Unit</th>
             <th style={{ width: 120, ...rowHeaderStyle }}>Actions</th>
@@ -83,6 +84,7 @@ export default function DeviceTable() {
                 </td>
                 <td>{item.name}</td>
                 <td>{item.deviceType?.name}</td>
+                <td>{item.serialNumber}</td>
                 <td>{item.ipAddress}</td>
                 <td>{item.unit?.name}</td>
                 <td>

@@ -9,7 +9,7 @@ import {
   Title,
 } from "@mantine/core";
 import { useEffect, useState } from "react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { ChevronDown, Pencil, Plus, Trash } from "tabler-icons-react";
 import { SelectOptions } from "../../../../types/common";
 import { fetchUnit } from "../../../Unit/utils/service";
@@ -21,7 +21,7 @@ import {
 import DevsAddModal from "./DevsAddModal";
 
 export default function DeviceTemplateDevsCreate() {
-  const data = useRecoilValue(deviceTemplateDevsCreateState);
+  const [data, setData] = useRecoilState(deviceTemplateDevsCreateState);
   const setCreateModal = useSetRecoilState(deviceTemplateDevsCreateModalState);
   const [unitOptions, setUnitOptions] = useState<SelectOptions[]>([]);
   const loading = useRecoilValue(deviceTemplateLoadingCreateState);
@@ -33,6 +33,22 @@ export default function DeviceTemplateDevsCreate() {
       );
     });
   }, []);
+
+  const saveButtonHandler = (props: {
+    sn: string;
+    unitId: string | null;
+    isSpare: string | null;
+  }) => {
+    setData((d) => [
+      ...d,
+      {
+        serialNumber: props.sn,
+        unitId: props.unitId,
+        isSpare: props.isSpare === "1",
+        unitName: unitOptions.find((f) => f.value === props.unitId)?.label,
+      },
+    ]);
+  };
 
   return (
     <>
@@ -108,7 +124,7 @@ export default function DeviceTemplateDevsCreate() {
           </tbody>
         </Table>
       </Paper>
-      <DevsAddModal unitOptions={unitOptions} />
+      <DevsAddModal unitOptions={unitOptions} saveHandler={saveButtonHandler} />
     </>
   );
 }

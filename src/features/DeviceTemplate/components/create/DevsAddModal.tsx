@@ -15,8 +15,11 @@ import {
   deviceTemplateDevsCreateState,
 } from "../../utils/store";
 
-export default function DevsAddModal(props: { unitOptions: SelectOptions[] }) {
-  const { unitOptions } = props;
+export default function DevsAddModal(props: {
+  unitOptions: SelectOptions[];
+  saveHandler: any;
+}) {
+  const { unitOptions, saveHandler } = props;
   const showModal = useRecoilValue(deviceTemplateDevsCreateModalState);
   const resetModal = useResetRecoilState(deviceTemplateDevsCreateModalState);
   const setDevices = useSetRecoilState(deviceTemplateDevsCreateState);
@@ -31,15 +34,7 @@ export default function DevsAddModal(props: { unitOptions: SelectOptions[] }) {
     resetModal();
   };
   const saveButtonHandler = () => {
-    setDevices((d) => [
-      ...d,
-      {
-        serialNumber: sn,
-        unitId,
-        isSpare: isSpare === "1",
-        unitName: unitOptions.find((f) => f.value === unitId)?.label,
-      },
-    ]);
+    saveHandler({ sn, unitId, isSpare });
     resetForm();
   };
 

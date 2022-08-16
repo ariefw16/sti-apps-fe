@@ -2,6 +2,7 @@ import { atom } from "recoil";
 import { DeviceSpec } from "../../Devices/utils/type";
 import {
   CreateDeviceTemplate,
+  DeleteDeviceFromTemplate,
   DeleteDeviceTemplate,
   DeviceTemplate,
   DeviceTemplateDevsCreate,
@@ -87,4 +88,15 @@ export const deviceTemplateDevsCreateModalState = atom({
 export const deviceTemplateLoadingCreateState = atom({
   key: "deviceTemplateLoadingCreateState",
   default: false,
+});
+
+export const deviceTemplateRemoveDeviceState = atom<DeleteDeviceFromTemplate>({
+  key: "deviceTemplateRemoveDeviceState",
+  default: {
+    showModal: false,
+    data: {
+      id: 0,
+      name: "",
+    },
+  },
 });

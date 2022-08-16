@@ -19,7 +19,7 @@ export interface CreateDeviceTemplate {
   name?: string;
   deviceTypeId?: string;
   deviceTemplateSpecs?: DeviceTemplateSpec[];
-  devices?: { serialNumber: string }[];
+  devices?: DeviceTemplateDevsCreate[];
 }
 
 export interface DeviceTemplateDevsCreate {
@@ -51,4 +51,9 @@ export interface DeleteDeviceTemplate {
 export interface QuickUpdateDevice {
   showModal: boolean;
   data: Device;
+}
+
+export interface DeleteDeviceFromTemplate {
+  showModal: boolean;
+  data: DataToDelete;
 }
