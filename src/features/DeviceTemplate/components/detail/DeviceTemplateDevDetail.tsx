@@ -11,7 +11,7 @@ import {
 import { showNotification } from "@mantine/notifications";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useRecoilValue, useResetRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { ChevronDown, Eye, Pencil, Plus, Trash } from "tabler-icons-react";
 import DeleteDialog from "../../../../components/common/DeleteDialog";
 import { DataToDelete, SelectOptions } from "../../../../types/common";
@@ -20,10 +20,8 @@ import { Device } from "../../../Devices/utils/type";
 import { addDeviceToDeviceTemplate } from "../../utils/service";
 import {
   deviceTemplateDetailState,
-  deviceTemplateDevsCreateModalState,
   deviceTemplateQuickUpdateDeviceState,
   deviceTemplateQuickUpdateTriggreState,
-  deviceTemplateRemoveDeviceState,
 } from "../../utils/store";
 import DevsAddModal from "../create/DevsAddModal";
 
@@ -36,7 +34,6 @@ export default function DeviceTemplateDevicesDetail(props: {
   const setQuickUpdate = useSetRecoilState(
     deviceTemplateQuickUpdateDeviceState
   );
-  const setCreateModal = useSetRecoilState(deviceTemplateDevsCreateModalState);
   const setTrigger = useSetRecoilState(deviceTemplateQuickUpdateTriggreState);
   const [deviceDeletion, setDeviceDeletion] = useState<DataToDelete>({
     id: 0,
@@ -44,6 +41,7 @@ export default function DeviceTemplateDevicesDetail(props: {
   });
   const [showDeletion, setShowDeletion] = useState(false);
   const [deletionLoading, setDeletionLoading] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
 
   const updateMenuHandler = (data: Device) => {
     setQuickUpdate({
@@ -89,7 +87,7 @@ export default function DeviceTemplateDevicesDetail(props: {
           color: "green",
         });
         setTrigger((t) => !t);
-        closeModalHandler();
+        closeDeletionHandler();
       })
       .catch((e) => {
         showNotification({
@@ -103,12 +101,15 @@ export default function DeviceTemplateDevicesDetail(props: {
       });
   };
   const closeModalHandler = () => {
-    setShowDeletion(false);
-    setDeviceDeletion({ id: 0, name: "" });
+    setOpenModal(false);
   };
   const deleteButtonHandler = (data: DataToDelete) => {
-    setDeviceDeletion(data);
     setShowDeletion(true);
+    setDeviceDeletion({ ...data });
+  };
+  const closeDeletionHandler = () => {
+    setDeviceDeletion({ id: 0, name: "" });
+    setShowDeletion(false);
   };
 
   return (
@@ -122,7 +123,7 @@ export default function DeviceTemplateDevicesDetail(props: {
             variant="light"
             color={"cyan"}
             onClick={() => {
-              setCreateModal(true);
+              setOpenModal(true);
             }}
           >
             Add Device
@@ -135,6 +136,7 @@ export default function DeviceTemplateDevicesDetail(props: {
               <th>Serial Number</th>
               <th>is Spare</th>
               <th>Unit</th>
+              <th>IP Address</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -151,6 +153,7 @@ export default function DeviceTemplateDevicesDetail(props: {
                     )}
                   </td>
                   <td>{d.unit?.name || "-"}</td>
+                  <td>{d.ipAddress}</td>
                   <td>
                     <Menu
                       control={
@@ -198,12 +201,17 @@ export default function DeviceTemplateDevicesDetail(props: {
           </tbody>
         </Table>
       </Paper>
-      <DevsAddModal unitOptions={unitOptions} saveHandler={saveButtonHandler} />
+      <DevsAddModal
+        unitOptions={unitOptions}
+        saveHandler={saveButtonHandler}
+        opened={openModal}
+        onClose={closeModalHandler}
+      />
       <DeleteDialog
         open={showDeletion}
         data={deviceDeletion}
         onSubmit={deletionDeviceHandler}
-        onClose={closeModalHandler}
+        onClose={closeDeletionHandler}
         loading={deletionLoading}
       />
     </>

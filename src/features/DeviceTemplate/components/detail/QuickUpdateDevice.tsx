@@ -33,7 +33,7 @@ export default function QuickUpdateDeviceTemplate(props: {
 
   useEffect(() => {
     setSn(data.data.serialNumber || "");
-    setUnitId(data.data.unitId?.toString());
+    setUnitId(data.data.unit?.id!.toString());
     setSpare(isSpare);
     setIpAddress(data.data.ipAddress);
   }, [data.data.id]);

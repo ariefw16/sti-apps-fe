@@ -6,32 +6,39 @@ import {
   Select,
   TextInput,
 } from "@mantine/core";
-import { useState } from "react";
-import { useRecoilValue, useResetRecoilState, useSetRecoilState } from "recoil";
+import { useEffect, useState } from "react";
 import { DeviceFloppy, X } from "tabler-icons-react";
 import { SelectOptions } from "../../../../types/common";
-import {
-  deviceTemplateDevsCreateModalState,
-  deviceTemplateDevsCreateState,
-} from "../../utils/store";
 
 export default function DevsAddModal(props: {
   unitOptions: SelectOptions[];
   saveHandler: any;
+  defaultValues?: {
+    sn: string;
+    isSpare: string | null;
+    unitId: string | null;
+  };
+  opened: boolean;
+  onClose: any;
 }) {
-  const { unitOptions, saveHandler } = props;
-  const showModal = useRecoilValue(deviceTemplateDevsCreateModalState);
-  const resetModal = useResetRecoilState(deviceTemplateDevsCreateModalState);
-  const setDevices = useSetRecoilState(deviceTemplateDevsCreateState);
+  const { unitOptions, saveHandler, defaultValues, opened, onClose } = props;
   const [sn, setSn] = useState("");
   const [isSpare, setIsSpare] = useState<string | null>("1");
   const [unitId, setUnitId] = useState<string | null>("");
+
+  useEffect(() => {
+    if (defaultValues) {
+      setSn(defaultValues.sn);
+      setIsSpare(defaultValues.isSpare);
+      setUnitId(defaultValues.unitId);
+    }
+  }, [opened]);
 
   const resetForm = () => {
     setSn("");
     setIsSpare("1");
     setUnitId("");
-    resetModal();
+    onClose();
   };
   const saveButtonHandler = () => {
     saveHandler({ sn, unitId, isSpare });
@@ -40,8 +47,8 @@ export default function DevsAddModal(props: {
 
   return (
     <Modal
-      opened={showModal}
-      onClose={resetForm}
+      opened={opened}
+      onClose={onClose}
       size="lg"
       radius={"lg"}
       title="Add Devices to Device Template"
@@ -89,7 +96,7 @@ export default function DevsAddModal(props: {
           variant="subtle"
           color={"orange"}
           leftIcon={<X />}
-          onClick={resetModal}
+          onClick={onClose}
         >
           Discard
         </Button>

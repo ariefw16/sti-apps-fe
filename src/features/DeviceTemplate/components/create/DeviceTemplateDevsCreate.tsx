@@ -14,7 +14,6 @@ import { ChevronDown, Pencil, Plus, Trash } from "tabler-icons-react";
 import { SelectOptions } from "../../../../types/common";
 import { fetchUnit } from "../../../Unit/utils/service";
 import {
-  deviceTemplateDevsCreateModalState,
   deviceTemplateDevsCreateState,
   deviceTemplateLoadingCreateState,
 } from "../../utils/store";
@@ -22,8 +21,8 @@ import DevsAddModal from "./DevsAddModal";
 
 export default function DeviceTemplateDevsCreate() {
   const [data, setData] = useRecoilState(deviceTemplateDevsCreateState);
-  const setCreateModal = useSetRecoilState(deviceTemplateDevsCreateModalState);
   const [unitOptions, setUnitOptions] = useState<SelectOptions[]>([]);
+  const [showCreate, setShowCreate] = useState(false);
   const loading = useRecoilValue(deviceTemplateLoadingCreateState);
 
   useEffect(() => {
@@ -49,6 +48,12 @@ export default function DeviceTemplateDevsCreate() {
       },
     ]);
   };
+  const removeDevice = (idx: number) => {
+    setData((d) => d.filter((e, i) => i !== idx));
+  };
+  const closeAddModalHandler = () => {
+    setShowCreate(false);
+  };
 
   return (
     <>
@@ -61,7 +66,7 @@ export default function DeviceTemplateDevsCreate() {
             variant="light"
             color={"cyan"}
             onClick={() => {
-              setCreateModal(true);
+              setShowCreate(true);
             }}
             loading={loading}
           >
@@ -112,7 +117,9 @@ export default function DeviceTemplateDevsCreate() {
                     <Menu.Item
                       icon={<Trash size={14} />}
                       color="red"
-                      onClick={() => {}}
+                      onClick={() => {
+                        removeDevice(idx);
+                      }}
                       disabled={loading}
                     >
                       Delete
@@ -124,7 +131,12 @@ export default function DeviceTemplateDevsCreate() {
           </tbody>
         </Table>
       </Paper>
-      <DevsAddModal unitOptions={unitOptions} saveHandler={saveButtonHandler} />
+      <DevsAddModal
+        unitOptions={unitOptions}
+        saveHandler={saveButtonHandler}
+        opened={showCreate}
+        onClose={closeAddModalHandler}
+      />
     </>
   );
 }
