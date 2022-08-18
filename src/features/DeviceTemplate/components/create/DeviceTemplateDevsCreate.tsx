@@ -9,7 +9,7 @@ import {
   Title,
 } from "@mantine/core";
 import { useEffect, useState } from "react";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { ChevronDown, Pencil, Plus, Trash } from "tabler-icons-react";
 import { SelectOptions } from "../../../../types/common";
 import { fetchUnit } from "../../../Unit/utils/service";
@@ -23,6 +23,8 @@ export default function DeviceTemplateDevsCreate() {
   const [data, setData] = useRecoilState(deviceTemplateDevsCreateState);
   const [unitOptions, setUnitOptions] = useState<SelectOptions[]>([]);
   const [showCreate, setShowCreate] = useState(false);
+  const [showUpdate, setShowUpdate] = useState(false);
+  const [idxUpdate, setIdxUpdate] = useState<number>(-1);
   const loading = useRecoilValue(deviceTemplateLoadingCreateState);
 
   useEffect(() => {
@@ -53,6 +55,33 @@ export default function DeviceTemplateDevsCreate() {
   };
   const closeAddModalHandler = () => {
     setShowCreate(false);
+  };
+  const updateButtonHandler = (idx: number) => {
+    setIdxUpdate(idx);
+    setShowUpdate(true);
+  };
+  const closeUpdateModalHandler = () => {
+    setShowUpdate(false);
+    setIdxUpdate(-1);
+  };
+  const saveUpdateHandler = (props: {
+    sn: string;
+    unitId: string | null;
+    isSpare: string | null;
+  }) => {
+    const { sn, unitId, isSpare } = props;
+    setData(
+      data.map((dt, idx) => {
+        if (idx === idxUpdate)
+          return {
+            serialNumber: sn,
+            unitId,
+            isSpare: isSpare === "1",
+            unitName: unitOptions.find((e) => e.value === unitId)?.label,
+          };
+        else return dt;
+      })
+    );
   };
 
   return (
@@ -109,7 +138,9 @@ export default function DeviceTemplateDevsCreate() {
                   >
                     <Menu.Item
                       icon={<Pencil size={14} />}
-                      onClick={() => {}}
+                      onClick={() => {
+                        updateButtonHandler(idx);
+                      }}
                       disabled={loading}
                     >
                       Update
@@ -136,6 +167,17 @@ export default function DeviceTemplateDevsCreate() {
         saveHandler={saveButtonHandler}
         opened={showCreate}
         onClose={closeAddModalHandler}
+      />
+      <DevsAddModal
+        unitOptions={unitOptions}
+        opened={showUpdate}
+        onClose={closeUpdateModalHandler}
+        saveHandler={saveUpdateHandler}
+        defaultValues={{
+          sn: data[idxUpdate]?.serialNumber || "",
+          unitId: data[idxUpdate]?.unitId || null,
+          isSpare: data[idxUpdate]?.isSpare ? "1" : "0",
+        }}
       />
     </>
   );
