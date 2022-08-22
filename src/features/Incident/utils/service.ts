@@ -70,3 +70,12 @@ export async function fetchSingleIncident(id: number): Promise<Incident> {
     throw new Error(e.message);
   }
 }
+
+export async function fetchActiveIncident(): Promise<Incident[]> {
+  try {
+    const res = await axios.get(`incident?isDone=0`);
+    return res.data[0];
+  } catch (e: any) {
+    throw new Error(e.message);
+  }
+}

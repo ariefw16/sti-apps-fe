@@ -2,6 +2,7 @@ import { Grid } from "@mantine/core";
 import PageTitleComponent from "../../components/common/PageTitle";
 import { PageTitleBreadcrumbs } from "../../types/pagetitle.type";
 import DashboardCard from "./components/DashboardCard";
+import DashboardIncidentCard from "./components/IncidentCard";
 
 export default function DashboardPage() {
   const breadcrumbs: PageTitleBreadcrumbs[] = [
@@ -16,10 +17,10 @@ export default function DashboardPage() {
     <>
       <PageTitleComponent breadcrumbs={breadcrumbs} title="App Dashboard" />
       <Grid mt={40}>
-        <Grid.Col sm={12} md={8}>
-          <DashboardCard>Tes</DashboardCard>
+        <Grid.Col sm={12} md={9}>
+          <DashboardIncidentCard />
         </Grid.Col>
-        <Grid.Col sm={12} md={4}>
+        <Grid.Col sm={12} md={3}>
           <DashboardCard>Tes</DashboardCard>
         </Grid.Col>
         <Grid.Col sm={12} md={8}>
