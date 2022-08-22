@@ -21,6 +21,7 @@
     "react-dom": "^18.0.0",
     "react-router-dom": "^6.3.0",
     "recoil": "^0.7.3-alpha.2",
+    "socket.io-client": "^4.5.1",
     "tabler-icons-react": "^1.48.0",
     "zod": "^3.17.3"
   },
