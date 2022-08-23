@@ -1,22 +1,20 @@
 import { Paper, Table, Title } from "@mantine/core";
-import { showNotification } from "@mantine/notifications";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { io } from "socket.io-client";
-import { fetchActiveIncident } from "../../Incident/utils/service";
 import { activeIncidentState } from "../utils/store";
 
 export default function DashboardIncidentCard() {
   const [incident, setIncident] = useRecoilState(activeIncidentState);
-  const socket = io(`http://localhost:3400/dashboard`);
+  const socket = io(`ws://localhost:3400`);
 
   useEffect(() => {
-    socket.on("incident", (args) => {
-      console.log("ok");
-      console.log(args);
+    socket.on("connect", () => {
+      console.log(socket.io.engine.transport.name);
     });
-    socket.on("connect_error", () => {
-      console.log("err");
+    socket.on("incident", (data) => {
+      console.log("ok");
+      console.log(data);
     });
   }, []);
 
