@@ -1,20 +1,41 @@
-import { Paper, Table, Title } from "@mantine/core";
+import { Paper, Table } from "@mantine/core";
+import { showNotification } from "@mantine/notifications";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { io } from "socket.io-client";
+import {
+  fetchActiveIncident,
+  fetchIncidents,
+} from "../../Incident/utils/service";
+import { Incident } from "../../Incident/utils/type";
 import { activeIncidentState } from "../utils/store";
 
 export default function DashboardIncidentCard() {
-  const [incident, setIncident] = useRecoilState(activeIncidentState);
+  const [incident, setIncident] = useState<Incident[]>([]);
   const socket = io(`ws://localhost:3400`);
 
   useEffect(() => {
+    const fetchIncident = () => {
+      fetchActiveIncident()
+        .then((res) => {
+          setIncident(res);
+        })
+        .catch((e) => {
+          showNotification({
+            title: "Fetch Active Incident",
+            message: `Error! ${e.message}`,
+            color: "red",
+          });
+        });
+    };
     socket.on("connect", () => {
-      console.log(socket.io.engine.transport.name);
+      fetchIncident();
+      console.log("websocket connected!");
     });
+    //Type result callback
+    //data : {type:'down'|'up', id:number}
     socket.on("incident", (data) => {
-      console.log("ok");
-      console.log(data);
+      fetchIncident();
     });
   }, []);
 
