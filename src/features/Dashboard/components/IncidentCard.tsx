@@ -1,14 +1,10 @@
 import { Paper, Table } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
+import moment from "moment";
 import { useEffect, useState } from "react";
-import { useRecoilState } from "recoil";
 import { io } from "socket.io-client";
-import {
-  fetchActiveIncident,
-  fetchIncidents,
-} from "../../Incident/utils/service";
+import { fetchActiveIncident } from "../../Incident/utils/service";
 import { Incident } from "../../Incident/utils/type";
-import { activeIncidentState } from "../utils/store";
 
 export default function DashboardIncidentCard() {
   const [incident, setIncident] = useState<Incident[]>([]);
@@ -18,6 +14,7 @@ export default function DashboardIncidentCard() {
     const fetchIncident = () => {
       fetchActiveIncident()
         .then((res) => {
+          console.log(res);
           setIncident(res);
         })
         .catch((e) => {
@@ -51,28 +48,23 @@ export default function DashboardIncidentCard() {
           </tr>
         </thead>
         <tbody>
+          {incident.length < 1 && (
+            <tr>
+              <td colSpan={4} style={{ textAlign: "center" }}>
+                <i>No Data Found.</i>
+              </td>
+            </tr>
+          )}
           {incident.map((i, idx) => (
             <tr key={idx}>
               <td>
                 {i.unit?.name} ({i.device?.ipAddress})
               </td>
-              <td>123</td>
+              <td>{moment(i.eventDate).format("DD-MMM-YYYY HH:mm")}</td>
               <td>123</td>
               <td>123</td>
             </tr>
           ))}
-          <tr>
-            <td>123</td>
-            <td>123</td>
-            <td>123</td>
-            <td>123</td>
-          </tr>
-          <tr>
-            <td>123</td>
-            <td>123</td>
-            <td>123</td>
-            <td>123</td>
-          </tr>
         </tbody>
       </Table>
     </Paper>
