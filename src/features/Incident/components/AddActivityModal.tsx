@@ -42,6 +42,7 @@ export default function AddActivityModal(props: { afterSubmit?: any }) {
           color: "green",
         });
         resetCreation();
+        form.reset();
         afterSubmit();
       })
       .catch((e) => {

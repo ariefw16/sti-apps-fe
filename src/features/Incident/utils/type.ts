@@ -22,6 +22,7 @@ export interface Incident {
   unitId?: number;
   incidentLog?: IncidentLog[];
   incidentActivity?: IncidentActivity[];
+  lastUpdate?: Date;
 }
 
 export interface IncidentLog {

@@ -17,10 +17,10 @@ export default function DashboardPage() {
     <>
       <PageTitleComponent breadcrumbs={breadcrumbs} title="App Dashboard" />
       <Grid mt={40}>
-        <Grid.Col sm={12} md={9}>
+        <Grid.Col sm={12} md={12}>
           <DashboardIncidentCard />
         </Grid.Col>
-        <Grid.Col sm={12} md={3}>
+        <Grid.Col sm={12} md={4}>
           <DashboardCard>Tes</DashboardCard>
         </Grid.Col>
         <Grid.Col sm={12} md={8}>
