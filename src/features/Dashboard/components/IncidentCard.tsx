@@ -4,7 +4,7 @@ import moment from "moment";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { io } from "socket.io-client";
-import { ChevronDown, Eye, ListDetails } from "tabler-icons-react";
+import { ChevronDown, Eye } from "tabler-icons-react";
 import { fetchActiveIncident } from "../../Incident/utils/service";
 import { Incident } from "../../Incident/utils/type";
 

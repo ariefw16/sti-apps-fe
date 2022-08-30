@@ -22,6 +22,7 @@ const schema = z.object({
   client_id: z.string().optional(),
   account_id: z.string().optional(),
   active: z.boolean().optional(),
+  maxParticipant: z.number().min(0),
 });
 export default function CreateZoomAccountPage() {
   const form = useForm<ZoomAccountCreate>({
@@ -33,6 +34,7 @@ export default function CreateZoomAccountPage() {
       account_id: "",
       active: true,
       unitId: "",
+      maxParticipant: 100,
     },
     schema: zodResolver(schema),
   });

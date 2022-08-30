@@ -1,4 +1,12 @@
-import { Divider, Paper, Title, TextInput, PasswordInput } from "@mantine/core";
+import {
+  Divider,
+  Paper,
+  Title,
+  TextInput,
+  PasswordInput,
+  NumberInput,
+  Group,
+} from "@mantine/core";
 import { UseFormReturnType } from "@mantine/form/lib/use-form";
 import { useRecoilValue } from "recoil";
 import { zoomAccountCreateLoadingState } from "../../utils/store";
@@ -21,22 +29,24 @@ export default function ZoomInfoCard(props: {
         disabled={loading}
         {...form.getInputProps("email")}
       />
-      <TextInput
-        my="sm"
-        label="Account ID"
-        description="Account ID from zoom.us to connect Account"
-        placeholder="Input Account ID"
-        disabled={loading}
-        {...form.getInputProps("account_id")}
-      />
-      <TextInput
-        my="sm"
-        label="Client ID"
-        description="Client ID from zoom.us to connect Account"
-        placeholder="Input Client ID"
-        disabled={loading}
-        {...form.getInputProps("client_id")}
-      />
+      <Group>
+        <TextInput
+          my="sm"
+          label="Account ID"
+          description="Account ID from zoom.us to connect Account"
+          placeholder="Input Account ID"
+          disabled={loading}
+          {...form.getInputProps("account_id")}
+        />
+        <TextInput
+          my="sm"
+          label="Client ID"
+          description="Client ID from zoom.us to connect Account"
+          placeholder="Input Client ID"
+          disabled={loading}
+          {...form.getInputProps("client_id")}
+        />
+      </Group>
       <PasswordInput
         my="sm"
         label="Secret Key"
@@ -45,6 +55,16 @@ export default function ZoomInfoCard(props: {
         disabled={loading}
         {...form.getInputProps("secretKey")}
       />
+      <Group>
+        <NumberInput
+          my="sm"
+          label="Max Participant"
+          description="Participant allowed Limit from this account"
+          placeholder="Input Max Participant"
+          disabled={loading}
+          {...form.getInputProps("maxParticipant")}
+        />
+      </Group>
     </Paper>
   );
 }

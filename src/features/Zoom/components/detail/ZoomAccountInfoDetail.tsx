@@ -39,6 +39,14 @@ export default function ZoomAccountInfoDetail() {
       />
       <TextInput
         my="sm"
+        label="Max Participant"
+        description="Participant allowed Limit from this account"
+        readOnly
+        variant="filled"
+        value={account.maxParticipant + " Participant"}
+      />
+      <TextInput
+        my="sm"
         label="Last Connection"
         description="Last connection established for any features"
         readOnly

@@ -13,7 +13,12 @@ import { useNavigate } from "react-router-dom";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { Check, ChevronDown, Eye, Pencil, Trash, X } from "tabler-icons-react";
 import { DataToDelete } from "../../../../types/common";
-import { meetingApprovalState, meetingCancelState, meetingDeleteState, meetingListState } from "../../utils/store";
+import {
+  meetingApprovalState,
+  meetingCancelState,
+  meetingDeleteState,
+  meetingListState,
+} from "../../utils/store";
 
 const useStyles = createStyles((theme) => ({
   rowSelected: {
@@ -29,10 +34,10 @@ export default function MeetingListTable() {
   const [selection, setSelection] = useState<number[]>([]);
   const rowHeaderStyle = { color: "GrayText", fontWeight: 500 };
   const navigate = useNavigate();
-  const meeting = useRecoilValue(meetingListState)
-  const setDeletion = useSetRecoilState(meetingDeleteState)
-  const setApproval = useSetRecoilState(meetingApprovalState)
-  const setCancel = useSetRecoilState(meetingCancelState)
+  const meeting = useRecoilValue(meetingListState);
+  const setDeletion = useSetRecoilState(meetingDeleteState);
+  const setApproval = useSetRecoilState(meetingApprovalState);
+  const setCancel = useSetRecoilState(meetingCancelState);
 
   const toggleRow = (id: number) =>
     setSelection((current) =>
@@ -42,19 +47,23 @@ export default function MeetingListTable() {
     );
   const toggleAll = () =>
     setSelection((current) =>
-      current.length === meeting.length
-        ? []
-        : meeting.map((item) => item.id!)
+      current.length === meeting.length ? [] : meeting.map((item) => item.id!)
     );
   const deleteButtonHandler = (data: DataToDelete) => {
-    setDeletion({ showModal: true, data })
-  }
-  const approvalMenuHandler = (data: { id: number, name: string, startDate: Date, duration: number }) => {
-    setApproval({ showModal: true, data })
-  }
-  const cancelMenuHandler = (data: { id: number, name: string }) => {
-    setCancel({ showModal: true, data })
-  }
+    setDeletion({ showModal: true, data });
+  };
+  const approvalMenuHandler = (data: {
+    id: number;
+    name: string;
+    startDate: Date;
+    duration: number;
+    expectedParticipant: number;
+  }) => {
+    setApproval({ showModal: true, data });
+  };
+  const cancelMenuHandler = (data: { id: number; name: string }) => {
+    setCancel({ showModal: true, data });
+  };
 
   return (
     <ScrollArea>
@@ -95,12 +104,20 @@ export default function MeetingListTable() {
                   />
                 </td>
                 <td>{item.name}</td>
-                <td>{moment(item.startDate).format('DD-MMM-YYYY HH:mm:ss')}</td>
+                <td>{moment(item.startDate).format("DD-MMM-YYYY HH:mm:ss")}</td>
                 <td>{item.duration} min</td>
-                <td>{item.zoomAccount?.name || '-'}</td>
-                <td>{item.status === 0 ?
-                  <Badge variant="filled" color={"orange"}>Waiting approval</Badge>
-                  : item.status === 1 ? <Badge>Approved</Badge> : <Badge color={"red"}>Cancelled</Badge>}</td>
+                <td>{item.zoomAccount?.name || "-"}</td>
+                <td>
+                  {item.status === 0 ? (
+                    <Badge variant="filled" color={"orange"}>
+                      Waiting approval
+                    </Badge>
+                  ) : item.status === 1 ? (
+                    <Badge>Approved</Badge>
+                  ) : (
+                    <Badge color={"red"}>Cancelled</Badge>
+                  )}
+                </td>
                 <td>
                   <Menu
                     control={
@@ -121,31 +138,26 @@ export default function MeetingListTable() {
                     >
                       View
                     </Menu.Item>
-                    {
-                      item.status === 0 &&
-                      <Menu.Item
-                        icon={<Pencil size={14} />}
-                        onClick={() => {
-                        }}
-                      >
+                    {item.status === 0 && (
+                      <Menu.Item icon={<Pencil size={14} />} onClick={() => {}}>
                         Update
                       </Menu.Item>
-                    }
-                    {item.status === 1 &&
-                      (<Menu.Item
+                    )}
+                    {item.status === 1 && (
+                      <Menu.Item
                         icon={<X size={14} />}
                         onClick={() => {
                           cancelMenuHandler({
                             id: item.id!,
                             name: item.name!,
-                          })
+                          });
                         }}
                         color="red"
                       >
                         Cancel Meeting
-                      </Menu.Item>)
-                    }
-                    {item.status === 0 &&
+                      </Menu.Item>
+                    )}
+                    {item.status === 0 && (
                       <Menu.Item
                         icon={<Check size={14} />}
                         onClick={() => {
@@ -153,19 +165,20 @@ export default function MeetingListTable() {
                             id: item.id!,
                             name: item.name!,
                             startDate: item.startDate!,
-                            duration: item.duration!
-                          })
+                            duration: item.duration!,
+                            expectedParticipant: item.expectedParticipant ?? 0,
+                          });
                         }}
                         color="cyan"
                       >
                         Approve Meeting
                       </Menu.Item>
-                    }
+                    )}
                     <Menu.Item
                       icon={<Trash size={14} />}
                       color="red"
                       onClick={() => {
-                        deleteButtonHandler({ id: item.id!, name: item.name! })
+                        deleteButtonHandler({ id: item.id!, name: item.name! });
                       }}
                     >
                       Delete
@@ -178,5 +191,5 @@ export default function MeetingListTable() {
         </tbody>
       </Table>
     </ScrollArea>
-  )
+  );
 }

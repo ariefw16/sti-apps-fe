@@ -76,6 +76,7 @@ export default function ZoomAccountListTable() {
               />
             </th>
             <th style={rowHeaderStyle}>Name</th>
+            <th style={rowHeaderStyle}>Max Participant</th>
             <th style={{ width: 120, ...rowHeaderStyle }}>Actions</th>
           </tr>
         </thead>
@@ -95,6 +96,7 @@ export default function ZoomAccountListTable() {
                   />
                 </td>
                 <td>{item.name}</td>
+                <td>{item.maxParticipant} participants</td>
                 <td>
                   <Menu
                     control={

@@ -8,8 +8,8 @@ import { PageTitleBreadcrumbs } from "../../types/pagetitle.type";
 import { fetchSingleZoomAccount, updateZoomAccount } from "./utils/service";
 import { zoomAccountDetailState } from "./utils/store";
 import ZoomAccountGeneralInfoEdit from "./components/edit/ZoomAccountGeneralInfoEdit";
-import { z } from 'zod'
-import { ZoomAccountCreate } from './utils/type'
+import { z } from "zod";
+import { ZoomAccountCreate } from "./utils/type";
 import { useForm, zodResolver } from "@mantine/form";
 import ZoomInfoEdit from "./components/edit/ZoomInfoEdit";
 
@@ -20,19 +20,22 @@ const schema = z.object({
   client_id: z.string().optional(),
   account_id: z.string().optional(),
   active: z.boolean().optional(),
-})
+  maxParticipant: z.number().min(0),
+});
 export default function EditZoomAccountPage() {
   const form = useForm<ZoomAccountCreate>({
     initialValues: {
-      name: '',
-      email: '',
-      secretKey: '',
-      client_id: '',
-      account_id: '',
+      name: "",
+      email: "",
+      secretKey: "",
+      client_id: "",
+      account_id: "",
       active: true,
-      unitId: ""
-    }, schema: zodResolver(schema)
-  })
+      unitId: "",
+      maxParticipant: 50,
+    },
+    schema: zodResolver(schema),
+  });
   const { id } = useParams();
   const breadcrumbs: PageTitleBreadcrumbs[] = [
     {
@@ -48,64 +51,85 @@ export default function EditZoomAccountPage() {
     },
   ];
   const [loading, setLoading] = useState(false);
-  const [account, setAccount] = useRecoilState(zoomAccountDetailState)
-  const navigate = useNavigate()
+  const [account, setAccount] = useRecoilState(zoomAccountDetailState);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (account.id !== +id!) {
-      setLoading(true)
+      setLoading(true);
       fetchSingleZoomAccount(+id!)
-        .then(res => {
-          setAccount(res)
+        .then((res) => {
+          setAccount(res);
         })
-        .catch(e => {
+        .catch((e) => {
           showNotification({
             title: "Fetch Zoom Account",
             message: `Error! ${e.message}`,
             color: "red",
           });
         })
-        .finally(() => { setLoading(false) })
+        .finally(() => {
+          setLoading(false);
+        });
     }
-  }, [id])
+  }, [id]);
   useEffect(() => {
-    form.setFieldValue('name', account.name || '')
-    form.setFieldValue('account_id', account.account_id || '')
-    form.setFieldValue('client_id', account.client_id || '')
-    form.setFieldValue('email', account.email || '')
-    form.setFieldValue('unitId', account.ownerUnit && account.ownerUnit.id ? account.ownerUnit.id.toString() : '')
-  }, [account])
+    form.setFieldValue("name", account.name || "");
+    form.setFieldValue("account_id", account.account_id || "");
+    form.setFieldValue("client_id", account.client_id || "");
+    form.setFieldValue("email", account.email || "");
+    form.setFieldValue(
+      "unitId",
+      account.ownerUnit && account.ownerUnit.id
+        ? account.ownerUnit.id.toString()
+        : ""
+    );
+    form.setFieldValue("maxParticipant", account.maxParticipant ?? 100);
+  }, [account]);
 
   const formSubmitHandler = (data: ZoomAccountCreate) => {
-    setLoading(true)
-    updateZoomAccount({ id: +id!, data }).then(res => {
-      setAccount(res)
-      showNotification({ title: 'Zoom Account Update', message: `Update Account Zoom success!`, color: 'green' })
-      navigate(`/zoom-account/${id}`)
-    }).catch(e => {
-      showNotification({ title: 'Zoom Account Update', message: `Error! ${e.message}`, color: 'red' })
-    }).finally(() => {
-      setLoading(false)
-    })
-  }
+    setLoading(true);
+    updateZoomAccount({ id: +id!, data })
+      .then((res) => {
+        setAccount(res);
+        showNotification({
+          title: "Zoom Account Update",
+          message: `Update Account Zoom success!`,
+          color: "green",
+        });
+        navigate(`/zoom-account/${id}`);
+      })
+      .catch((e) => {
+        showNotification({
+          title: "Zoom Account Update",
+          message: `Error! ${e.message}`,
+          color: "red",
+        });
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
 
-  return <>
-    <PageTitleComponent
-      title="Update Data Zoom Account"
-      breadcrumbs={breadcrumbs}
-    />
-    <Box style={{ position: "relative" }}>
-      <LoadingOverlay visible={loading} />
-      <form onSubmit={form.onSubmit(formSubmitHandler)}>
-        <Grid mt={50}>
-          <Grid.Col md={5} sm={12}>
-            <ZoomInfoEdit form={form} />
-          </Grid.Col>
-          <Grid.Col md={7} sm={12}>
-            <ZoomAccountGeneralInfoEdit form={form} />
-          </Grid.Col>
-        </Grid>
-      </form>
-    </Box>
-  </>
-} 
+  return (
+    <>
+      <PageTitleComponent
+        title="Update Data Zoom Account"
+        breadcrumbs={breadcrumbs}
+      />
+      <Box style={{ position: "relative" }}>
+        <LoadingOverlay visible={loading} />
+        <form onSubmit={form.onSubmit(formSubmitHandler)}>
+          <Grid mt={50}>
+            <Grid.Col md={5} sm={12}>
+              <ZoomInfoEdit form={form} />
+            </Grid.Col>
+            <Grid.Col md={7} sm={12}>
+              <ZoomAccountGeneralInfoEdit form={form} />
+            </Grid.Col>
+          </Grid>
+        </form>
+      </Box>
+    </>
+  );
+}
