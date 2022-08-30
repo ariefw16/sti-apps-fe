@@ -14,6 +14,7 @@ export interface Device {
   deviceType?: DeviceType;
   DeviceSpecs?: DeviceSpec[];
   serialNumber?: string;
+  merk?: string;
 }
 
 export interface DeviceSpec {
@@ -45,4 +46,5 @@ export interface CreateDevice {
   deviceSpecs?: DeviceSpec[];
   id?: number;
   serialNumber?: string;
+  merk?: string;
 }
