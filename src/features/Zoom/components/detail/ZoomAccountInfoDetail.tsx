@@ -43,7 +43,7 @@ export default function ZoomAccountInfoDetail() {
         description="Participant allowed Limit from this account"
         readOnly
         variant="filled"
-        value={account.maxParticipant + " Participant"}
+        value={account.maxParticipant + " Participant" || ""}
       />
       <TextInput
         my="sm"
