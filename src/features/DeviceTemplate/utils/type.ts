@@ -13,6 +13,7 @@ export interface DeviceTemplate {
     devices?: number;
   };
   devices?: Device[];
+  merk?: string;
 }
 
 export interface CreateDeviceTemplate {
@@ -20,6 +21,7 @@ export interface CreateDeviceTemplate {
   deviceTypeId?: string;
   deviceTemplateSpecs?: DeviceTemplateSpec[];
   devices?: DeviceTemplateDevsCreate[];
+  merk?: string;
 }
 
 export interface DeviceTemplateDevsCreate {

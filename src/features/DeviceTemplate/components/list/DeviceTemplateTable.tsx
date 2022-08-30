@@ -63,6 +63,7 @@ export default function DeviceTemplateTable() {
               />
             </th>
             <th style={rowHeaderStyle}>Name</th>
+            <th style={rowHeaderStyle}>Merk</th>
             <th style={rowHeaderStyle}>Type</th>
             <th style={rowHeaderStyle}>Devices</th>
             <th style={{ width: 120, ...rowHeaderStyle }}>Actions</th>
@@ -84,6 +85,7 @@ export default function DeviceTemplateTable() {
                   />
                 </td>
                 <td>{item.name}</td>
+                <td>{item.merk}</td>
                 <td>{item.deviceType?.name}</td>
                 <td>{item._count?.devices}</td>
                 <td>
