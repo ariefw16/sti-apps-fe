@@ -14,11 +14,13 @@ import { useNavigate } from "react-router-dom";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { ArrowLeft, DeviceFloppy } from "tabler-icons-react";
 import { SelectOptions } from "../../../../types/common";
+import { fetchSingleDeviceType } from "../../../DeviceType/utils/service";
 import { updateDeviceTemplate } from "../../utils/service";
 import {
   deviceTemplateDetailState,
   deviceTemplateQuickUpdateTriggreState,
 } from "../../utils/store";
+import { DeviceTemplateSpec } from "../../utils/type";
 
 export default function DeviceTemplateGeneralInfoEdit(props: {
   typeOptions: SelectOptions[];
@@ -29,26 +31,59 @@ export default function DeviceTemplateGeneralInfoEdit(props: {
   const setTrigger = useSetRecoilState(deviceTemplateQuickUpdateTriggreState);
   const [name, setName] = useState("");
   const [merk, setMerk] = useState("");
-  const [deviceTypeId, setDeviceTypeId] = useState<string | null>(null);
+  const [deviceTypeId, setDeviceTypeId] = useState<string>();
+  const [specs, setSpecs] = useState<DeviceTemplateSpec[]>([]);
 
   useEffect(() => {
     setName(template.name ?? "");
     setMerk(template.merk ?? "");
-    setDeviceTypeId(template.deviceType?.id?.toString() ?? null);
+    setDeviceTypeId(template.deviceType?.id?.toString());
+    setSpecs(template.DeviceTemplateSpecs ?? []);
   }, [template]);
 
   const typeChangeHandler = (vals: string) => {
     setDeviceTypeId(vals);
+    fetchSingleDeviceType(+vals)
+      .then((res) => {
+        if (res.DeviceTypeSpec)
+          setSpecs(
+            res.DeviceTypeSpec?.map((sp) => ({
+              value: "",
+              specType: sp.specType,
+              name: sp.name,
+              deviceTypeSpec: sp,
+              deviceTypeSpecId: sp.id,
+            }))
+          );
+      })
+      .catch((e) => {
+        showNotification({
+          title: "Fetch Specification",
+          message: `Error! ${e.message}`,
+          color: "red",
+        });
+      });
+  };
+  const specsOnChangeHandler = (vals: string, id: number) => {
+    setSpecs((sp) => {
+      const ret = sp.map((s) => ({ ...s }));
+      const idx = ret.findIndex((s) => s.deviceTypeSpec?.id === id);
+      ret[idx].value = vals;
+      return ret;
+    });
   };
   const backButtonHandler = () => {
     navigate(-1);
   };
   const saveButtonHandler = () => {
+    console.table({ name, merk, deviceTypeId, specs });
     updateDeviceTemplate({
       id: template.id!,
       data: {
         merk,
         name,
+        deviceTypeId,
+        deviceTemplateSpecs: specs,
       },
     })
       .then(() => {
@@ -109,6 +144,7 @@ export default function DeviceTemplateGeneralInfoEdit(props: {
               color="orange"
               leftIcon={<ArrowLeft />}
               radius="md"
+              variant="outline"
             >
               Back
             </Button>
@@ -116,10 +152,28 @@ export default function DeviceTemplateGeneralInfoEdit(props: {
               rightIcon={<DeviceFloppy />}
               radius={"md"}
               onClick={saveButtonHandler}
+              variant="gradient"
             >
-              Update
+              Save
             </Button>
           </Group>
+        </Paper>
+      </Grid.Col>
+      <Grid.Col sm={12} lg={4}>
+        <Paper p={20} radius="lg" mt={20}>
+          <Title order={5}>Specifications</Title>
+          <Divider my={"md"} variant="dotted" />
+          {specs.map((x, idx) => (
+            <TextInput
+              key={idx}
+              my={"sm"}
+              label={x.name}
+              value={x.value || ""}
+              onChange={(e) => {
+                specsOnChangeHandler(e.target.value, x.deviceTypeSpec?.id!);
+              }}
+            />
+          ))}
         </Paper>
       </Grid.Col>
     </Grid>
