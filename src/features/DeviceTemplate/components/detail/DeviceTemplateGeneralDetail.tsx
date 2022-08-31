@@ -42,7 +42,7 @@ export default function DeviceTemplateGeneralInfoDetail() {
             variant="filled"
             rightSection={loading ? <Loader size={16} /> : null}
             description="Device Template Name, applied to all device"
-            defaultValue={template.name || ""}
+            value={template.name || ""}
           />
           <TextInput
             my={"sm"}
@@ -51,7 +51,7 @@ export default function DeviceTemplateGeneralInfoDetail() {
             variant="filled"
             rightSection={loading ? <Loader size={16} /> : null}
             description="Device Brand"
-            defaultValue={template.merk || ""}
+            value={template.merk || ""}
           />
           <TextInput
             my={"sm"}
@@ -60,7 +60,7 @@ export default function DeviceTemplateGeneralInfoDetail() {
             variant="filled"
             rightSection={loading ? <Loader size={16} /> : null}
             description="Type of device for this template"
-            defaultValue={template.deviceType?.name || ""}
+            value={template.deviceType?.name || ""}
           />
           <Divider my={"md"} variant="dotted" />
           <Group position="apart">

@@ -88,3 +88,16 @@ export async function addDeviceToDeviceTemplate(
     throw new Error(e.message);
   }
 }
+
+export async function updateDeviceTemplate(props: {
+  id: number;
+  data: CreateDeviceTemplate;
+}) {
+  try {
+    const { id, data } = props;
+    const result = await axios.patch(`device-template/${id}`, { ...data });
+    return result.data;
+  } catch (e: any) {
+    throw new Error(e.message);
+  }
+}

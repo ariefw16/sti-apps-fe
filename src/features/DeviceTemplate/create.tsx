@@ -19,6 +19,7 @@ export default function CreateDeviceTemplate() {
       label: "Create Device Template",
     },
   ];
+
   return (
     <>
       <PageTitleComponent
