@@ -83,7 +83,10 @@ export default function DeviceTemplateGeneralInfoEdit(props: {
         merk,
         name,
         deviceTypeId,
-        deviceTemplateSpecs: specs,
+        deviceTemplateSpecs: specs.map((s) => ({
+          ...s,
+          deviceTypeSpec: undefined,
+        })),
       },
     })
       .then(() => {
