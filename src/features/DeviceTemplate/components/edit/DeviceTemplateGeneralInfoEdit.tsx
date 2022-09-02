@@ -79,6 +79,7 @@ export default function DeviceTemplateGeneralInfoEdit(props: {
   };
 
   const saveButtonHandler = () => {
+    console.log(specs);
     updateDeviceTemplate({
       id: template.id!,
       data: {

@@ -95,7 +95,7 @@ export default function DeviceTemplateGeneralInfoDetail() {
                 readOnly
                 variant="filled"
                 rightSection={loading ? <Loader size={16} /> : null}
-                defaultValue={x.value}
+                value={x.value ?? ""}
               />
             ))}
         </Paper>
