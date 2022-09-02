@@ -64,6 +64,7 @@ export default function DeviceTemplateGeneralInfoEdit(props: {
         });
       });
   };
+
   const specsOnChangeHandler = (vals: string, id: number) => {
     setSpecs((sp) => {
       const ret = sp.map((s) => ({ ...s }));
@@ -72,11 +73,12 @@ export default function DeviceTemplateGeneralInfoEdit(props: {
       return ret;
     });
   };
+
   const backButtonHandler = () => {
     navigate(-1);
   };
+
   const saveButtonHandler = () => {
-    console.table({ name, merk, deviceTypeId, specs });
     updateDeviceTemplate({
       id: template.id!,
       data: {
