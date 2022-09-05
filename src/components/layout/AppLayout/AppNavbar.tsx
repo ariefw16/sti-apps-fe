@@ -30,6 +30,7 @@ const mockdata = [
       { label: "Devices", link: "/device" },
       { label: "Incidents", link: "/incident" },
       { label: "Device Type", link: "/device-type" },
+      { label: "Access Door DC", link: "/access-door" },
     ],
   },
   {

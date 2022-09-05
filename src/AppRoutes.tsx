@@ -29,6 +29,7 @@ import GroupPage from "./features/Group";
 import DetailDeviceTemplate from "./features/DeviceTemplate/detail";
 import EditDeviceTemplate from "./features/DeviceTemplate/edit";
 import CreateDeviceTemplate from "./features/DeviceTemplate/create";
+import AccessDoorPage from "./features/AccessDoor";
 
 function App() {
   axios.defaults.baseURL = "http://localhost:3400/";
@@ -79,6 +80,7 @@ function App() {
             path="/device-template/:id"
             element={<DetailDeviceTemplate />}
           />
+          <Route path="/access-door" element={<AccessDoorPage />} />
         </Route>
         <Route path="/auth" element={<AuthLayout />}>
           <Route index element={<LoginPage />} />
