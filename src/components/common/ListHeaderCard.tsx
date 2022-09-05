@@ -9,6 +9,7 @@ export default function ListHeaderCard(props: {
   addButton?: JSX.Element;
   refreshButton?: JSX.Element;
   noFilterButton?: boolean;
+  noSearch?: boolean;
 }) {
   const {
     search,
@@ -17,6 +18,7 @@ export default function ListHeaderCard(props: {
     addButton,
     refreshButton,
     noFilterButton,
+    noSearch,
   } = props;
   const [openFilter, setOpenFilter] = useState(false);
 
@@ -41,19 +43,24 @@ export default function ListHeaderCard(props: {
   );
 
   return (
-    <Group sx={{ marginTop: 10, marginBottom: 20 }} position="apart">
-      <TextInput
-        placeholder="Quick Search"
-        variant="filled"
-        radius={"lg"}
-        icon={<Search />}
-        sx={{ width: 300 }}
-        size="md"
-        onChange={(e) => {
-          setSearch(e.target.value);
-        }}
-        value={search}
-      />
+    <Group
+      sx={{ marginTop: 10, marginBottom: 20 }}
+      position={noSearch ? "right" : "apart"}
+    >
+      {!noSearch && (
+        <TextInput
+          placeholder="Quick Search"
+          variant="filled"
+          radius={"lg"}
+          icon={<Search />}
+          sx={{ width: 300 }}
+          size="md"
+          onChange={(e) => {
+            setSearch(e.target.value);
+          }}
+          value={search}
+        />
+      )}
       <Group>
         {!noFilterButton && (
           <Popover
