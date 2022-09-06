@@ -29,7 +29,7 @@ export default function GroupListCard() {
     setFilter((x) => ({ ...x, page: value }));
   };
   const addButtonHandler = () => {
-    setCreation({ showModal: true, data: { name: "" } });
+    setCreation({ showModal: true, data: { name: "", initial: "" } });
   };
 
   return (

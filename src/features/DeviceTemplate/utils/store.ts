@@ -2,7 +2,6 @@ import { atom } from "recoil";
 import { DeviceSpec } from "../../Devices/utils/type";
 import {
   CreateDeviceTemplate,
-  DeleteDeviceFromTemplate,
   DeleteDeviceTemplate,
   DeviceTemplate,
   DeviceTemplateDevsCreate,
