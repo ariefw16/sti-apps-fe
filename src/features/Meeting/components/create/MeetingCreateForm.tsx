@@ -49,6 +49,7 @@ export default function MeetingCreateForm(props: {
           label="Duration (minutes)"
           placeholder="duration in minutes"
           description="Meeting Duration estimation"
+          {...form.getInputProps("duration")}
         />
         <NumberInput
           label="Expected Participant"
