@@ -3,6 +3,7 @@ import {
   Button,
   Group,
   LoadingOverlay,
+  Menu,
   Paper,
   Select,
   Table,
@@ -10,12 +11,16 @@ import {
 import { showNotification } from "@mantine/notifications";
 import moment from "moment";
 import { useState } from "react";
-import { useRecoilValue } from "recoil";
-import { Search } from "tabler-icons-react";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { ChevronDown, Download, Search } from "tabler-icons-react";
 import { MONTH, SelectOptions } from "../../../../types/common";
 import { fetchZoomAccountRecording } from "../../utils/service";
-import { zoomAccountDetailState } from "../../utils/store";
+import {
+  zoomAccountDetailState,
+  zoomAccountDownloadDialogState,
+} from "../../utils/store";
 import { ZoomAccountRecord } from "../../utils/type";
+import ZoomAccountRecordDownloadModal from "./ZoomAccountRecordDownloadModal";
 
 export default function ZoomAccountRecordCard() {
   const year: SelectOptions[] = [];
@@ -24,6 +29,7 @@ export default function ZoomAccountRecordCard() {
   const [record, setRecord] = useState<ZoomAccountRecord[]>([]);
   const [loading, setLoading] = useState(false);
   const account = useRecoilValue(zoomAccountDetailState);
+  const setShowDownload = useSetRecoilState(zoomAccountDownloadDialogState);
 
   for (let i = 2022; i <= new Date().getFullYear(); i++) {
     year.push({
@@ -58,6 +64,9 @@ export default function ZoomAccountRecordCard() {
   };
   const yearSelectHandler = (vals: string) => {
     setYearSelected(vals);
+  };
+  const downloadRecordingHandler = (id: number) => {
+    setShowDownload({ showModal: true, meetingId: id });
   };
 
   return (
@@ -112,11 +121,30 @@ export default function ZoomAccountRecordCard() {
                   .map((r, idx) => (
                     <tr key={idx}>
                       <td>{r.topic}</td>
+                      <td>{moment(r.start_time).format("DD/MM/YYYY HH:mm")}</td>
+                      <td>{r.duration} min</td>
                       <td>
-                        {moment(r.start_time).format("DD-MMM-YYYY HH:mm")}
+                        <Menu
+                          control={
+                            <Button
+                              size="xs"
+                              variant="light"
+                              rightIcon={<ChevronDown size={14} />}
+                            >
+                              Actions
+                            </Button>
+                          }
+                        >
+                          <Menu.Item
+                            icon={<Download size={14} />}
+                            onClick={() => {
+                              downloadRecordingHandler(r.id!);
+                            }}
+                          >
+                            Download Recording
+                          </Menu.Item>
+                        </Menu>
                       </td>
-                      <td>{r.duration}</td>
-                      <td></td>
                     </tr>
                   ))
               )}
@@ -124,6 +152,7 @@ export default function ZoomAccountRecordCard() {
           </Table>
         </Paper>
       </Box>
+      <ZoomAccountRecordDownloadModal />
     </>
   );
 }

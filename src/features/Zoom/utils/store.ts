@@ -1,46 +1,62 @@
-import { ZoomAccount, ZoomAccountDelete, ZoomAccountFetchParams, ZoomAccountTestConnection } from './type'
-import { atom } from 'recoil'
+import {
+  ZoomAccount,
+  ZoomAccountDelete,
+  ZoomAccountFetchParams,
+  ZoomAccountTestConnection,
+} from "./type";
+import { atom } from "recoil";
 
 export const zoomListState = atom<ZoomAccount[]>({
-  key: 'zoomListState',
-  default: []
-})
+  key: "zoomListState",
+  default: [],
+});
 
 export const zoomListCountState = atom({
-  key: 'zoomListCountState',
-  default: 0
-})
+  key: "zoomListCountState",
+  default: 0,
+});
 
 export const zoomListFilterState = atom<ZoomAccountFetchParams>({
-  key: 'zoomListFilterState',
+  key: "zoomListFilterState",
   default: {
     page: 1,
-    limit: 15
-  }
-})
+    limit: 15,
+  },
+});
 
 export const zoomAccountDeleteState = atom<ZoomAccountDelete>({
-  key: 'zoomAccountDeleteState',
+  key: "zoomAccountDeleteState",
   default: {
     data: { id: 0, name: "" },
-    showModal: false
-  }
-})
+    showModal: false,
+  },
+});
 
 export const zoomAccountCreateLoadingState = atom({
-  key: 'zoomAccountCreateLoadingState',
-  default: false
-})
+  key: "zoomAccountCreateLoadingState",
+  default: false,
+});
 
 export const zoomAccountDetailState = atom<ZoomAccount>({
-  key: 'zoomAccountDetailState',
-  default: {}
-})
+  key: "zoomAccountDetailState",
+  default: {},
+});
 
 export const zoomAccountTestConnectState = atom<ZoomAccountTestConnection>({
-  key: 'zoomAccountTestConnectState',
+  key: "zoomAccountTestConnectState",
   default: {
     showModal: false,
-    id: 0
-  }
-})
+    id: 0,
+  },
+});
+
+export const zoomAccountDownloadDialogState = atom<{
+  showModal: boolean;
+  meetingId?: number;
+}>({
+  key: "zoomAccountDownloadDialogState",
+  default: {
+    showModal: false,
+    meetingId: undefined,
+  },
+});

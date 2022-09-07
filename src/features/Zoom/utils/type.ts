@@ -58,14 +58,18 @@ export interface ZoomAccountRecord {
   total_size?: number;
   recording_count?: number;
   share_url?: string;
-  recording_files?: ZoomAccountRecordFile[];
 }
 
-export interface ZoomAccountRecordFile {
+export interface ZoomAccountRecordDownload {
+  topic?: string;
+  share_url?: string;
+  password?: string;
+  recording_files?: ZoomAccountRecordDownloadFiles[];
+}
+
+export interface ZoomAccountRecordDownloadFiles {
   id?: string;
-  meeting_id?: string;
   file_type?: string;
-  file_extension?: string;
   download_url?: string;
   recording_type?: string;
 }

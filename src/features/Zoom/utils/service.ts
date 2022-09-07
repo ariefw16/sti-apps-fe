@@ -5,6 +5,7 @@ import {
   ZoomAccountCreate,
   ZoomAccountFetchParams,
   ZoomAccountRecord,
+  ZoomAccountRecordDownload,
 } from "./type";
 
 export async function fetchZoomAccount(
@@ -89,6 +90,21 @@ export async function fetchZoomAccountRecording(props: {
       `zoom-account/rec/${id}?from=${year}-${month}-01&to=${year}-${month}-31`
     );
     return result.data.meetings;
+  } catch (e: any) {
+    throw new Error(e.message);
+  }
+}
+
+export async function getDownloadLinkRecording(props: {
+  id: number;
+  meetingId: number;
+}): Promise<ZoomAccountRecordDownload> {
+  try {
+    const { id, meetingId } = props;
+    const result = await axios.get(
+      `zoom-account/rec/${id}/dl?meetingId=${meetingId}`
+    );
+    return result.data;
   } catch (e: any) {
     throw new Error(e.message);
   }
