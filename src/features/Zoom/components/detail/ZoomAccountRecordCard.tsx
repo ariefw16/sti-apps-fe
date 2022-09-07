@@ -12,7 +12,7 @@ import { showNotification } from "@mantine/notifications";
 import moment from "moment";
 import { useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { ChevronDown, Download, Search } from "tabler-icons-react";
+import { ChevronDown, Download, Video } from "tabler-icons-react";
 import { MONTH, SelectOptions } from "../../../../types/common";
 import { fetchZoomAccountRecording } from "../../utils/service";
 import {
@@ -86,7 +86,7 @@ export default function ZoomAccountRecordCard() {
             />
           </Group>
           <Button
-            rightIcon={<Search />}
+            rightIcon={<Video />}
             radius="lg"
             variant="light"
             color={"teal"}
