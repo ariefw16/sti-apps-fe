@@ -124,6 +124,17 @@ export default function ApprovalMeetingModal() {
         variant="filled"
         value={approval.data.expectedParticipant + " participants" || ""}
       />
+      <TextInput
+        my="sm"
+        label="Requested By"
+        description="Requestor Name and email"
+        readOnly
+        variant="filled"
+        value={
+          `${approval.data.requestorName} ( ${approval.data.requestorEmail})` ||
+          ""
+        }
+      />
       <Select
         data={accountSelection || []}
         placeholder="Select Options"

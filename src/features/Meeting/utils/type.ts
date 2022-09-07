@@ -30,6 +30,8 @@ export interface Meeting {
   createdById?: number;
   approvadById?: number;
   expectedParticipant?: number;
+  requestorName?: string;
+  requestorEmail?: string;
 }
 
 export interface MeetingsFetchParams extends FetchParams {
@@ -71,6 +73,8 @@ export interface MeetingApproval {
     startDate?: Date;
     duration?: number;
     expectedParticipant?: number;
+    requestorName?: string;
+    requestorEmail?: string;
   };
 }
 

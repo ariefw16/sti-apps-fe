@@ -58,6 +58,8 @@ export default function MeetingListTable() {
     startDate: Date;
     duration: number;
     expectedParticipant: number;
+    requestorName: string;
+    requestorEmail: string;
   }) => {
     setApproval({ showModal: true, data });
   };
@@ -167,6 +169,8 @@ export default function MeetingListTable() {
                             startDate: item.startDate!,
                             duration: item.duration!,
                             expectedParticipant: item.expectedParticipant ?? 0,
+                            requestorEmail: item.requestorEmail!,
+                            requestorName: item.requestorName!,
                           });
                         }}
                         color="cyan"
