@@ -1,6 +1,6 @@
 import PageTitleComponent from "../../components/common/PageTitle";
 import { PageTitleBreadcrumbs } from "../../types/pagetitle.type";
-import { Box, Grid, LoadingOverlay } from "@mantine/core";
+import { Box, Grid, LoadingOverlay, Tabs } from "@mantine/core";
 import DeleteDialog from "../../components/common/DeleteDialog";
 import { useRecoilValue, useResetRecoilState, useSetRecoilState } from "recoil";
 import {
@@ -14,6 +14,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import { showNotification } from "@mantine/notifications";
 import ZoomAccountGeneralInfoDetail from "./components/detail/ZoomAccountGeneralInfoDetail";
 import ZoomAccountInfoDetail from "./components/detail/ZoomAccountInfoDetail";
+import TabNav from "../../components/common/TabNav";
+import { InfoCircle, Video } from "tabler-icons-react";
+import ZoomAccountRecordCard from "./components/detail/ZoomAccountRecordCard";
 
 export default function DetailZoomAccount() {
   const breadcrumbs: PageTitleBreadcrumbs[] = [
@@ -89,14 +92,21 @@ export default function DetailZoomAccount() {
       />
       <Box style={{ position: "relative" }}>
         <LoadingOverlay visible={loading} />
-        <Grid mt={50}>
-          <Grid.Col md={5} sm={12}>
-            <ZoomAccountInfoDetail />
-          </Grid.Col>
-          <Grid.Col md={7} sm={12}>
-            <ZoomAccountGeneralInfoDetail />
-          </Grid.Col>
-        </Grid>
+        <TabNav mt={20} position="left">
+          <Tabs.Tab label="General Information" icon={<InfoCircle />}>
+            <Grid mt={10}>
+              <Grid.Col md={5} sm={12}>
+                <ZoomAccountInfoDetail />
+              </Grid.Col>
+              <Grid.Col md={7} sm={12}>
+                <ZoomAccountGeneralInfoDetail />
+              </Grid.Col>
+            </Grid>
+          </Tabs.Tab>
+          <Tabs.Tab label="Recording" icon={<Video />}>
+            <ZoomAccountRecordCard />
+          </Tabs.Tab>
+        </TabNav>
       </Box>
       <DeleteDialog
         data={deletion.data}

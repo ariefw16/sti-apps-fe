@@ -44,3 +44,28 @@ export interface ZoomAccountTestConnection {
   showModal: boolean;
   id: number;
 }
+
+export interface ZoomAccountRecord {
+  uuid?: string;
+  id?: number;
+  account_id?: string;
+  host_id?: string;
+  topic?: string;
+  type?: number;
+  start_time?: Date;
+  timezone?: string;
+  duration?: number;
+  total_size?: number;
+  recording_count?: number;
+  share_url?: string;
+  recording_files?: ZoomAccountRecordFile[];
+}
+
+export interface ZoomAccountRecordFile {
+  id?: string;
+  meeting_id?: string;
+  file_type?: string;
+  file_extension?: string;
+  download_url?: string;
+  recording_type?: string;
+}
