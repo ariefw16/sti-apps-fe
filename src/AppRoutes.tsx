@@ -30,6 +30,7 @@ import DetailDeviceTemplate from "./features/DeviceTemplate/detail";
 import EditDeviceTemplate from "./features/DeviceTemplate/edit";
 import CreateDeviceTemplate from "./features/DeviceTemplate/create";
 import AccessDoorPage from "./features/AccessDoor";
+import RequestMeetingPage from "./features/Meeting/request";
 
 function App() {
   axios.defaults.baseURL = "http://localhost:3400/";
@@ -86,6 +87,7 @@ function App() {
           <Route index element={<LoginPage />} />
         </Route>
         <Route path="*" element={<NothingFoundBackground />} />
+        <Route path="/meeting-request" element={<RequestMeetingPage />} />
       </Routes>
     </BrowserRouter>
   );

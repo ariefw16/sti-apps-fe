@@ -1,21 +1,13 @@
-import { Grid } from "@mantine/core";
+import { Box, Grid } from "@mantine/core";
 import { useForm, zodResolver } from "@mantine/form";
 import { showNotification } from "@mantine/notifications";
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { z } from "zod";
-import PageTitleComponent from "../../components/common/PageTitle";
-import { PageTitleBreadcrumbs } from "../../types/pagetitle.type";
-import { authState } from "../Auth/utils/store";
 import CreateMeetingButtonGroup from "./components/create/CreateMeetingButtonGroup";
 import MeetingCreateForm from "./components/create/MeetingCreateForm";
 import MeetingCreatePropsForm from "./components/create/MeetingCreatePropsForm";
 import { saveMeeting } from "./utils/service";
-import {
-  meetingCreateLoadingState,
-  meetingListFilterState,
-} from "./utils/store";
+import { meetingCreateLoadingState } from "./utils/store";
 import { MeetingCreate } from "./utils/type";
 
 const schema = z.object({
@@ -34,26 +26,11 @@ const schema = z.object({
   waitingRoom: z.boolean().optional(),
 });
 
-export default function CreateMeetingPage() {
-  const breadcrumbs: PageTitleBreadcrumbs[] = [
-    {
-      label: "Home",
-      to: "/",
-    },
-    {
-      label: "Meeting Management",
-      to: "/meetings",
-    },
-    {
-      label: "Create",
-    },
-  ];
-  const auth = useRecoilValue(authState);
+export default function RequestMeetingPage() {
   const form = useForm<MeetingCreate>({
     initialValues: {
       name: "",
       startDate: new Date(),
-      startDateTime: new Date(),
       duration: 60,
       password: "",
       audio: "both",
@@ -72,13 +49,6 @@ export default function CreateMeetingPage() {
     schema: zodResolver(schema),
   });
   const setLoading = useSetRecoilState(meetingCreateLoadingState);
-  const setFilter = useSetRecoilState(meetingListFilterState);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    form.setFieldValue("requestorName", auth.user?.name || "");
-    form.setFieldValue("requestorEmail", auth.user?.email || "");
-  }, [auth]);
 
   const submitFormHandler = (data: MeetingCreate) => {
     setLoading(true);
@@ -89,8 +59,6 @@ export default function CreateMeetingPage() {
           message: `Meeting Creation success!`,
           color: "green",
         });
-        navigate("/meetings");
-        setFilter((f) => ({ ...f, refreshToggle: !f.refreshToggle }));
       })
       .catch((e) => {
         showNotification({
@@ -105,11 +73,7 @@ export default function CreateMeetingPage() {
   };
 
   return (
-    <>
-      <PageTitleComponent
-        breadcrumbs={breadcrumbs}
-        title="Create New Meeting"
-      />
+    <body style={{ backgroundColor: "whitesmoke", padding: 20 }}>
       <form onSubmit={form.onSubmit(submitFormHandler)}>
         <Grid mt={50}>
           <Grid.Col sm={12} md={4}>
@@ -127,6 +91,6 @@ export default function CreateMeetingPage() {
           </Grid.Col>
         </Grid>
       </form>
-    </>
+    </body>
   );
 }

@@ -41,7 +41,7 @@ export default function MeetingCreateForm(props: {
           label="Jam Meeting"
           placeholder="Pick Time"
           icon={<Clock />}
-          {...form.getInputProps("startDate")}
+          {...form.getInputProps("startDateTime")}
         />
       </Group>
       <Group my={"sm"}>
@@ -56,6 +56,23 @@ export default function MeetingCreateForm(props: {
           {...form.getInputProps("expectedParticipant")}
         />
       </Group>
+      <Divider variant="dotted" my="lg" />
+      <TextInput
+        my="sm"
+        label="Requested by"
+        description="Request by Employee name "
+        placeholder="Input your Name"
+        disabled={loading}
+        {...form.getInputProps("requestorName")}
+      />
+      <TextInput
+        my="sm"
+        label="Requestor Email"
+        description="Request by Employee Email "
+        placeholder="Input your Email here.."
+        disabled={loading}
+        {...form.getInputProps("requestorEmail")}
+      />
     </Paper>
   );
 }

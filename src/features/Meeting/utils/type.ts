@@ -45,6 +45,7 @@ export interface MeetingDelete {
 export interface MeetingCreate {
   name?: string;
   startDate?: Date;
+  startDateTime?: Date;
   duration?: number;
   password?: string;
   audio?: string;
@@ -57,6 +58,8 @@ export interface MeetingCreate {
   participantVideo?: boolean;
   waitingRoom?: boolean;
   expectedParticipant?: number;
+  requestorName?: string;
+  requestorEmail?: string;
 }
 
 export interface MeetingApproval {
