@@ -33,7 +33,7 @@ import AccessDoorPage from "./features/AccessDoor";
 import RequestMeetingPage from "./features/Meeting/request";
 
 function App() {
-  axios.defaults.baseURL = "http://localhost:3400/";
+  axios.defaults.baseURL = import.meta.env.VITE_SERVER_URL;
   const token = localStorage.getItem("accessToken");
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 

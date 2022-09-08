@@ -10,7 +10,7 @@ import { Incident } from "../../Incident/utils/type";
 
 export default function DashboardIncidentCard() {
   const [incident, setIncident] = useState<Incident[]>([]);
-  const socket = io(`ws://localhost:3400`);
+  const socket = io(import.meta.env.VITE_WS_SERVER_URL);
   const navigate = useNavigate();
 
   useEffect(() => {
