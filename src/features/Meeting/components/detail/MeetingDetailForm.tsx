@@ -1,15 +1,40 @@
-import { Paper, Title, TextInput, Divider } from "@mantine/core";
+import { Paper, Title, TextInput, Divider, Grid, Button } from "@mantine/core";
+import { showNotification } from "@mantine/notifications";
 import moment from "moment";
+import { useState } from "react";
 import { useRecoilValue } from "recoil";
+import { Copy, Link } from "tabler-icons-react";
+import { copyInvitationMeeting } from "../../utils/service";
 import { meetingDetailState } from "../../utils/store";
 
 export default function MeetingDetailForm() {
   const detail = useRecoilValue(meetingDetailState);
+  const [loadingInvitation, setLoadingInvitation] = useState(false);
 
   const statusMeeting = (status: number) => {
     if (status === 0) return "Waiting for Approval";
     if (status === 1) return "Meeting Approved";
     if (status === 3) return "Meeting Cancelled";
+  };
+  const copyInvitationHandler = () => {
+    setLoadingInvitation(true);
+    copyInvitationMeeting({ id: detail.id! })
+      .then((res) => {
+        navigator.clipboard.writeText(res);
+        showNotification({
+          message: "Invitation Text Copied!",
+          color: "teal",
+        });
+      })
+      .catch((e) => {
+        showNotification({
+          message: `Error! ${e.message}`,
+          color: "red",
+        });
+      })
+      .finally(() => {
+        setLoadingInvitation(false);
+      });
   };
 
   return (
@@ -59,6 +84,66 @@ export default function MeetingDetailForm() {
         variant="filled"
         value={statusMeeting(detail.status!) || ""}
       />
+      <Divider variant="dotted" my="lg" />
+      <TextInput
+        my="sm"
+        label="Zoom Account"
+        description="Zoom Account used to meeting"
+        readOnly
+        variant="filled"
+        value={detail.zoomAccount?.name ?? ""}
+      />
+      <TextInput
+        my="sm"
+        label="Requested By"
+        description="User / Employee who request the meeting"
+        readOnly
+        variant="filled"
+        value={`${detail.requestorName} (${detail.requestorEmail})`}
+      />
+      <Grid>
+        <Grid.Col span={5}>
+          <TextInput
+            my="sm"
+            label="Join URL"
+            description="Use this url to join the meeting"
+            readOnly
+            variant="filled"
+            value={detail.joinUrl ?? ""}
+          />
+        </Grid.Col>
+        <Grid.Col span={3}>
+          <Button
+            size="xs"
+            mt={60}
+            variant="outline"
+            leftIcon={<Link />}
+            color="orange"
+            onClick={() => {
+              navigator.clipboard.writeText(detail.joinUrl ?? "");
+              showNotification({
+                message: "URL to Join meeting Copied!",
+                color: "orange",
+              });
+            }}
+          >
+            Copy URL
+          </Button>
+        </Grid.Col>
+        <Grid.Col span={3}>
+          <Button
+            size="xs"
+            mt={60}
+            variant="gradient"
+            leftIcon={<Copy />}
+            color="green"
+            onClick={copyInvitationHandler}
+            loading={loadingInvitation}
+          >
+            Copy Invitation
+          </Button>
+        </Grid.Col>
+      </Grid>
     </Paper>
   );
 }

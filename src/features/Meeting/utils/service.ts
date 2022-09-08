@@ -108,3 +108,15 @@ export async function updateMeeting(props: {
     throw new Error(e.response.data.message);
   }
 }
+
+export async function copyInvitationMeeting(props: {
+  id: number;
+}): Promise<string> {
+  try {
+    const { id } = props;
+    const result = await axios.get(`zoom-meeting/${id}/invitation`);
+    return result.data;
+  } catch (e: any) {
+    throw new Error(e.message);
+  }
+}
