@@ -1,4 +1,4 @@
-import { Select, Button, Modal, Group, TextInput } from "@mantine/core";
+import { Select, Button, Modal, Group, TextInput, Table } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import { useEffect, useState } from "react";
 import { useRecoilState, useResetRecoilState, useSetRecoilState } from "recoil";
@@ -6,7 +6,8 @@ import { meetingApprovalState, meetingListFilterState } from "../utils/store";
 import { SelectOptions } from "../../../types/common";
 import { fetchZoomAccount } from "../../Zoom/utils/service";
 import moment from "moment";
-import { approveMeeting } from "../utils/service";
+import { approveMeeting, fetchMeeting } from "../utils/service";
+import { Meeting } from "../utils/type";
 
 export default function ApprovalMeetingModal() {
   const [approval, setApproval] = useRecoilState(meetingApprovalState);
@@ -15,12 +16,16 @@ export default function ApprovalMeetingModal() {
   const [loading, setLoading] = useState(false);
   const [accountSelection, setAccountSelection] = useState<SelectOptions[]>([]);
   const [accountError, setAccountError] = useState(false);
+  const [schedule, setSchedule] = useState<Meeting[]>([]);
 
   useEffect(() => {
     fetchZoomAccount({})
       .then((res) => {
         setAccountSelection(
-          res.data.map((r) => ({ label: r.name!, value: r.id!.toString() }))
+          res.data.map((r) => ({
+            label: `${r.name} (${r.maxParticipant} participants) `,
+            value: r.id!.toString(),
+          }))
         );
       })
       .catch((e) => {
@@ -31,6 +36,10 @@ export default function ApprovalMeetingModal() {
         });
       });
   }, []);
+  useEffect(() => {
+    //reset Schedule useState
+    setSchedule([]);
+  }, [approval.showModal]);
 
   const onSubmit = () => {
     if (
@@ -74,6 +83,17 @@ export default function ApprovalMeetingModal() {
   const accountSelectHandler = (vals: string) => {
     setAccountError(false);
     setApproval((a) => ({ ...a, data: { ...a.data, zoomAccountId: vals } }));
+    fetchMeeting({ zoomAccountId: vals })
+      .then((res) => {
+        setSchedule(res.data);
+      })
+      .catch((e) => {
+        showNotification({
+          title: "Fetch Meeting Schedule",
+          message: `Error! ${e.message}`,
+          color: "red",
+        });
+      });
   };
 
   return (
@@ -84,6 +104,7 @@ export default function ApprovalMeetingModal() {
       closeOnEscape={loading}
       closeOnClickOutside={loading}
       title="Meeting Approval"
+      size={"xl"}
     >
       <TextInput
         my="sm"
@@ -145,7 +166,36 @@ export default function ApprovalMeetingModal() {
         value={approval.data.zoomAccountId?.toString()}
         disabled={loading}
         error={accountError}
+        my="md"
       />
+      <Table>
+        <thead>
+          <tr>
+            <th style={{ width: "40%" }}>Agenda</th>
+            <th style={{ width: "20%" }}>Start time</th>
+            <th style={{ width: "15%" }}>Duration</th>
+            <th style={{ width: "25%" }}>Requested By</th>
+          </tr>
+        </thead>
+        <tbody>
+          {schedule.length < 1 ? (
+            <tr>
+              <td colSpan={4} align="center">
+                <i>No Schedule Found</i>
+              </td>
+            </tr>
+          ) : (
+            schedule.map((s, idx) => (
+              <tr key={idx}>
+                <td>{s.name}</td>
+                <td>{moment(s.startDate).format("HH:mm")}</td>
+                <td>{s.duration} minutes</td>
+                <td>{s.requestorName}</td>
+              </tr>
+            ))
+          )}
+        </tbody>
+      </Table>
       <Group position="center" sx={{ marginTop: 30 }}>
         <Button color="green" onClick={onSubmit} loading={loading}>
           Yes, Approve it

@@ -18,11 +18,13 @@ export async function fetchMeeting(
       limit = "",
       status = "",
       zoomAccountId = "",
+      meetingDate = "",
     } = params;
     if (status === null) status = "";
     if (zoomAccountId === null) status = "";
     const result = await axios.get(
-      `zoom-meeting?q=${q}&page=${page}&limit=${limit}&status=${status}&zoomAccountId=${zoomAccountId}`
+      `zoom-meeting?q=${q}&page=${page}&limit=${limit}&status=${status}` +
+        `&zoomAccountId=${zoomAccountId}&meetingDate=${meetingDate}`
     );
     return { data: result.data[0], rowCount: result.data[1] };
   } catch (e: any) {

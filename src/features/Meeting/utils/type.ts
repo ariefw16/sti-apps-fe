@@ -37,6 +37,7 @@ export interface Meeting {
 export interface MeetingsFetchParams extends FetchParams {
   zoomAccountId?: string | null;
   status?: string | null;
+  meetingDate?: string;
 }
 
 export interface MeetingDelete {
