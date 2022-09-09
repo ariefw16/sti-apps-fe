@@ -1,59 +1,83 @@
 import { atom } from "recoil";
-import { Meeting, MeetingApproval, MeetingCancel, MeetingDelete, MeetingsFetchParams } from "./type";
+import {
+  Meeting,
+  MeetingApproval,
+  MeetingCancel,
+  MeetingDelete,
+  MeetingsFetchParams,
+} from "./type";
 
 export const meetingListState = atom<Meeting[]>({
-  key: 'meetingListState',
-  default: []
-})
+  key: "meetingListState",
+  default: [],
+});
 
 export const meetingListCountState = atom({
-  key: 'meetingListCountState',
-  default: 0
-})
+  key: "meetingListCountState",
+  default: 0,
+});
 
-export const meetingListFilterState = atom<MeetingsFetchParams>({
-  key: 'meetingListFilterState',
+export const historyMeetingListState = atom<Meeting[]>({
+  key: "historyMeetingListState",
+  default: [],
+});
+
+export const historyMeetingListCountState = atom({
+  key: "historyMeetingListCountState",
+  default: 0,
+});
+
+export const historyMeetingListFilterState = atom<MeetingsFetchParams>({
+  key: "historyMeetingListFilterState",
   default: {
     page: 1,
-    limit: 15
-  }
-})
+    limit: 15,
+  },
+});
+
+export const meetingListFilterState = atom<MeetingsFetchParams>({
+  key: "meetingListFilterState",
+  default: {
+    page: 1,
+    limit: 15,
+  },
+});
 
 export const meetingDeleteState = atom<MeetingDelete>({
-  key: 'meetingDeleteState',
+  key: "meetingDeleteState",
   default: {
     showModal: false,
-    data: { id: 0, name: "" }
-  }
-})
+    data: { id: 0, name: "" },
+  },
+});
 
 export const meetingCreateLoadingState = atom({
-  key: 'meetingCreateLoadingState',
-  default: false
-})
+  key: "meetingCreateLoadingState",
+  default: false,
+});
 
 export const meetingApprovalState = atom<MeetingApproval>({
-  key: 'meetingApprovalState',
+  key: "meetingApprovalState",
   default: {
     showModal: false,
-    data: {}
-  }
-})
+    data: {},
+  },
+});
 
 export const meetingCancelState = atom<MeetingCancel>({
-  key: 'meetingCancelState',
+  key: "meetingCancelState",
   default: {
     showModal: false,
-    data: {}
-  }
-})
+    data: {},
+  },
+});
 
 export const meetingDetailState = atom<Meeting>({
-  key: 'meetingDetailState',
-  default: {}
-})
+  key: "meetingDetailState",
+  default: {},
+});
 
 export const meetingUpdateLoadingState = atom({
-  key: 'meetingUpdateLoadingState',
-  default: false
-})
+  key: "meetingUpdateLoadingState",
+  default: false,
+});

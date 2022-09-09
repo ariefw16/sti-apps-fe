@@ -1,21 +1,16 @@
-import { Paper, Divider } from "@mantine/core";
-import { useNavigate } from "react-router-dom";
+import { Divider, Paper } from "@mantine/core";
 import { useRecoilState, useRecoilValue } from "recoil";
-import AddButton from "../../../../components/common/AddButton";
 import ListFooterCard from "../../../../components/common/ListFooterCard";
 import ListHeaderCard from "../../../../components/common/ListHeaderCard";
 import RefreshButton from "../../../../components/common/RefreshButton";
 import {
-  meetingListCountState,
-  meetingListFilterState,
+  historyMeetingListCountState,
+  historyMeetingListFilterState,
 } from "../../utils/store";
-import MeetingFilterForm from "./MeetingFilterForm";
-import MeetingListTable from "./MeetingListTable";
 
-export default function MeetingListCard() {
-  const [filter, setFilter] = useRecoilState(meetingListFilterState);
-  const navigate = useNavigate();
-  const rowCount = useRecoilValue(meetingListCountState);
+export default function HistoryMeetingCard() {
+  const [filter, setFilter] = useRecoilState(historyMeetingListFilterState);
+  const rowCount = useRecoilValue(historyMeetingListCountState);
 
   const setSearch = (txt: string) => {
     setFilter((x) => ({ ...x, q: txt }));
@@ -29,20 +24,14 @@ export default function MeetingListCard() {
   const pageChangeHandler = (value: number) => {
     setFilter((x) => ({ ...x, page: value }));
   };
-  const addButtonHandler = () => {
-    navigate("/meetings/create");
-  };
 
   return (
     <Paper radius={"lg"} p="lg" sx={{ marginTop: 10 }}>
       <ListHeaderCard
-        addButton={<AddButton onClick={addButtonHandler} />}
         refreshButton={<RefreshButton onClick={applyToggleRefresh} />}
         search={filter.q}
         setSearch={setSearch}
-        filterForm={<MeetingFilterForm />}
       />
-      <MeetingListTable />
       <Divider my="sm" variant="dotted" />
       <ListFooterCard
         onPageChange={pageChangeHandler}
