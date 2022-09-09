@@ -7,6 +7,7 @@ import {
   historyMeetingListCountState,
   historyMeetingListFilterState,
 } from "../../utils/store";
+import HistoryMeetingTable from "./HistoryMeetingTable";
 
 export default function HistoryMeetingCard() {
   const [filter, setFilter] = useRecoilState(historyMeetingListFilterState);
@@ -32,6 +33,7 @@ export default function HistoryMeetingCard() {
         search={filter.q}
         setSearch={setSearch}
       />
+      <HistoryMeetingTable />
       <Divider my="sm" variant="dotted" />
       <ListFooterCard
         onPageChange={pageChangeHandler}

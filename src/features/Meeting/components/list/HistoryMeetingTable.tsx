@@ -19,7 +19,6 @@ export default function HistoryMeetingTable() {
             <th style={rowHeaderStyle}>Meeting Time</th>
             <th style={rowHeaderStyle}>Duration</th>
             <th style={rowHeaderStyle}>Account</th>
-            <th style={rowHeaderStyle}>Approval Status</th>
             <th style={{ width: 120, ...rowHeaderStyle }}>Actions</th>
           </tr>
         </thead>
@@ -31,17 +30,6 @@ export default function HistoryMeetingTable() {
                 <td>{moment(item.startDate).format("DD-MMM-YYYY HH:mm:ss")}</td>
                 <td>{item.duration} min</td>
                 <td>{item.zoomAccount?.name || "-"}</td>
-                <td>
-                  {item.status === 0 ? (
-                    <Badge variant="filled" color={"orange"}>
-                      Waiting approval
-                    </Badge>
-                  ) : item.status === 1 ? (
-                    <Badge>Approved</Badge>
-                  ) : (
-                    <Badge color={"red"}>Cancelled</Badge>
-                  )}
-                </td>
                 <td>
                   <Menu
                     control={
