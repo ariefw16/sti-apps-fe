@@ -1,8 +1,8 @@
-import { Divider, Paper } from "@mantine/core";
+import { Box, Divider, LoadingOverlay, Paper } from "@mantine/core";
 import { useDebouncedValue } from "@mantine/hooks";
 import { showNotification } from "@mantine/notifications";
 import { useEffect, useState } from "react";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import ListFooterCard from "../../../../components/common/ListFooterCard";
 import ListHeaderCard from "../../../../components/common/ListHeaderCard";
 import RefreshButton from "../../../../components/common/RefreshButton";
@@ -54,22 +54,25 @@ export default function HistoryMeetingCard() {
   };
 
   return (
-    <Paper radius={"lg"} p="lg" sx={{ marginTop: 10 }}>
-      <ListHeaderCard
-        refreshButton={<RefreshButton onClick={applyToggleRefresh} />}
-        search={filter.q}
-        setSearch={setSearch}
-        noFilterButton
-      />
-      <HistoryMeetingTable />
-      <Divider my="sm" variant="dotted" />
-      <ListFooterCard
-        onPageChange={pageChangeHandler}
-        onRowPerPageChange={rowsChangeHandler}
-        rows={rowCount}
-        page={filter.page}
-        rowsPerPage={filter.limit?.toString()}
-      />
-    </Paper>
+    <Box style={{ position: "relative" }}>
+      <LoadingOverlay visible={loading} />
+      <Paper radius={"lg"} p="lg" sx={{ marginTop: 10 }}>
+        <ListHeaderCard
+          refreshButton={<RefreshButton onClick={applyToggleRefresh} />}
+          search={filter.q}
+          setSearch={setSearch}
+          noFilterButton
+        />
+        <HistoryMeetingTable />
+        <Divider my="sm" variant="dotted" />
+        <ListFooterCard
+          onPageChange={pageChangeHandler}
+          onRowPerPageChange={rowsChangeHandler}
+          rows={rowCount}
+          page={filter.page}
+          rowsPerPage={filter.limit?.toString()}
+        />
+      </Paper>
+    </Box>
   );
 }

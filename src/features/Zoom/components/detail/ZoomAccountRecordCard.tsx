@@ -66,7 +66,7 @@ export default function ZoomAccountRecordCard() {
     setYearSelected(vals);
   };
   const downloadRecordingHandler = (id: number) => {
-    setShowDownload({ showModal: true, meetingId: id });
+    setShowDownload({ showModal: true, meetingId: id, accountId: account.id! });
   };
 
   return (

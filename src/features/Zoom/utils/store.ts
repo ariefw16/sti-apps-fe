@@ -53,10 +53,12 @@ export const zoomAccountTestConnectState = atom<ZoomAccountTestConnection>({
 export const zoomAccountDownloadDialogState = atom<{
   showModal: boolean;
   meetingId?: number;
+  accountId?: number;
 }>({
   key: "zoomAccountDownloadDialogState",
   default: {
     showModal: false,
     meetingId: undefined,
+    accountId: undefined,
   },
 });

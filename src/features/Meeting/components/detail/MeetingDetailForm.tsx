@@ -2,14 +2,17 @@ import { Paper, Title, TextInput, Divider, Grid, Button } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import moment from "moment";
 import { useState } from "react";
-import { useRecoilValue } from "recoil";
+import { useParams } from "react-router-dom";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { Copy, Link } from "tabler-icons-react";
+import { zoomAccountDownloadDialogState } from "../../../Zoom/utils/store";
 import { copyInvitationMeeting } from "../../utils/service";
 import { meetingDetailState } from "../../utils/store";
 
 export default function MeetingDetailForm() {
   const detail = useRecoilValue(meetingDetailState);
   const [loadingInvitation, setLoadingInvitation] = useState(false);
+  const setShowDownload = useSetRecoilState(zoomAccountDownloadDialogState);
 
   const statusMeeting = (status: number) => {
     if (status === 0) return "Waiting for Approval";
@@ -35,6 +38,14 @@ export default function MeetingDetailForm() {
       .finally(() => {
         setLoadingInvitation(false);
       });
+  };
+
+  const downloadRecordingHandler = () => {
+    setShowDownload({
+      showModal: true,
+      meetingId: detail.idMeeting ? +detail.idMeeting : undefined,
+      accountId: detail.zoomAccountId!,
+    });
   };
 
   return (
@@ -101,49 +112,61 @@ export default function MeetingDetailForm() {
         variant="filled"
         value={`${detail.requestorName} (${detail.requestorEmail})`}
       />
-      <Grid>
-        <Grid.Col span={5}>
-          <TextInput
-            my="sm"
-            label="Join URL"
-            description="Use this url to join the meeting"
-            readOnly
-            variant="filled"
-            value={detail.joinUrl ?? ""}
-          />
-        </Grid.Col>
-        <Grid.Col span={3}>
-          <Button
-            size="xs"
-            mt={60}
-            variant="outline"
-            leftIcon={<Link />}
-            color="orange"
-            onClick={() => {
-              navigator.clipboard.writeText(detail.joinUrl ?? "");
-              showNotification({
-                message: "URL to Join meeting Copied!",
-                color: "orange",
-              });
-            }}
-          >
-            Copy URL
-          </Button>
-        </Grid.Col>
-        <Grid.Col span={3}>
-          <Button
-            size="xs"
-            mt={60}
-            variant="gradient"
-            leftIcon={<Copy />}
-            color="green"
-            onClick={copyInvitationHandler}
-            loading={loadingInvitation}
-          >
-            Copy Invitation
-          </Button>
-        </Grid.Col>
-      </Grid>
+      {moment(detail.startDate).toDate() > new Date() && (
+        <Grid>
+          <Grid.Col span={5}>
+            <TextInput
+              my="sm"
+              label="Join URL"
+              description="Use this url to join the meeting"
+              readOnly
+              variant="filled"
+              value={detail.joinUrl ?? ""}
+            />
+          </Grid.Col>
+          <Grid.Col span={3}>
+            <Button
+              size="xs"
+              mt={60}
+              variant="outline"
+              leftIcon={<Link />}
+              color="orange"
+              onClick={() => {
+                navigator.clipboard.writeText(detail.joinUrl ?? "");
+                showNotification({
+                  message: "URL to Join meeting Copied!",
+                  color: "orange",
+                });
+              }}
+            >
+              Copy URL
+            </Button>
+          </Grid.Col>
+          <Grid.Col span={3}>
+            <Button
+              size="xs"
+              mt={60}
+              variant="gradient"
+              leftIcon={<Copy />}
+              color="green"
+              onClick={copyInvitationHandler}
+              loading={loadingInvitation}
+            >
+              Copy Invitation
+            </Button>
+          </Grid.Col>
+        </Grid>
+      )}
+      {moment(detail.startDate).toDate() < new Date() && (
+        <Button
+          my="lg"
+          variant="outline"
+          color={"teal"}
+          onClick={downloadRecordingHandler}
+        >
+          Download Recording
+        </Button>
+      )}
     </Paper>
   );
 }

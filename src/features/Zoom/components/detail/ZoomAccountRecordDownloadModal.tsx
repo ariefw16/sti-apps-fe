@@ -21,7 +21,7 @@ export default function ZoomAccountRecordDownloadModal() {
     if (props.showModal) {
       setLoading(true);
       getDownloadLinkRecording({
-        id: account.id!,
+        id: props.accountId!,
         meetingId: props.meetingId!,
       })
         .then((res) => {

@@ -7,6 +7,7 @@ import { Tools, Video } from "tabler-icons-react";
 import PageTitleComponent from "../../components/common/PageTitle";
 import TabNav from "../../components/common/TabNav";
 import { PageTitleBreadcrumbs } from "../../types/pagetitle.type";
+import ZoomAccountRecordDownloadModal from "../Zoom/components/detail/ZoomAccountRecordDownloadModal";
 import DetailMeetingButtonGroup from "./components/detail/DetailMeetingButtonGroup";
 import MeetingDetailForm from "./components/detail/MeetingDetailForm";
 import MeetingPropsDetailForm from "./components/detail/MeetingPropsDetailForm";
@@ -68,6 +69,7 @@ export default function DetailMeetingPage() {
           </Grid>
         </Grid.Col>
       </Grid>
+      <ZoomAccountRecordDownloadModal />
     </>
   );
 }

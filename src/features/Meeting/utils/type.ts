@@ -32,6 +32,7 @@ export interface Meeting {
   expectedParticipant?: number;
   requestorName?: string;
   requestorEmail?: string;
+  idMeeting?: string;
 }
 
 export interface MeetingsFetchParams extends FetchParams {
