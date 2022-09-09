@@ -23,7 +23,7 @@ export async function fetchMeeting(
     if (status === null) status = "";
     if (zoomAccountId === null) status = "";
     const result = await axios.get(
-      `zoom-meeting?q=${q}&page=${page}&limit=${limit}&status=${status}` +
+      `zoom-meeting/current?q=${q}&page=${page}&limit=${limit}&status=${status}` +
         `&zoomAccountId=${zoomAccountId}&meetingDate=${meetingDate}`
     );
     return { data: result.data[0], rowCount: result.data[1] };
@@ -116,6 +116,30 @@ export async function copyInvitationMeeting(props: {
     const { id } = props;
     const result = await axios.get(`zoom-meeting/${id}/invitation`);
     return result.data;
+  } catch (e: any) {
+    throw new Error(e.message);
+  }
+}
+
+export async function fetchHistoryMeeting(
+  params: MeetingsFetchParams
+): Promise<FetchResult<Meeting[]>> {
+  try {
+    let {
+      q = "",
+      page = "",
+      limit = "",
+      status = "",
+      zoomAccountId = "",
+      meetingDate = "",
+    } = params;
+    if (status === null) status = "";
+    if (zoomAccountId === null) status = "";
+    const result = await axios.get(
+      `zoom-meeting?q=${q}&page=${page}&limit=${limit}&status=${status}` +
+        `&zoomAccountId=${zoomAccountId}&meetingDate=${meetingDate}`
+    );
+    return { data: result.data[0], rowCount: result.data[1] };
   } catch (e: any) {
     throw new Error(e.message);
   }

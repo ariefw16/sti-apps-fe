@@ -1,17 +1,44 @@
 import { Divider, Paper } from "@mantine/core";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useDebouncedValue } from "@mantine/hooks";
+import { showNotification } from "@mantine/notifications";
+import { useEffect, useState } from "react";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import ListFooterCard from "../../../../components/common/ListFooterCard";
 import ListHeaderCard from "../../../../components/common/ListHeaderCard";
 import RefreshButton from "../../../../components/common/RefreshButton";
+import { fetchHistoryMeeting } from "../../utils/service";
 import {
   historyMeetingListCountState,
   historyMeetingListFilterState,
+  historyMeetingListState,
 } from "../../utils/store";
 import HistoryMeetingTable from "./HistoryMeetingTable";
 
 export default function HistoryMeetingCard() {
   const [filter, setFilter] = useRecoilState(historyMeetingListFilterState);
-  const rowCount = useRecoilValue(historyMeetingListCountState);
+  const [rowCount, setRowCount] = useRecoilState(historyMeetingListCountState);
+  const setMeeting = useSetRecoilState(historyMeetingListState);
+  const [loading, setLoading] = useState(false);
+  const [q] = useDebouncedValue(filter.q, 300);
+
+  useEffect(() => {
+    setLoading(true);
+    fetchHistoryMeeting(filter)
+      .then((res) => {
+        setMeeting(res.data);
+        setRowCount(res.rowCount);
+      })
+      .catch((e) => {
+        showNotification({
+          title: "Fetch Meetings",
+          message: `Error! ${e.message}`,
+          color: "red",
+        });
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [filter.page, filter.limit, filter.refreshToggle, q]);
 
   const setSearch = (txt: string) => {
     setFilter((x) => ({ ...x, q: txt }));
@@ -32,6 +59,7 @@ export default function HistoryMeetingCard() {
         refreshButton={<RefreshButton onClick={applyToggleRefresh} />}
         search={filter.q}
         setSearch={setSearch}
+        noFilterButton
       />
       <HistoryMeetingTable />
       <Divider my="sm" variant="dotted" />
