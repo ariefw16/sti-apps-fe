@@ -22,6 +22,21 @@ export const incidentListCountState = atom({
   default: 0,
 });
 
+export const HistoryIncidentListState = atom<Incident[]>({
+  key: "HistoryIncidentListState",
+  default: [],
+});
+
+export const HistoryincidentListFilterState = atom<IncidentFetchParams>({
+  key: "HistoryincidentListFilterState",
+  default: {},
+});
+
+export const HistoryincidentListCountState = atom({
+  key: "HistoryincidentListCountState",
+  default: 0,
+});
+
 export const incidentDeletionState = atom<IncidentDeletion>({
   key: "incidentDeletionState",
   default: {

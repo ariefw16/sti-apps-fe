@@ -56,7 +56,7 @@ export default function MeetingPage() {
   return (
     <>
       <PageTitleComponent breadcrumbs={breadcrumbs} title="Meetings" />
-      <TabNav mt={30} position="left">
+      <TabNav mt={30} position="right">
         <Tabs.Tab label="Schedule" icon={<Video />}>
           <MeetingListCard />
         </Tabs.Tab>

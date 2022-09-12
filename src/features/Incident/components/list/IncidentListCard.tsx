@@ -31,7 +31,7 @@ export default function IncidentListCard() {
 
   return (
     <>
-      <Paper radius={"lg"} p="lg" sx={{ marginTop: 50 }}>
+      <Paper radius={"lg"} p="lg" sx={{ marginTop: 10 }}>
         <ListHeaderCard
           refreshButton={<RefreshButton onClick={applyToggleRefresh} />}
           setSearch={setSearch}
