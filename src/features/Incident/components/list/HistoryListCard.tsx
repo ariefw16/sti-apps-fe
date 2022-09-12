@@ -7,6 +7,8 @@ import {
   HistoryincidentListCountState,
   HistoryincidentListFilterState,
 } from "../../utils/store";
+import ActivityListModal from "./ActivityListModal";
+import HistoryIncidentListTable from "./HistoryTable";
 
 export default function HistoryIncidentListCard() {
   const [filter, setFilter] = useRecoilState(HistoryincidentListFilterState);
@@ -26,21 +28,25 @@ export default function HistoryIncidentListCard() {
   };
 
   return (
-    <Paper radius={"lg"} p="lg" sx={{ marginTop: 10 }}>
-      <ListHeaderCard
-        refreshButton={<RefreshButton onClick={applyToggleRefresh} />}
-        setSearch={setSearch}
-        search={filter.q}
-        noFilterButton
-      />
-      <Divider my="sm" variant="dotted" />
-      <ListFooterCard
-        onPageChange={pageChangeHandler}
-        onRowPerPageChange={rowsChangeHandler}
-        rows={rowCount}
-        page={filter.page}
-        rowsPerPage={filter.limit?.toString()}
-      />
-    </Paper>
+    <>
+      <Paper radius={"lg"} p="lg" sx={{ marginTop: 10 }}>
+        <ListHeaderCard
+          refreshButton={<RefreshButton onClick={applyToggleRefresh} />}
+          setSearch={setSearch}
+          search={filter.q}
+          noFilterButton
+        />
+        <Divider my="sm" variant="dotted" />
+        <HistoryIncidentListTable />
+        <ListFooterCard
+          onPageChange={pageChangeHandler}
+          onRowPerPageChange={rowsChangeHandler}
+          rows={rowCount}
+          page={filter.page}
+          rowsPerPage={filter.limit?.toString()}
+        />
+      </Paper>
+      <ActivityListModal />
+    </>
   );
 }

@@ -29,7 +29,9 @@ export const HistoryIncidentListState = atom<Incident[]>({
 
 export const HistoryincidentListFilterState = atom<IncidentFetchParams>({
   key: "HistoryincidentListFilterState",
-  default: {},
+  default: {
+    isDone: "1",
+  },
 });
 
 export const HistoryincidentListCountState = atom({

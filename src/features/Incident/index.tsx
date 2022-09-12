@@ -60,7 +60,7 @@ export default function IncidentPage() {
 
   useEffect(() => {
     setLoadingHistory(true);
-    fetchIncidents(filter)
+    fetchIncidents(filterHistory)
       .then((res) => {
         setIncidentHistory(res.data);
         setCountHistory(res.rowCount);
