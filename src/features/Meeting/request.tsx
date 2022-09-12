@@ -59,6 +59,7 @@ export default function RequestMeetingPage() {
           message: `Meeting Creation success!`,
           color: "green",
         });
+        form.reset();
       })
       .catch((e) => {
         showNotification({

@@ -70,3 +70,8 @@ export const specsUpdateModalState = atom<DeviceTypeSpecsUpdate>({
     data: {},
   },
 });
+
+export const deviceTypeDetailLoadingState = atom({
+  key: "deviceTypeDetailLoadingState",
+  default: false,
+});

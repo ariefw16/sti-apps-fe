@@ -1,4 +1,13 @@
-import { Button, Divider, Group, Menu, Table, Title } from "@mantine/core";
+import {
+  Box,
+  Button,
+  Divider,
+  Group,
+  LoadingOverlay,
+  Menu,
+  Table,
+  Title,
+} from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import {
   useRecoilState,
@@ -11,6 +20,7 @@ import DeleteDialog from "../../../../components/common/DeleteDialog";
 import { DataToDelete } from "../../../../types/common";
 import { deleteSpecsDeviceType } from "../../utils/service";
 import {
+  deviceTypeDetailLoadingState,
   deviceTypeState,
   specsCreateModalState,
   specsDeleteModalState,
@@ -26,6 +36,7 @@ export default function DeviceTypeViewSpecification() {
   const specsDeletion = useRecoilValue(specsDeleteModalState);
   const resetSpecsDeletion = useResetRecoilState(specsDeleteModalState);
   const setUpdation = useSetRecoilState(specsUpdateModalState);
+  const fetchLoading = useRecoilValue(deviceTypeDetailLoadingState);
 
   const createSpecsButtonHandler = () => {
     setCreateSpecs((c) => ({ ...c, showModal: true }));
@@ -63,59 +74,62 @@ export default function DeviceTypeViewSpecification() {
     <>
       <Title order={4}>Specification list</Title>
       <Divider my={10} variant="dotted" />
-      <Table striped highlightOnHover>
-        <thead>
-          <tr>
-            <th>Specification</th>
-            <th>Type</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {deviceType.DeviceTypeSpec?.map((dt) => (
-            <tr key={dt.id}>
-              <td width={"50%"}>
-                {dt.name} {dt.isMandatory ? "*" : ""}
-              </td>
-              <td width={"20%"}>{dt.specType}</td>
-              <td>
-                <Menu
-                  control={
-                    <Button
-                      size="xs"
-                      variant="light"
-                      rightIcon={<ChevronDown size={14} />}
-                    >
-                      Actions
-                    </Button>
-                  }
-                >
-                  <Menu.Item
-                    icon={<Pencil size={14} />}
-                    onClick={() => {
-                      editButtonHandler(dt);
-                    }}
-                  >
-                    Update
-                  </Menu.Item>
-                  <Menu.Item
-                    icon={<Trash size={14} />}
-                    color="red"
-                    onClick={() => {
-                      deleteButtonHandler({
-                        id: dt.id!,
-                        name: dt.name!,
-                      });
-                    }}
-                  >
-                    Delete
-                  </Menu.Item>
-                </Menu>
-              </td>
+      <Box style={{ position: "relative" }}>
+        <LoadingOverlay visible={fetchLoading} />
+        <Table striped highlightOnHover>
+          <thead>
+            <tr>
+              <th>Specification</th>
+              <th>Type</th>
+              <th>Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </Table>
+          </thead>
+          <tbody>
+            {deviceType.DeviceTypeSpec?.map((dt) => (
+              <tr key={dt.id}>
+                <td width={"50%"}>
+                  {dt.name} {dt.isMandatory ? "*" : ""}
+                </td>
+                <td width={"20%"}>{dt.specType}</td>
+                <td>
+                  <Menu
+                    control={
+                      <Button
+                        size="xs"
+                        variant="light"
+                        rightIcon={<ChevronDown size={14} />}
+                      >
+                        Actions
+                      </Button>
+                    }
+                  >
+                    <Menu.Item
+                      icon={<Pencil size={14} />}
+                      onClick={() => {
+                        editButtonHandler(dt);
+                      }}
+                    >
+                      Update
+                    </Menu.Item>
+                    <Menu.Item
+                      icon={<Trash size={14} />}
+                      color="red"
+                      onClick={() => {
+                        deleteButtonHandler({
+                          id: dt.id!,
+                          name: dt.name!,
+                        });
+                      }}
+                    >
+                      Delete
+                    </Menu.Item>
+                  </Menu>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </Box>
       <Divider my={10} variant="dotted" />
       <Group position="right">
         <Button
@@ -124,6 +138,7 @@ export default function DeviceTypeViewSpecification() {
           variant="outline"
           onClick={createSpecsButtonHandler}
           radius="md"
+          loading={fetchLoading}
         >
           Add New Specs
         </Button>

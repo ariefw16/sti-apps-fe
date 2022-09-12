@@ -1,4 +1,12 @@
-import { Paper, Title, Divider, TextInput, Group, Button } from "@mantine/core";
+import {
+  Paper,
+  Title,
+  Divider,
+  TextInput,
+  Group,
+  Button,
+  Loader,
+} from "@mantine/core";
 import { useForm, zodResolver } from "@mantine/form";
 import { showNotification } from "@mantine/notifications";
 import { useEffect, useState } from "react";
@@ -7,13 +15,18 @@ import { Trash, Pencil, DeviceFloppy, X } from "tabler-icons-react";
 import { z } from "zod";
 import GroupButtonModal from "../../../../components/common/GroupButtonModal";
 import { updateSimpleDeviceType } from "../../utils/service";
-import { deviceTypeDeleteModalState, deviceTypeState } from "../../utils/store";
+import {
+  deviceTypeDeleteModalState,
+  deviceTypeDetailLoadingState,
+  deviceTypeState,
+} from "../../utils/store";
 import { DeviceType } from "../../utils/type";
 
 const schema = z.object({ name: z.string().min(3) });
 
 export default function ViewGeneralDeviceType() {
   const setDeletiion = useSetRecoilState(deviceTypeDeleteModalState);
+  const fetchLoading = useRecoilValue(deviceTypeDetailLoadingState);
   const [deviceType, setDeviceType] = useRecoilState(deviceTypeState);
   const [isView, setView] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -63,6 +76,7 @@ export default function ViewGeneralDeviceType() {
       {isView && (
         <>
           <TextInput
+            rightSection={fetchLoading && <Loader size={"sm"} />}
             label="Name"
             description="Device Type Name"
             disabled
@@ -77,6 +91,7 @@ export default function ViewGeneralDeviceType() {
               variant="subtle"
               onClick={deleteButtonHandler}
               radius="lg"
+              loading={fetchLoading}
             >
               Delete
             </Button>
@@ -86,6 +101,7 @@ export default function ViewGeneralDeviceType() {
               onClick={() => {
                 setView(false);
               }}
+              loading={fetchLoading}
             >
               Update
             </Button>

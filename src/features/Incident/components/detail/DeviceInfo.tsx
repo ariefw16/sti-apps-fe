@@ -1,12 +1,16 @@
-import { Divider, Paper, Table, TextInput, Title } from "@mantine/core";
+import { Divider, Loader, Paper, Table, TextInput, Title } from "@mantine/core";
 import { Device } from "../../../Devices/utils/type";
 
-export default function DeviceInfo(props: { device?: Device }) {
-  const { device } = props;
+export default function DeviceInfo(props: {
+  device?: Device;
+  loading: boolean;
+}) {
+  const { device, loading } = props;
   return (
     <>
       <Paper radius={"lg"} p={20}>
         <TextInput
+          rightSection={loading && <Loader size={"sm"} />}
           readOnly
           mb="md"
           variant="filled"
@@ -15,6 +19,7 @@ export default function DeviceInfo(props: { device?: Device }) {
           description="Device Type of this device (router, access point, etc)"
         />
         <TextInput
+          rightSection={loading && <Loader size={"sm"} />}
           readOnly
           mb="md"
           variant="filled"
@@ -23,6 +28,7 @@ export default function DeviceInfo(props: { device?: Device }) {
           value={device?.ipAddress}
         />
         <TextInput
+          rightSection={loading && <Loader size={"sm"} />}
           readOnly
           mb="md"
           variant="filled"
@@ -31,6 +37,7 @@ export default function DeviceInfo(props: { device?: Device }) {
           value={device?.unit?.name}
         />
         <TextInput
+          rightSection={loading && <Loader size={"sm"} />}
           readOnly
           mb="md"
           variant="filled"

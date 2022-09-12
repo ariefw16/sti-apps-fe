@@ -10,7 +10,11 @@ import CreateSpecsModal from "./components/DetailView/CreateSpecsModal";
 import ViewGeneralDeviceType from "./components/DetailView/ViewGeneral";
 import DeviceTypeViewSpecification from "./components/DetailView/ViewSpecification";
 import { fetchSingleDeviceType } from "./utils/service";
-import { deviceTypeDeleteModalState, deviceTypeState } from "./utils/store";
+import {
+  deviceTypeDeleteModalState,
+  deviceTypeDetailLoadingState,
+  deviceTypeState,
+} from "./utils/store";
 
 export default function DeviceTypeDetailPage() {
   const breadcrumbs: PageTitleBreadcrumbs[] = [
@@ -21,9 +25,11 @@ export default function DeviceTypeDetailPage() {
   const deletion = useRecoilValue(deviceTypeDeleteModalState);
   const resetDeletion = useResetRecoilState(deviceTypeDeleteModalState);
   const setDeviceType = useSetRecoilState(deviceTypeState);
+  const setLoading = useSetRecoilState(deviceTypeDetailLoadingState);
   const { id } = useParams();
 
   useEffect(() => {
+    setLoading(true);
     fetchSingleDeviceType(+id!)
       .then((res) => {
         setDeviceType(res);
@@ -34,6 +40,9 @@ export default function DeviceTypeDetailPage() {
           message: `Error! ${e.message}`,
           color: "red",
         });
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, []);
 

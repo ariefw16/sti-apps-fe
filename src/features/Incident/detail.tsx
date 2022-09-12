@@ -31,9 +31,11 @@ export default function DetailIncidentPage() {
   const { id } = useParams();
   const setActivityModal = useSetRecoilState(incidentActivityCreationState);
   const [trigger, setTrigger] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (id) {
+      setLoading(true);
       fetchSingleIncident(+id)
         .then((res) => {
           setDetail(res);
@@ -44,6 +46,9 @@ export default function DetailIncidentPage() {
             message: `Error! ${e.message}`,
             color: "red",
           });
+        })
+        .finally(() => {
+          setLoading(false);
         });
     }
   }, [id, trigger]);
@@ -68,13 +73,17 @@ export default function DetailIncidentPage() {
         <Grid.Col md={7} sm={12}>
           <TabNav mt={40}>
             <Tabs.Tab label="General Info" icon={<InfoCircle size={14} />}>
-              <GeneralInfo incident={detail} setTrigger={setTrigger} />
+              <GeneralInfo
+                incident={detail}
+                setTrigger={setTrigger}
+                loading={loading}
+              />
             </Tabs.Tab>
             <Tabs.Tab label="Device Info" icon={<Tools size={14} />}>
-              <DeviceInfo device={detail.device} />
+              <DeviceInfo device={detail.device} loading={loading} />
             </Tabs.Tab>
             <Tabs.Tab label="Logs" icon={<Notebook size={14} />}>
-              <LogDetail log={detail.incidentLog} />
+              <LogDetail log={detail.incidentLog} loading={loading} />
             </Tabs.Tab>
           </TabNav>
         </Grid.Col>
@@ -85,6 +94,7 @@ export default function DetailIncidentPage() {
               leftIcon={<Plus />}
               onClick={addActivityButtonHandler}
               radius="md"
+              loading={loading}
             >
               Add Activity
             </Button>

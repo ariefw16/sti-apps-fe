@@ -1,6 +1,13 @@
-import { Paper, Title, Divider, TextInput } from "@mantine/core";
+import {
+  Paper,
+  Title,
+  Divider,
+  TextInput,
+  Box,
+  LoadingOverlay,
+} from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { fetchSingleDeviceType } from "../../../DeviceType/utils/service";
 import {
@@ -13,8 +20,10 @@ export default function DeviceTemplateSpecsCreate() {
   const typeId = useRecoilValue(deviceTemplateCreateState).deviceTypeId;
   const [spec, setSpec] = useRecoilState(deviceTemplateSpecCreateState);
   const loading = useRecoilValue(deviceTemplateLoadingCreateState);
+  const [specLoading, setSpecLoading] = useState(false);
 
   useEffect(() => {
+    setSpecLoading(true);
     if (typeId)
       fetchSingleDeviceType(+typeId)
         .then((res) => {
@@ -35,6 +44,9 @@ export default function DeviceTemplateSpecsCreate() {
             message: `Error! ${e.message}`,
             color: "red",
           });
+        })
+        .finally(() => {
+          setSpecLoading(false);
         });
   }, [typeId]);
 
@@ -48,24 +60,27 @@ export default function DeviceTemplateSpecsCreate() {
   };
 
   return (
-    <Paper p={20} radius="lg">
-      <Title order={5}>Specifications</Title>
-      <Divider my={"md"} variant="dotted" />
-      {spec &&
-        spec.map((sp) => (
-          <TextInput
-            disabled={loading}
-            label={sp.name}
-            key={sp.deviceTypeSpec?.id}
-            my={"md"}
-            placeholder={"Enter " + sp.name + " here ..."}
-            required={sp.deviceTypeSpec?.isMandatory}
-            value={sp.value || ""}
-            onChange={(e) => {
-              specsOnChangeHandler(e.target.value, sp.deviceTypeSpec?.id!);
-            }}
-          />
-        ))}
-    </Paper>
+    <Box style={{ position: "relative" }}>
+      <LoadingOverlay visible={specLoading} />
+      <Paper p={20} radius="lg">
+        <Title order={5}>Specifications</Title>
+        <Divider my={"md"} variant="dotted" />
+        {spec &&
+          spec.map((sp) => (
+            <TextInput
+              disabled={loading}
+              label={sp.name}
+              key={sp.deviceTypeSpec?.id}
+              my={"md"}
+              placeholder={"Enter " + sp.name + " here ..."}
+              required={sp.deviceTypeSpec?.isMandatory}
+              value={sp.value || ""}
+              onChange={(e) => {
+                specsOnChangeHandler(e.target.value, sp.deviceTypeSpec?.id!);
+              }}
+            />
+          ))}
+      </Paper>
+    </Box>
   );
 }

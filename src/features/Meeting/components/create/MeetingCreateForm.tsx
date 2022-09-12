@@ -5,6 +5,7 @@ import {
   TextInput,
   Divider,
   NumberInput,
+  Loader,
 } from "@mantine/core";
 import { UseFormReturnType } from "@mantine/form/lib/use-form";
 import { MeetingCreate } from "../../utils/type";
@@ -29,6 +30,7 @@ export default function MeetingCreateForm(props: {
         description="Meeting Name or Agenda of Meeting"
         placeholder="Input Agenda"
         disabled={loading}
+        rightSection={loading && <Loader size={"sm"} />}
         {...form.getInputProps("name")}
       />
       <Group>
@@ -49,11 +51,15 @@ export default function MeetingCreateForm(props: {
           label="Duration (minutes)"
           placeholder="duration in minutes"
           description="Meeting Duration estimation"
+          disabled={loading}
+          rightSection={loading && <Loader size={"sm"} />}
           {...form.getInputProps("duration")}
         />
         <NumberInput
           label="Expected Participant"
           description="Participant to attend Meeting"
+          disabled={loading}
+          rightSection={loading && <Loader size={"sm"} />}
           {...form.getInputProps("expectedParticipant")}
         />
       </Group>
@@ -62,16 +68,18 @@ export default function MeetingCreateForm(props: {
         my="sm"
         label="Requested by"
         description="Request by Employee name "
-        placeholder="Input your Name"
         disabled={loading}
+        rightSection={loading && <Loader size={"sm"} />}
+        placeholder="Input your Name"
         {...form.getInputProps("requestorName")}
       />
       <TextInput
         my="sm"
         label="Requestor Email"
         description="Request by Employee Email "
-        placeholder="Input your Email here.."
         disabled={loading}
+        rightSection={loading && <Loader size={"sm"} />}
+        placeholder="Input your Email here.."
         {...form.getInputProps("requestorEmail")}
       />
     </Paper>

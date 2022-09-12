@@ -1,9 +1,12 @@
-import { Paper, Table } from "@mantine/core";
+import { Loader, Paper, Table } from "@mantine/core";
 import moment from "moment";
 import { IncidentLog } from "../../utils/type";
 
-export default function LogDetail(props: { log?: IncidentLog[] }) {
-  const { log } = props;
+export default function LogDetail(props: {
+  log?: IncidentLog[];
+  loading: boolean;
+}) {
+  const { log, loading } = props;
   return (
     <Paper radius={"lg"} p={20}>
       <Table striped highlightOnHover>
@@ -15,6 +18,7 @@ export default function LogDetail(props: { log?: IncidentLog[] }) {
           </tr>
         </thead>
         <tbody>
+          {loading && <Loader />}
           {log?.map((l, i) => (
             <tr key={l.id}>
               <td>{i + 1}.</td>

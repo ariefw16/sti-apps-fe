@@ -1,4 +1,13 @@
-import { Select, Button, Modal, Group, TextInput, Table } from "@mantine/core";
+import {
+  Select,
+  Button,
+  Modal,
+  Group,
+  TextInput,
+  Table,
+  LoadingOverlay,
+  Box,
+} from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import { useEffect, useState } from "react";
 import { useRecoilState, useResetRecoilState, useSetRecoilState } from "recoil";
@@ -14,6 +23,7 @@ export default function ApprovalMeetingModal() {
   const resetApproval = useResetRecoilState(meetingApprovalState);
   const setFilter = useSetRecoilState(meetingListFilterState);
   const [loading, setLoading] = useState(false);
+  const [accountLoading, setAccountLoading] = useState(false);
   const [accountSelection, setAccountSelection] = useState<SelectOptions[]>([]);
   const [accountError, setAccountError] = useState(false);
   const [schedule, setSchedule] = useState<Meeting[]>([]);
@@ -83,6 +93,7 @@ export default function ApprovalMeetingModal() {
   const accountSelectHandler = (vals: string) => {
     setAccountError(false);
     setApproval((a) => ({ ...a, data: { ...a.data, zoomAccountId: vals } }));
+    setAccountLoading(true);
     fetchMeeting({ zoomAccountId: vals })
       .then((res) => {
         setSchedule(res.data);
@@ -93,6 +104,9 @@ export default function ApprovalMeetingModal() {
           message: `Error! ${e.message}`,
           color: "red",
         });
+      })
+      .finally(() => {
+        setAccountLoading(false);
       });
   };
 
@@ -168,34 +182,37 @@ export default function ApprovalMeetingModal() {
         error={accountError}
         my="md"
       />
-      <Table>
-        <thead>
-          <tr>
-            <th style={{ width: "40%" }}>Agenda</th>
-            <th style={{ width: "20%" }}>Start time</th>
-            <th style={{ width: "15%" }}>Duration</th>
-            <th style={{ width: "25%" }}>Requested By</th>
-          </tr>
-        </thead>
-        <tbody>
-          {schedule.length < 1 ? (
+      <Box style={{ position: "relative" }}>
+        <LoadingOverlay visible={accountLoading} />
+        <Table>
+          <thead>
             <tr>
-              <td colSpan={4} align="center">
-                <i>No Schedule Found</i>
-              </td>
+              <th style={{ width: "40%" }}>Agenda</th>
+              <th style={{ width: "20%" }}>Start time</th>
+              <th style={{ width: "15%" }}>Duration</th>
+              <th style={{ width: "25%" }}>Requested By</th>
             </tr>
-          ) : (
-            schedule.map((s, idx) => (
-              <tr key={idx}>
-                <td>{s.name}</td>
-                <td>{moment(s.startDate).format("HH:mm")}</td>
-                <td>{s.duration} minutes</td>
-                <td>{s.requestorName}</td>
+          </thead>
+          <tbody>
+            {schedule.length < 1 ? (
+              <tr>
+                <td colSpan={4} align="center">
+                  <i>No Schedule Found</i>
+                </td>
               </tr>
-            ))
-          )}
-        </tbody>
-      </Table>
+            ) : (
+              schedule.map((s, idx) => (
+                <tr key={idx}>
+                  <td>{s.name}</td>
+                  <td>{moment(s.startDate).format("HH:mm")}</td>
+                  <td>{s.duration} minutes</td>
+                  <td>{s.requestorName}</td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </Table>
+      </Box>
       <Group position="center" sx={{ marginTop: 30 }}>
         <Button color="green" onClick={onSubmit} loading={loading}>
           Yes, Approve it

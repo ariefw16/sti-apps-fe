@@ -4,6 +4,7 @@ import {
   Divider,
   Grid,
   Group,
+  Loader,
   Paper,
   TextInput,
   Title,
@@ -19,8 +20,9 @@ import { showNotification } from "@mantine/notifications";
 export default function GeneralInfo(props: {
   incident?: Incident;
   setTrigger?: any;
+  loading: boolean;
 }) {
-  const { incident, setTrigger } = props;
+  const { incident, setTrigger, loading } = props;
   const downtimeSecs = incident?.isDone
     ? moment
         .duration(moment(incident.resolveDate).diff(incident.eventDate))
@@ -60,6 +62,7 @@ export default function GeneralInfo(props: {
         <Grid.Col span={12}>
           <Paper p={20} radius="lg">
             <TextInput
+              rightSection={loading && <Loader size={"sm"} />}
               value={incident?.name || ""}
               description="Incident Name / Trigger"
               label="Incident"
@@ -68,6 +71,7 @@ export default function GeneralInfo(props: {
               mb={20}
             />
             <TextInput
+              rightSection={loading && <Loader size={"sm"} />}
               value={incident?.eventNote || ""}
               description="Detail / Notes of incident"
               label="Notes"
@@ -76,6 +80,7 @@ export default function GeneralInfo(props: {
               mb={20}
             />
             <TextInput
+              rightSection={loading && <Loader size={"sm"} />}
               value={
                 moment(incident?.eventDate).format("DD-MMM-YYYY HH:mm:ss") || ""
               }
@@ -87,6 +92,7 @@ export default function GeneralInfo(props: {
             />
             {incident?.triggerType === "monitoring" ? (
               <TextInput
+                rightSection={loading && <Loader size={"sm"} />}
                 value={incident?.eventId || ""}
                 description="Event ID from Monitoring"
                 label="Event ID"
@@ -96,6 +102,7 @@ export default function GeneralInfo(props: {
               />
             ) : (
               <TextInput
+                rightSection={loading && <Loader size={"sm"} />}
                 value={incident?.reportedBy?.name || ""}
                 description="Employee Reporter Name"
                 label="Reported by"
@@ -105,6 +112,7 @@ export default function GeneralInfo(props: {
               />
             )}
             <TextInput
+              rightSection={loading && <Loader size={"sm"} />}
               value={incident?.triggerType || ""}
               description="Trigger From Monitoring or Employee Report"
               label="Trigger"
@@ -125,6 +133,7 @@ export default function GeneralInfo(props: {
             </Group>
             <Divider my={"md"} variant="dotted" />
             <TextInput
+              rightSection={loading && <Loader size={"sm"} />}
               label="Downtime (hours)"
               description="Down time from incident reported / triggered (in Hours)"
               readOnly
@@ -135,6 +144,7 @@ export default function GeneralInfo(props: {
             {incident?.isDone && (
               <>
                 <TextInput
+                  rightSection={loading && <Loader size={"sm"} />}
                   label="Resolve Notes"
                   description="Resolve Notes / Solution for incidents"
                   readOnly
@@ -143,6 +153,7 @@ export default function GeneralInfo(props: {
                   value={incident?.resolveNote}
                 />
                 <TextInput
+                  rightSection={loading && <Loader size={"sm"} />}
                   label="Resolve Date time"
                   description="Date time incident is resolved"
                   readOnly

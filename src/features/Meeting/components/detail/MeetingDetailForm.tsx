@@ -1,15 +1,23 @@
-import { Paper, Title, TextInput, Divider, Grid, Button } from "@mantine/core";
+import {
+  Paper,
+  Title,
+  TextInput,
+  Divider,
+  Grid,
+  Button,
+  Loader,
+} from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import moment from "moment";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { Copy, Link } from "tabler-icons-react";
 import { zoomAccountDownloadDialogState } from "../../../Zoom/utils/store";
 import { copyInvitationMeeting } from "../../utils/service";
 import { meetingDetailState } from "../../utils/store";
 
-export default function MeetingDetailForm() {
+export default function MeetingDetailForm(props: { loading: boolean }) {
+  const { loading } = props;
   const detail = useRecoilValue(meetingDetailState);
   const [loadingInvitation, setLoadingInvitation] = useState(false);
   const setShowDownload = useSetRecoilState(zoomAccountDownloadDialogState);
@@ -53,6 +61,7 @@ export default function MeetingDetailForm() {
       <Title order={5}>Meeting Information</Title>
       <Divider variant="dotted" my="md" />
       <TextInput
+        rightSection={loading && <Loader size={"sm"} />}
         my="sm"
         label="Meeting Name"
         description="Meeting Name or Agenda of Meeting"
@@ -62,6 +71,7 @@ export default function MeetingDetailForm() {
         value={detail.name || ""}
       />
       <TextInput
+        rightSection={loading && <Loader size={"sm"} />}
         my="sm"
         label="Meeting Time"
         description="Meeting time to launch"
@@ -72,6 +82,7 @@ export default function MeetingDetailForm() {
         }
       />
       <TextInput
+        rightSection={loading && <Loader size={"sm"} />}
         my="sm"
         label="Duration"
         description="Duration Estimate of this meeting (in minutes)"
@@ -80,6 +91,7 @@ export default function MeetingDetailForm() {
         value={detail.duration + " min" || ""}
       />
       <TextInput
+        rightSection={loading && <Loader size={"sm"} />}
         my="sm"
         label="Expected Participant"
         description="Participant to attend Meeting"
@@ -88,6 +100,7 @@ export default function MeetingDetailForm() {
         value={detail.expectedParticipant + " participants" || ""}
       />
       <TextInput
+        rightSection={loading && <Loader size={"sm"} />}
         my="sm"
         label="Status"
         description="Approval Status"
@@ -97,6 +110,7 @@ export default function MeetingDetailForm() {
       />
       <Divider variant="dotted" my="lg" />
       <TextInput
+        rightSection={loading && <Loader size={"sm"} />}
         my="sm"
         label="Zoom Account"
         description="Zoom Account used to meeting"
@@ -105,6 +119,7 @@ export default function MeetingDetailForm() {
         value={detail.zoomAccount?.name ?? ""}
       />
       <TextInput
+        rightSection={loading && <Loader size={"sm"} />}
         my="sm"
         label="Requested By"
         description="User / Employee who request the meeting"
@@ -116,6 +131,7 @@ export default function MeetingDetailForm() {
         <Grid>
           <Grid.Col span={5}>
             <TextInput
+              rightSection={loading && <Loader size={"sm"} />}
               my="sm"
               label="Join URL"
               description="Use this url to join the meeting"
