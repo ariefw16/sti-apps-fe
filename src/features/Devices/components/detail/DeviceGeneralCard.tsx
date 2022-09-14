@@ -25,27 +25,27 @@ export default function DeviceGeneralCard() {
         label="Name"
         description="Input Device Name here.."
         disabled
-        defaultValue={device.name}
+        value={device.name ?? ""}
       />
       <TextInput
         my={"sm"}
         label="Merk"
         description="Device Brand"
         disabled
-        defaultValue={device.merk}
+        value={device.merk ?? ""}
       />
       <TextInput
         my={"sm"}
         label="Unit"
         description="Select unit where this device is located"
         disabled
-        defaultValue={device.unit?.name}
+        value={device.unit?.name ?? ""}
       />
       <Checkbox
         label="This Device is a spare"
         my={"md"}
         disabled
-        defaultChecked={device.isSpare}
+        checked={device.isSpare ?? false}
       />
       {!device.isSpare && (
         <TextInput
@@ -53,10 +53,10 @@ export default function DeviceGeneralCard() {
           my={"sm"}
           label="IP Address"
           description="Input IP Address to monitor device"
-          defaultValue={device.ipAddress}
+          value={device.ipAddress ?? ""}
         />
       )}
-      <Divider variant="dotted" my={"md"} defaultChecked={device.isSpare} />
+      <Divider variant="dotted" my={"md"} />
       <Group position="apart">
         <Button
           color={"orange"}

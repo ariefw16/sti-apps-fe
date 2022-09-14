@@ -94,6 +94,17 @@ export default function DeviceTemplateGeneralCreate() {
         }}
         disabled={loading}
       />
+      <TextInput
+        my={"sm"}
+        label="Merk"
+        description="Device Template Merk, applied to all device"
+        placeholder="ex: Cisco / Ubiquiti"
+        value={data.merk || ""}
+        onChange={(e) => {
+          setData((d) => ({ ...d, merk: e.target.value }));
+        }}
+        disabled={loading}
+      />
       <Select
         data={typeOptions}
         label="Device Type"
