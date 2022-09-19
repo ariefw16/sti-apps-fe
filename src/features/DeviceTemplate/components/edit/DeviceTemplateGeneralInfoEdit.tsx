@@ -31,12 +31,14 @@ export default function DeviceTemplateGeneralInfoEdit(props: {
   const setTrigger = useSetRecoilState(deviceTemplateQuickUpdateTriggreState);
   const [name, setName] = useState("");
   const [merk, setMerk] = useState("");
+  const [merkType, setMerkType] = useState("");
   const [deviceTypeId, setDeviceTypeId] = useState<string>();
   const [specs, setSpecs] = useState<DeviceTemplateSpec[]>([]);
 
   useEffect(() => {
     setName(template.name ?? "");
     setMerk(template.merk ?? "");
+    setMerkType(template.merkType ?? "");
     setDeviceTypeId(template.deviceType?.id?.toString());
     setSpecs(template.DeviceTemplateSpecs ?? []);
   }, [template]);
@@ -79,11 +81,12 @@ export default function DeviceTemplateGeneralInfoEdit(props: {
   };
 
   const saveButtonHandler = () => {
-    console.log(specs);
+    // console.log(specs);
     updateDeviceTemplate({
       id: template.id!,
       data: {
         merk,
+        merkType,
         name,
         deviceTypeId,
         deviceTemplateSpecs: specs.map((s) => ({
@@ -132,6 +135,15 @@ export default function DeviceTemplateGeneralInfoEdit(props: {
             value={merk}
             onChange={(e) => {
               setMerk(e.target.value);
+            }}
+          />
+          <TextInput
+            my={"sm"}
+            label="Merk Type"
+            description="Device Brand Series / Type"
+            value={merkType}
+            onChange={(e) => {
+              setMerkType(e.target.value);
             }}
           />
           <Select

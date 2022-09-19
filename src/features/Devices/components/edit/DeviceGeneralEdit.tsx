@@ -38,6 +38,7 @@ export default function DeviceGeneralEdit() {
       unitId: "",
       isSpare: false,
       merk: "",
+      merkType: "",
     },
     schema: zodResolver(schema),
   });
@@ -51,6 +52,7 @@ export default function DeviceGeneralEdit() {
     );
     form.setFieldValue("isSpare", device.isSpare);
     form.setFieldValue("merk", device.merk || "");
+    form.setFieldValue("merkType", device.merkType || "");
   }, [device]);
 
   useEffect(() => {
@@ -120,6 +122,13 @@ export default function DeviceGeneralEdit() {
           description="Input Device Brand here.."
           required
           {...form.getInputProps("merk")}
+        />
+        <TextInput
+          my={"sm"}
+          label="Merk Type"
+          description="Input Device Brand Series or Type here.."
+          required
+          {...form.getInputProps("merkType")}
         />
         <Select
           my={"sm"}

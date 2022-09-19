@@ -36,6 +36,13 @@ export default function DeviceGeneralCard() {
       />
       <TextInput
         my={"sm"}
+        label="Merk Type"
+        description="Device Type / Series Brand"
+        disabled
+        value={device.merkType ?? ""}
+      />
+      <TextInput
+        my={"sm"}
         label="Unit"
         description="Select unit where this device is located"
         disabled

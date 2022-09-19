@@ -55,6 +55,15 @@ export default function DeviceTemplateGeneralInfoDetail() {
           />
           <TextInput
             my={"sm"}
+            label="Merk Type"
+            readOnly
+            variant="filled"
+            rightSection={loading ? <Loader size={16} /> : null}
+            description="Device Brand Series / Type"
+            value={template.merkType || ""}
+          />
+          <TextInput
+            my={"sm"}
             label="Device Type"
             readOnly
             variant="filled"

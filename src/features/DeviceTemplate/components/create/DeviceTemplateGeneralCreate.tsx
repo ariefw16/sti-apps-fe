@@ -56,6 +56,8 @@ export default function DeviceTemplateGeneralCreate() {
       deviceTemplateSpecs: spec,
       devices,
       name: data.name,
+      merk: data.merk,
+      merkType: data.merkType,
       deviceTypeId: data.deviceTypeId,
     };
     saveDeviceTemplate(body)
@@ -102,6 +104,17 @@ export default function DeviceTemplateGeneralCreate() {
         value={data.merk || ""}
         onChange={(e) => {
           setData((d) => ({ ...d, merk: e.target.value }));
+        }}
+        disabled={loading}
+      />
+      <TextInput
+        my={"sm"}
+        label="Merk Type"
+        description="Device Template Merk Series / Type, applied to all device"
+        placeholder="ex: Cisco / Ubiquiti"
+        value={data.merkType || ""}
+        onChange={(e) => {
+          setData((d) => ({ ...d, merkType: e.target.value }));
         }}
         disabled={loading}
       />

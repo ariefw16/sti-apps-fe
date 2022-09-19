@@ -32,6 +32,7 @@ export default function DeviceCreateForm() {
       ipAddress: "",
       unitId: "",
       merk: "",
+      merkType: "",
     },
     schema: zodResolver(schema),
   });
@@ -104,6 +105,13 @@ export default function DeviceCreateForm() {
           description="Input Device Merk here.."
           required
           {...form.getInputProps("merk")}
+        />
+        <TextInput
+          my={"sm"}
+          label="Merk Type"
+          description="Input Device Type of Brand here.."
+          required
+          {...form.getInputProps("merkType")}
         />
         <Select
           my={"sm"}
