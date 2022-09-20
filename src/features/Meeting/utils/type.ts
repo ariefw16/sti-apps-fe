@@ -90,4 +90,5 @@ export interface MeetingCancel {
 
 export interface MeetingUpdate extends Meeting {
   jbhTimeString?: string | null;
+  startDateTime?: Date;
 }

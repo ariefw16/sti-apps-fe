@@ -47,7 +47,7 @@ export default function MeetingEditForm(props: {
           label="Jam Meeting"
           placeholder="Pick Time"
           icon={<Clock />}
-          {...form.getInputProps("startDate")}
+          {...form.getInputProps("startDateTime")}
           disabled={loading}
         />
       </Group>

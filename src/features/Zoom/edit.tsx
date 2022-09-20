@@ -33,6 +33,7 @@ export default function EditZoomAccountPage() {
       active: true,
       unitId: "",
       maxParticipant: 50,
+      useApi: "",
     },
     schema: zodResolver(schema),
   });
@@ -85,6 +86,7 @@ export default function EditZoomAccountPage() {
         : ""
     );
     form.setFieldValue("maxParticipant", account.maxParticipant ?? 100);
+    form.setFieldValue("useApi", account.useApi ? "Yes" : "No");
   }, [account]);
 
   const formSubmitHandler = (data: ZoomAccountCreate) => {

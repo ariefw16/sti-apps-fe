@@ -50,7 +50,8 @@ export async function saveMeeting(props: MeetingCreate): Promise<Meeting> {
       startDate:
         moment(data.startDate).format("YYYY-MM-DD") +
         " " +
-        moment(startDateTime).format("HH:mm"),
+        moment(startDateTime).format("HH:mm") +
+        ":00",
     });
     return result.data;
   } catch (e: any) {
@@ -98,10 +99,15 @@ export async function updateMeeting(props: {
 }): Promise<Meeting> {
   try {
     const { id, data } = props;
-    const { jbhTimeString, ...params } = data;
+    const { jbhTimeString, startDateTime, ...params } = data;
     const result = await axios.patch(`zoom-meeting/${id}`, {
       ...params,
       jbhTime: +data.jbhTimeString!,
+      startDate:
+        moment(data.startDate).format("YYYY-MM-DD") +
+        " " +
+        moment(startDateTime).format("HH:mm") +
+        ":00",
     });
     return result.data;
   } catch (e: any) {

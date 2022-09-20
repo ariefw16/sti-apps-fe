@@ -63,6 +63,7 @@ export async function updateZoomAccount(props: {
     const result = await axios.patch(`zoom-account/${props.id}`, {
       ...props.data,
       unitId: props.data.unitId ? +props.data?.unitId : undefined,
+      useApi: props.data.useApi === "Yes",
     });
     return result.data;
   } catch (e: any) {

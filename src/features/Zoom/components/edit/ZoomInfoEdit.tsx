@@ -34,30 +34,42 @@ export default function ZoomInfoEdit(props: {
         disabled={loading}
         {...form.getInputProps("email")}
       />
-      <PasswordInput
-        my="sm"
-        label="Account ID"
-        description="Account ID from zoom.us to connect Account"
-        placeholder="Input Account ID"
-        disabled={loading}
-        {...form.getInputProps("account_id")}
-      />
-      <PasswordInput
-        my="sm"
-        label="Client ID"
-        description="Client ID from zoom.us to connect Account"
-        placeholder="Input Client ID"
-        disabled={loading}
-        {...form.getInputProps("client_id")}
-      />
-      <PasswordInput
-        my="sm"
-        label="Secret Key"
-        description="Secret Key from zoom.us to connect Account"
-        placeholder="Enter Secret Key"
-        disabled={loading}
-        {...form.getInputProps("secretKey")}
-      />
+      {form.values.useApi === "Yes" && (
+        <>
+          <PasswordInput
+            my="sm"
+            label="Account ID"
+            description="Account ID from zoom.us to connect Account"
+            placeholder="Input Account ID"
+            disabled={loading}
+            {...form.getInputProps("account_id")}
+          />
+          <PasswordInput
+            my="sm"
+            label="Client ID"
+            description="Client ID from zoom.us to connect Account"
+            placeholder="Input Client ID"
+            disabled={loading}
+            {...form.getInputProps("client_id")}
+          />
+          <PasswordInput
+            my="sm"
+            label="Secret Key"
+            description="Secret Key from zoom.us to connect Account"
+            placeholder="Enter Secret Key"
+            disabled={loading}
+            {...form.getInputProps("secretKey")}
+          />
+          <TextInput
+            my="sm"
+            label="Last Connection"
+            description="Last connection established for any features"
+            readOnly
+            variant="filled"
+            value={moment(account.lastCheck).format("DD-MMM-YYYY HH:mm:ss")}
+          />
+        </>
+      )}
       <Group>
         <NumberInput
           my="sm"
@@ -68,14 +80,6 @@ export default function ZoomInfoEdit(props: {
           {...form.getInputProps("maxParticipant")}
         />
       </Group>
-      <TextInput
-        my="sm"
-        label="Last Connection"
-        description="Last connection established for any features"
-        readOnly
-        variant="filled"
-        value={moment(account.lastCheck).format("DD-MMM-YYYY HH:mm:ss")}
-      />
     </Paper>
   );
 }

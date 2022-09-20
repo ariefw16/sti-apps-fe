@@ -19,24 +19,38 @@ export default function ZoomAccountInfoDetail() {
         variant="filled"
         value={account.email || ""}
       />
-      <PasswordInput
-        my="sm"
-        label="Client ID"
-        description="Client ID from zoom.us to connect Account"
-        placeholder="Input Client ID"
-        readOnly
-        variant="filled"
-        value={account.client_id || ""}
-      />
-      <PasswordInput
-        my="sm"
-        label="Account ID"
-        description="Account ID from zoom.us to connect Account"
-        placeholder="Input Account ID"
-        readOnly
-        variant="filled"
-        value={account.account_id || ""}
-      />
+      {account.useApi && (
+        <>
+          <PasswordInput
+            my="sm"
+            label="Client ID"
+            description="Client ID from zoom.us to connect Account"
+            placeholder="Input Client ID"
+            readOnly
+            variant="filled"
+            value={account.client_id || ""}
+          />
+          <PasswordInput
+            my="sm"
+            label="Account ID"
+            description="Account ID from zoom.us to connect Account"
+            placeholder="Input Account ID"
+            readOnly
+            variant="filled"
+            value={account.account_id || ""}
+          />
+          <TextInput
+            my="sm"
+            label="Last Connection"
+            description="Last connection established for any features"
+            readOnly
+            variant="filled"
+            value={
+              moment(account.lastCheck).format("DD-MMM-YYYY HH:mm:ss") || ""
+            }
+          />
+        </>
+      )}
       <TextInput
         my="sm"
         label="Max Participant"
@@ -44,14 +58,6 @@ export default function ZoomAccountInfoDetail() {
         readOnly
         variant="filled"
         value={account.maxParticipant + " Participant" || ""}
-      />
-      <TextInput
-        my="sm"
-        label="Last Connection"
-        description="Last connection established for any features"
-        readOnly
-        variant="filled"
-        value={moment(account.lastCheck).format("DD-MMM-YYYY HH:mm:ss")}
       />
     </Paper>
   );

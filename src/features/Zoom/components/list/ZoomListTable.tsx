@@ -4,6 +4,7 @@ import {
   zoomListState,
 } from "../../utils/store";
 import {
+  Badge,
   Button,
   Checkbox,
   createStyles,
@@ -77,6 +78,7 @@ export default function ZoomAccountListTable() {
             </th>
             <th style={rowHeaderStyle}>Name</th>
             <th style={rowHeaderStyle}>Max Participant</th>
+            <th style={rowHeaderStyle}>Use Api</th>
             <th style={{ width: 120, ...rowHeaderStyle }}>Actions</th>
           </tr>
         </thead>
@@ -97,6 +99,13 @@ export default function ZoomAccountListTable() {
                 </td>
                 <td>{item.name}</td>
                 <td>{item.maxParticipant} participants</td>
+                <td>
+                  {item.useApi ? (
+                    <Badge color={"green"}>Yes</Badge>
+                  ) : (
+                    <Badge color={"orange"}>No</Badge>
+                  )}
+                </td>
                 <td>
                   <Menu
                     control={
@@ -125,15 +134,17 @@ export default function ZoomAccountListTable() {
                     >
                       Update
                     </Menu.Item>
-                    <Menu.Item
-                      icon={<AccessPoint size={14} />}
-                      onClick={() => {
-                        setConnection({ showModal: true, id: item.id! });
-                      }}
-                      color="cyan"
-                    >
-                      Test Connection
-                    </Menu.Item>
+                    {item.useApi && (
+                      <Menu.Item
+                        icon={<AccessPoint size={14} />}
+                        onClick={() => {
+                          setConnection({ showModal: true, id: item.id! });
+                        }}
+                        color="cyan"
+                      >
+                        Test Connection
+                      </Menu.Item>
+                    )}
                     <Menu.Item
                       icon={<Trash size={14} />}
                       color="red"
