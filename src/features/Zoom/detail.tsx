@@ -2,7 +2,12 @@ import PageTitleComponent from "../../components/common/PageTitle";
 import { PageTitleBreadcrumbs } from "../../types/pagetitle.type";
 import { Box, Grid, LoadingOverlay, Tabs } from "@mantine/core";
 import DeleteDialog from "../../components/common/DeleteDialog";
-import { useRecoilValue, useResetRecoilState, useSetRecoilState } from "recoil";
+import {
+  useRecoilState,
+  useRecoilValue,
+  useResetRecoilState,
+  useSetRecoilState,
+} from "recoil";
 import {
   zoomAccountDeleteState,
   zoomAccountDetailState,
@@ -36,7 +41,7 @@ export default function DetailZoomAccount() {
   const resetDeletion = useResetRecoilState(zoomAccountDeleteState);
   const [loading, setLoading] = useState(false);
   const { id } = useParams();
-  const setAccount = useSetRecoilState(zoomAccountDetailState);
+  const [account, setAccount] = useRecoilState(zoomAccountDetailState);
   const [deletionLoading, setDeletionLoading] = useState(false);
   const navigate = useNavigate();
   const setFilter = useSetRecoilState(zoomListFilterState);
@@ -103,9 +108,11 @@ export default function DetailZoomAccount() {
               </Grid.Col>
             </Grid>
           </Tabs.Tab>
-          <Tabs.Tab label="Recording" icon={<Video />}>
-            <ZoomAccountRecordCard />
-          </Tabs.Tab>
+          {account.useApi && (
+            <Tabs.Tab label="Recording" icon={<Video />}>
+              <ZoomAccountRecordCard />
+            </Tabs.Tab>
+          )}
         </TabNav>
       </Box>
       <DeleteDialog

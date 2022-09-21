@@ -33,6 +33,7 @@ export interface Meeting {
   requestorName?: string;
   requestorEmail?: string;
   idMeeting?: string;
+  apiAccount?: boolean;
 }
 
 export interface MeetingsFetchParams extends FetchParams {
@@ -77,6 +78,7 @@ export interface MeetingApproval {
     expectedParticipant?: number;
     requestorName?: string;
     requestorEmail?: string;
+    apiAccount?: boolean;
   };
 }
 

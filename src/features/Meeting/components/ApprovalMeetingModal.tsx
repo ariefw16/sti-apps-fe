@@ -35,6 +35,7 @@ export default function ApprovalMeetingModal() {
           res.data.map((r) => ({
             label: `${r.name} (${r.maxParticipant} participants) `,
             value: r.id!.toString(),
+            group: r.useApi ? "API Connected" : "Non API Account",
           }))
         );
       })

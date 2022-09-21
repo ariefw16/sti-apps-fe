@@ -39,6 +39,7 @@ export default function DeviceGeneralEdit() {
       isSpare: false,
       merk: "",
       merkType: "",
+      serialNumber: "",
     },
     schema: zodResolver(schema),
   });
@@ -53,6 +54,7 @@ export default function DeviceGeneralEdit() {
     form.setFieldValue("isSpare", device.isSpare);
     form.setFieldValue("merk", device.merk || "");
     form.setFieldValue("merkType", device.merkType || "");
+    form.setFieldValue("serialNumber", device.serialNumber || "");
   }, [device]);
 
   useEffect(() => {
@@ -129,6 +131,13 @@ export default function DeviceGeneralEdit() {
           description="Input Device Brand Series or Type here.."
           required
           {...form.getInputProps("merkType")}
+        />
+        <TextInput
+          my={"sm"}
+          label="Serial Number"
+          description="Input Serial number of this product here.."
+          required
+          {...form.getInputProps("serialNumber")}
         />
         <Select
           my={"sm"}

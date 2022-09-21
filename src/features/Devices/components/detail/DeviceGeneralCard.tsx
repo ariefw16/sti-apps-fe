@@ -43,6 +43,13 @@ export default function DeviceGeneralCard() {
       />
       <TextInput
         my={"sm"}
+        label="Serial Number"
+        description="Serial Number of this product"
+        disabled
+        value={device.serialNumber ?? ""}
+      />
+      <TextInput
+        my={"sm"}
         label="Unit"
         description="Select unit where this device is located"
         disabled

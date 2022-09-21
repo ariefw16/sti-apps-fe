@@ -33,6 +33,7 @@ export default function DeviceCreateForm() {
       unitId: "",
       merk: "",
       merkType: "",
+      serialNumber: "",
     },
     schema: zodResolver(schema),
   });
@@ -112,6 +113,13 @@ export default function DeviceCreateForm() {
           description="Input Device Type of Brand here.."
           required
           {...form.getInputProps("merkType")}
+        />
+        <TextInput
+          my={"sm"}
+          label="Serial Number"
+          description="Input Serial Number of this device here.."
+          required
+          {...form.getInputProps("serialNumber")}
         />
         <Select
           my={"sm"}
