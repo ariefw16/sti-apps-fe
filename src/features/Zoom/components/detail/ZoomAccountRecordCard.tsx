@@ -65,8 +65,12 @@ export default function ZoomAccountRecordCard() {
   const yearSelectHandler = (vals: string) => {
     setYearSelected(vals);
   };
-  const downloadRecordingHandler = (id: number) => {
-    setShowDownload({ showModal: true, meetingId: id, accountId: account.id! });
+  const downloadRecordingHandler = (uuid: string) => {
+    setShowDownload({
+      showModal: true,
+      meetingId: uuid,
+      accountId: account.id!,
+    });
   };
 
   return (
@@ -138,7 +142,7 @@ export default function ZoomAccountRecordCard() {
                           <Menu.Item
                             icon={<Download size={14} />}
                             onClick={() => {
-                              downloadRecordingHandler(r.id!);
+                              downloadRecordingHandler(r.uuid!);
                             }}
                           >
                             Download Recording
