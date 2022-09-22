@@ -31,6 +31,8 @@ import EditDeviceTemplate from "./features/DeviceTemplate/edit";
 import CreateDeviceTemplate from "./features/DeviceTemplate/create";
 import AccessDoorPage from "./features/AccessDoor";
 import RequestMeetingPage from "./features/Meeting/request";
+import InspectionTemplatePage from "./features/InspectionTemplate";
+import DetailInspectionTemplatePage from "./features/InspectionTemplate/detail";
 
 function App() {
   axios.defaults.baseURL = import.meta.env.VITE_SERVER_URL;
@@ -82,6 +84,14 @@ function App() {
             element={<DetailDeviceTemplate />}
           />
           <Route path="/access-door" element={<AccessDoorPage />} />
+          <Route
+            path="/inspection-template"
+            element={<InspectionTemplatePage />}
+          />
+          <Route
+            path="/inspection-template/:id"
+            element={<DetailInspectionTemplatePage />}
+          />
         </Route>
         <Route path="/auth" element={<AuthLayout />}>
           <Route index element={<LoginPage />} />

@@ -10,8 +10,11 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { ChevronDown, Eye, Pencil, Trash } from "tabler-icons-react";
-import { DataToDelete } from "../../../types/common";
-import { deviceDeleteModalState, deviceListState } from "../utils/store";
+import { DataToDelete } from "../../../../types/common";
+import {
+  inspectionTemplateDeleteState,
+  inspectionTemplateListState,
+} from "../../utils/store";
 
 const useStyles = createStyles((theme) => ({
   rowSelected: {
@@ -22,13 +25,13 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-export default function DeviceTable() {
+export default function InspectionTemplateTable() {
   const { classes, cx } = useStyles();
   const [selection, setSelection] = useState<number[]>([]);
   const rowHeaderStyle = { color: "GrayText", fontWeight: 500 };
-  const device = useRecoilValue(deviceListState);
-  const setDeletion = useSetRecoilState(deviceDeleteModalState);
+  const data = useRecoilValue(inspectionTemplateListState);
   const navigate = useNavigate();
+  const setDeletion = useSetRecoilState(inspectionTemplateDeleteState);
 
   const toggleRow = (id: number) =>
     setSelection((current) =>
@@ -38,7 +41,7 @@ export default function DeviceTable() {
     );
   const toggleAll = () =>
     setSelection((current) =>
-      current.length === device.length ? [] : device.map((item) => item.id!)
+      current.length === data.length ? [] : data.map((item) => item.id!)
     );
   const deleteButtonHandler = (data: DataToDelete) => {
     setDeletion({ showModal: true, data });
@@ -52,23 +55,20 @@ export default function DeviceTable() {
             <th style={{ width: 40 }}>
               <Checkbox
                 onChange={toggleAll}
-                checked={selection.length === device.length}
+                checked={selection.length === data.length}
                 indeterminate={
-                  selection.length > 0 && selection.length !== device.length
+                  selection.length > 0 && selection.length !== data.length
                 }
                 transitionDuration={0}
               />
             </th>
             <th style={rowHeaderStyle}>Name</th>
             <th style={rowHeaderStyle}>Type</th>
-            <th style={rowHeaderStyle}>S/N</th>
-            <th style={rowHeaderStyle}>IP Address</th>
-            <th style={rowHeaderStyle}>Unit</th>
             <th style={{ width: 120, ...rowHeaderStyle }}>Actions</th>
           </tr>
         </thead>
         <tbody>
-          {device.map((item) => {
+          {data.map((item) => {
             const selected = selection.includes(item.id!);
             return (
               <tr
@@ -84,9 +84,6 @@ export default function DeviceTable() {
                 </td>
                 <td>{item.name}</td>
                 <td>{item.deviceType?.name}</td>
-                <td>{item.serialNumber}</td>
-                <td>{item.ipAddress}</td>
-                <td>{item.unit?.name}</td>
                 <td>
                   <Menu
                     control={
@@ -102,7 +99,7 @@ export default function DeviceTable() {
                     <Menu.Item
                       icon={<Eye size={14} />}
                       onClick={() => {
-                        navigate(`/device/${item.id}`);
+                        navigate(`/inspection-template/${item.id}`);
                       }}
                     >
                       View
@@ -110,7 +107,7 @@ export default function DeviceTable() {
                     <Menu.Item
                       icon={<Pencil size={14} />}
                       onClick={() => {
-                        navigate(`/device/${item.id}/edit`);
+                        navigate(`/inspection-template/${item.id}/edit`);
                       }}
                     >
                       Update

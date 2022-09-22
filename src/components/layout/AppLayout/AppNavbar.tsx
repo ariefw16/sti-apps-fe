@@ -1,5 +1,12 @@
 import { Navbar, ScrollArea, createStyles, Menu } from "@mantine/core";
-import { Notes, CalendarStats, Gauge, Lock, Logout } from "tabler-icons-react";
+import {
+  Notes,
+  CalendarStats,
+  Gauge,
+  Lock,
+  Logout,
+  Database,
+} from "tabler-icons-react";
 import { UserButton } from "./UserButton";
 import { LinksGroup } from "./NavbarLinkGroup";
 import { useRecoilValue, useResetRecoilState } from "recoil";
@@ -19,7 +26,6 @@ const mockdata = [
       { label: "Overview", link: "/services" },
       { label: "VPN", link: "/vpn" },
       { label: "Meetings", link: "/meetings" },
-      { label: "Zoom Account", link: "/zoom-account" },
     ],
   },
   {
@@ -31,6 +37,15 @@ const mockdata = [
       { label: "Incidents", link: "/incident" },
       { label: "Device Type", link: "/device-type" },
       { label: "Access Door DC", link: "/access-door" },
+    ],
+  },
+  {
+    label: "Master Data",
+    icon: Database,
+    links: [
+      { label: "Zoom Account", link: "/zoom-account" },
+      { label: "Device Type", link: "/device-type" },
+      { label: "Inspection Template", link: "/inspection-template" },
     ],
   },
   {
