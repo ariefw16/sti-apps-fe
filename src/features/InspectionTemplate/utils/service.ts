@@ -24,3 +24,14 @@ export async function deleteInspectionTemplate(id: number) {
     throw new Error(e.message);
   }
 }
+
+export async function fetchSingleInspectionTemplate(
+  id: number
+): Promise<InspectionTemplate> {
+  try {
+    const result = await axios.get(`device-inspection-template/${id}`);
+    return result.data;
+  } catch (e: any) {
+    throw new Error(e.message);
+  }
+}

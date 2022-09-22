@@ -51,7 +51,7 @@ export default function MeetingDetailForm(props: { loading: boolean }) {
   const downloadRecordingHandler = () => {
     setShowDownload({
       showModal: true,
-      meetingId: detail.idMeeting ? +detail.idMeeting : undefined,
+      meetingId: detail.idMeeting ? detail.idMeeting : undefined,
       accountId: detail.zoomAccountId!,
     });
   };

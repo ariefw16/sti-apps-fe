@@ -1,8 +1,14 @@
-import { Grid } from "@mantine/core";
+import { Box, Grid, LoadingOverlay } from "@mantine/core";
+import { showNotification } from "@mantine/notifications";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { useSetRecoilState } from "recoil";
 import PageTitleComponent from "../../components/common/PageTitle";
 import { PageTitleBreadcrumbs } from "../../types/pagetitle.type";
 import InspectionTemplateLineDetail from "./components/detail/DetailInfo";
 import InspectionTemplateGeneralDetail from "./components/detail/GeneralInfo";
+import { fetchSingleInspectionTemplate } from "./utils/service";
+import { inspectionTemplateState } from "./utils/store";
 
 export default function DetailInspectionTemplatePage() {
   const breadcrumbs: PageTitleBreadcrumbs[] = [
@@ -13,6 +19,27 @@ export default function DetailInspectionTemplatePage() {
     { label: "Inspection Template", to: "/inspection-template" },
     { label: "Detail" },
   ];
+  const { id } = useParams();
+  const setData = useSetRecoilState(inspectionTemplateState);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+    fetchSingleInspectionTemplate(+id!)
+      .then((res) => {
+        setData(res);
+      })
+      .catch((e) => {
+        showNotification({
+          title: "Fetch Inspection Template",
+          message: `Error! ${e.message}`,
+          color: "red",
+        });
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, []);
 
   return (
     <>
@@ -22,10 +49,16 @@ export default function DetailInspectionTemplatePage() {
       />
       <Grid sx={{ marginTop: 50 }}>
         <Grid.Col sm={12} md={5}>
-          <InspectionTemplateGeneralDetail />
+          <Box style={{ position: "relative" }}>
+            <LoadingOverlay visible={loading} />
+            <InspectionTemplateGeneralDetail loading={loading} />
+          </Box>
         </Grid.Col>
         <Grid.Col sm={12} md={7}>
-          <InspectionTemplateLineDetail />
+          <Box style={{ position: "relative" }}>
+            <LoadingOverlay visible={loading} />
+            <InspectionTemplateLineDetail />
+          </Box>
         </Grid.Col>
       </Grid>
     </>

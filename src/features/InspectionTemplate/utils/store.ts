@@ -31,3 +31,8 @@ export const inspectionTemplateDeleteState = atom<InspectionTemplateDelete>({
     data: { id: 0, name: "" },
   },
 });
+
+export const inspectionTemplateState = atom<InspectionTemplate>({
+  key: "inspectionTemplateState",
+  default: {},
+});
