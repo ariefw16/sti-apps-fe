@@ -65,3 +65,14 @@ export async function saveInspectionTemplate(
     throw new Error(e.message);
   }
 }
+
+export async function deleteInspectionTemplateDetail(id: number) {
+  try {
+    const result = await axios.delete(
+      `device-inspection-template/detail/${id}`
+    );
+    return result.data;
+  } catch (e: any) {
+    throw new Error(e.message);
+  }
+}

@@ -7,18 +7,63 @@ import {
   Table,
   Title,
 } from "@mantine/core";
+import { showNotification } from "@mantine/notifications";
 import { useState } from "react";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { AntennaBars1, Pencil, Plus, Trash } from "tabler-icons-react";
-import { inspectionTemplateState } from "../../utils/store";
+import DeleteDialog from "../../../../components/common/DeleteDialog";
+import { DataToDelete } from "../../../../types/common";
+import { deleteInspectionTemplateDetail } from "../../utils/service";
+import {
+  inspectionTemplateState,
+  inspectionTemplateTriggerState,
+} from "../../utils/store";
 import AddChecklistInspectionModal from "./AddChecklistModal";
 
 export default function InspectionTemplateLineDetail() {
   const data = useRecoilValue(inspectionTemplateState);
   const [openAdd, setOpenAdd] = useState(false);
+  const [deletion, setDeletion] = useState(false);
+  const [deletionLoading, setDeletionLoading] = useState(false);
+  const [deletionData, setDeletionData] = useState<DataToDelete>({
+    id: 0,
+    name: "",
+  });
+  const setTrigger = useSetRecoilState(inspectionTemplateTriggerState);
 
   const closeAddModal = () => {
     setOpenAdd(false);
+  };
+  const deleteButtonHandler = (data: DataToDelete) => {
+    setDeletionData(data);
+    setDeletion(true);
+  };
+  const deletionSubmitHandler = () => {
+    setDeletionLoading(true);
+    deleteInspectionTemplateDetail(deletionData.id)
+      .then(() => {
+        setTrigger((t) => !t);
+        hideDeleteion();
+        showNotification({
+          title: "Inspection Checklist Deletion",
+          message: "Inspection Checklist deleted successfully!",
+          color: "green",
+        });
+      })
+      .catch((e) => {
+        showNotification({
+          title: "Inspection Checklist Deletion",
+          message: `Error! ${e.message}`,
+          color: "red",
+        });
+      })
+      .finally(() => {
+        setDeletionLoading(false);
+      });
+  };
+  const hideDeleteion = () => {
+    setDeletion(false);
+    setDeletionData({ id: 0, name: "" });
   };
 
   return (
@@ -74,7 +119,7 @@ export default function InspectionTemplateLineDetail() {
                       icon={<Trash size={14} />}
                       color="red"
                       onClick={() => {
-                        // deleteButtonHandler({ id: item.id!, name: item.name! });
+                        deleteButtonHandler({ id: d.id!, name: d.name! });
                       }}
                     >
                       Delete
@@ -87,6 +132,13 @@ export default function InspectionTemplateLineDetail() {
         </Table>
       </Paper>
       <AddChecklistInspectionModal onClose={closeAddModal} opened={openAdd} />
+      <DeleteDialog
+        open={deletion}
+        data={deletionData}
+        onClose={hideDeleteion}
+        onSubmit={deletionSubmitHandler}
+        loading={deletionLoading}
+      />
     </>
   );
 }
