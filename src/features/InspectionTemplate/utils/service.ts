@@ -1,6 +1,11 @@
 import axios from "axios";
 import { FetchResult } from "../../../types/fetch.type";
-import { InspectionTemplate, InspectionTemplateFetchParams } from "./type";
+import {
+  CreateInspectionTemplate,
+  InspectionTemplate,
+  InspectionTemplateDetail,
+  InspectionTemplateFetchParams,
+} from "./type";
 
 export async function fetchInspectionTemplate(
   params: InspectionTemplateFetchParams
@@ -30,6 +35,31 @@ export async function fetchSingleInspectionTemplate(
 ): Promise<InspectionTemplate> {
   try {
     const result = await axios.get(`device-inspection-template/${id}`);
+    return result.data;
+  } catch (e: any) {
+    throw new Error(e.message);
+  }
+}
+
+export async function saveChecklistInspection(data: InspectionTemplateDetail) {
+  try {
+    const result = await axios.post("device-inspection-template/detail", {
+      ...data,
+    });
+    return result.data;
+  } catch (e: any) {
+    throw new Error(e.message);
+  }
+}
+
+export async function saveInspectionTemplate(
+  data: CreateInspectionTemplate
+): Promise<InspectionTemplate> {
+  try {
+    const result = await axios.post("device-inspection-template", {
+      name: data.name,
+      deviceTypeId: data.deviceTypeId ? +data.deviceTypeId : undefined,
+    });
     return result.data;
   } catch (e: any) {
     throw new Error(e.message);

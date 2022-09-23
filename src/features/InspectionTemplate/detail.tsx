@@ -2,13 +2,16 @@ import { Box, Grid, LoadingOverlay } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import PageTitleComponent from "../../components/common/PageTitle";
 import { PageTitleBreadcrumbs } from "../../types/pagetitle.type";
 import InspectionTemplateLineDetail from "./components/detail/DetailInfo";
 import InspectionTemplateGeneralDetail from "./components/detail/GeneralInfo";
 import { fetchSingleInspectionTemplate } from "./utils/service";
-import { inspectionTemplateState } from "./utils/store";
+import {
+  inspectionTemplateState,
+  inspectionTemplateTriggerState,
+} from "./utils/store";
 
 export default function DetailInspectionTemplatePage() {
   const breadcrumbs: PageTitleBreadcrumbs[] = [
@@ -22,6 +25,7 @@ export default function DetailInspectionTemplatePage() {
   const { id } = useParams();
   const setData = useSetRecoilState(inspectionTemplateState);
   const [loading, setLoading] = useState(false);
+  const trigger = useRecoilValue(inspectionTemplateTriggerState);
 
   useEffect(() => {
     setLoading(true);
@@ -39,7 +43,7 @@ export default function DetailInspectionTemplatePage() {
       .finally(() => {
         setLoading(false);
       });
-  }, []);
+  }, [trigger]);
 
   return (
     <>

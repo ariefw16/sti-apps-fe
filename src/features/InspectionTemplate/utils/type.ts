@@ -14,12 +14,24 @@ export interface InspectionTemplate {
   DeviceInspectionTemplateDetail?: InspectionTemplateDetail[];
 }
 
+export interface CreateInspectionTemplate {
+  name?: string;
+  deviceTypeId?: string | null;
+}
+
 export interface InspectionTemplateDetail {
   id?: number;
   name?: string;
   description?: string;
   inputType?: string;
   required?: boolean;
+  templateId?: number;
+  deviceInspectionTemplateChoice?: InspectionTemplateDetailChoice[];
+}
+
+export interface InspectionTemplateDetailChoice {
+  id?: number;
+  name?: string;
 }
 
 export interface InspectionTemplateFetchParams extends FetchParams {

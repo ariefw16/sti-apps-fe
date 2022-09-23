@@ -54,6 +54,7 @@ export default function EditMeetingPage() {
     initialValues: {
       name: "",
       startDate: new Date(),
+      startDateTime: new Date(),
       duration: 60,
       password: "",
       audio: "both",
@@ -97,6 +98,7 @@ export default function EditMeetingPage() {
     form.setFieldValue("status", data.status || 0);
     form.setFieldValue("name", data.name || "");
     form.setFieldValue("startDate", moment(data.startDate).toDate());
+    form.setFieldValue("startDateTime", moment(data.startDate).toDate());
     form.setFieldValue("duration", data.duration || 0);
     form.setFieldValue("password", data.password || "");
     form.setFieldValue("audio", data.audio || "");

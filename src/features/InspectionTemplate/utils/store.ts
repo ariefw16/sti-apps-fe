@@ -36,3 +36,8 @@ export const inspectionTemplateState = atom<InspectionTemplate>({
   key: "inspectionTemplateState",
   default: {},
 });
+
+export const inspectionTemplateTriggerState = atom({
+  key: "inspectionTemplateTriggerState",
+  default: false,
+});
