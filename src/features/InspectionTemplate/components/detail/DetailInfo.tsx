@@ -18,11 +18,15 @@ import {
   inspectionTemplateState,
   inspectionTemplateTriggerState,
 } from "../../utils/store";
+import { InspectionTemplateDetail } from "../../utils/type";
+import UpdateInspectionTemplateChecklistModal from "../updateChecklistModal";
 import AddChecklistInspectionModal from "./AddChecklistModal";
 
 export default function InspectionTemplateLineDetail() {
   const data = useRecoilValue(inspectionTemplateState);
   const [openAdd, setOpenAdd] = useState(false);
+  const [openUpdate, setOpenUpdate] = useState(false);
+  const [dataUpdate, setDataUpdate] = useState<InspectionTemplateDetail>({});
   const [deletion, setDeletion] = useState(false);
   const [deletionLoading, setDeletionLoading] = useState(false);
   const [deletionData, setDeletionData] = useState<DataToDelete>({
@@ -33,6 +37,9 @@ export default function InspectionTemplateLineDetail() {
 
   const closeAddModal = () => {
     setOpenAdd(false);
+  };
+  const closeUpdateModal = () => {
+    setOpenUpdate(false);
   };
   const deleteButtonHandler = (data: DataToDelete) => {
     setDeletionData(data);
@@ -64,6 +71,10 @@ export default function InspectionTemplateLineDetail() {
   const hideDeleteion = () => {
     setDeletion(false);
     setDeletionData({ id: 0, name: "" });
+  };
+  const editButtonHandler = (data: InspectionTemplateDetail) => {
+    setDataUpdate(data);
+    setOpenUpdate(true);
   };
 
   return (
@@ -110,7 +121,7 @@ export default function InspectionTemplateLineDetail() {
                     <Menu.Item
                       icon={<Pencil size={14} />}
                       onClick={() => {
-                        // editButtonHandler(item);
+                        editButtonHandler(d);
                       }}
                     >
                       Update
@@ -138,6 +149,11 @@ export default function InspectionTemplateLineDetail() {
         onClose={hideDeleteion}
         onSubmit={deletionSubmitHandler}
         loading={deletionLoading}
+      />
+      <UpdateInspectionTemplateChecklistModal
+        opened={openUpdate}
+        onClose={closeUpdateModal}
+        data={dataUpdate}
       />
     </>
   );

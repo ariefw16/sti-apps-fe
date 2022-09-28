@@ -91,3 +91,20 @@ export async function updateInspectionTemplate(
     throw new Error(e.message);
   }
 }
+
+export async function updateChecklistInspectionTemplate(
+  data: InspectionTemplateDetail
+) {
+  const { id, ...body } = data;
+  try {
+    const result = await axios.patch(
+      `device-inspection-template/detail/${id}`,
+      {
+        ...body,
+      }
+    );
+    return result.data;
+  } catch (e: any) {
+    throw new Error(e.message);
+  }
+}

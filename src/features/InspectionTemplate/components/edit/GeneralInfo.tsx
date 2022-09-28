@@ -18,7 +18,7 @@ import { SelectOptions } from "../../../../types/common";
 import { fetchDeviceType } from "../../../DeviceType/utils/service";
 import { updateInspectionTemplate } from "../../utils/service";
 import { inspectionTemplateState } from "../../utils/store";
-import { CreateInspectionTemplate, InspectionTemplate } from "../../utils/type";
+import { CreateInspectionTemplate } from "../../utils/type";
 
 const schema = z.object({
   name: z.string().min(1),
