@@ -76,3 +76,18 @@ export async function deleteInspectionTemplateDetail(id: number) {
     throw new Error(e.message);
   }
 }
+
+export async function updateInspectionTemplate(
+  id: number,
+  data: CreateInspectionTemplate
+): Promise<InspectionTemplate> {
+  try {
+    const result = await axios.patch(`device-inspection-template/${id}`, {
+      ...data,
+      deviceTypeId: data.deviceTypeId ? +data.deviceTypeId : undefined,
+    });
+    return result.data;
+  } catch (e: any) {
+    throw new Error(e.message);
+  }
+}

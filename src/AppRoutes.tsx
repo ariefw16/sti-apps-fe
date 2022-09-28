@@ -33,6 +33,7 @@ import AccessDoorPage from "./features/AccessDoor";
 import RequestMeetingPage from "./features/Meeting/request";
 import InspectionTemplatePage from "./features/InspectionTemplate";
 import DetailInspectionTemplatePage from "./features/InspectionTemplate/detail";
+import EditInspectionTemplatePage from "./features/InspectionTemplate/edit";
 
 function App() {
   axios.defaults.baseURL = import.meta.env.VITE_SERVER_URL;
@@ -87,6 +88,10 @@ function App() {
           <Route
             path="/inspection-template"
             element={<InspectionTemplatePage />}
+          />
+          <Route
+            path="/inspection-template/:id/edit"
+            element={<EditInspectionTemplatePage />}
           />
           <Route
             path="/inspection-template/:id"
