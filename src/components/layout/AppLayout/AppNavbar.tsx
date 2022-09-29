@@ -23,7 +23,6 @@ const mockdata = [
     icon: Notes,
     initiallyOpened: false,
     links: [
-      { label: "Overview", link: "/services" },
       { label: "VPN", link: "/vpn" },
       { label: "Meetings", link: "/meetings" },
     ],
@@ -32,11 +31,10 @@ const mockdata = [
     label: "Infrastructure",
     icon: CalendarStats,
     links: [
-      { label: "Overview", link: "/tasks" },
-      { label: "Devices", link: "/device" },
-      { label: "Incidents", link: "/incident" },
-      { label: "Device Type", link: "/device-type" },
       { label: "Access Door DC", link: "/access-door" },
+      { label: "Devices", link: "/device" },
+      { label: "Inspection", link: "/inspection" },
+      { label: "Incidents", link: "/incident" },
     ],
   },
   {
