@@ -53,12 +53,14 @@ export default function DeviceTemplateDevicesDetail(props: {
     sn: string;
     unitId: string | null;
     isSpare: string | null;
+    year: string;
   }) => {
-    const { sn, unitId, isSpare } = props;
+    const { sn, unitId, isSpare, year } = props;
     addDeviceToDeviceTemplate(template.id!, {
       serialNumber: sn,
       isSpare: isSpare === "1",
       unitId,
+      year,
     })
       .then(() => {
         showNotification({
@@ -137,6 +139,7 @@ export default function DeviceTemplateDevicesDetail(props: {
               <th>is Spare</th>
               <th>Unit</th>
               <th>IP Address</th>
+              <th>Purchase year</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -154,6 +157,7 @@ export default function DeviceTemplateDevicesDetail(props: {
                   </td>
                   <td>{d.unit?.name || "-"}</td>
                   <td>{d.ipAddress}</td>
+                  <td>{d.year}</td>
                   <td>
                     <Menu
                       control={

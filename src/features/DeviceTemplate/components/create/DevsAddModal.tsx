@@ -17,6 +17,7 @@ export default function DevsAddModal(props: {
     sn: string;
     isSpare: string | null;
     unitId: string | null;
+    year: string;
   };
   opened: boolean;
   onClose: any;
@@ -25,12 +26,14 @@ export default function DevsAddModal(props: {
   const [sn, setSn] = useState("");
   const [isSpare, setIsSpare] = useState<string | null>("1");
   const [unitId, setUnitId] = useState<string | null>("");
+  const [year, setYear] = useState<string>();
 
   useEffect(() => {
     if (defaultValues) {
       setSn(defaultValues.sn);
       setIsSpare(defaultValues.isSpare);
       setUnitId(defaultValues.unitId);
+      setYear(defaultValues.year);
     }
   }, [opened]);
 
@@ -41,7 +44,7 @@ export default function DevsAddModal(props: {
     onClose();
   };
   const saveButtonHandler = () => {
-    saveHandler({ sn, unitId, isSpare });
+    saveHandler({ sn, unitId, isSpare, year });
     resetForm();
   };
 
@@ -60,6 +63,15 @@ export default function DevsAddModal(props: {
         value={sn || ""}
         onChange={(e) => {
           setSn(e.target.value);
+        }}
+      />
+      <TextInput
+        label="Year"
+        description="Input when device is purchased (year)"
+        my="md"
+        value={year || ""}
+        onChange={(e) => {
+          setYear(e.target.value);
         }}
       />
       <Select

@@ -29,6 +29,13 @@ export default function DeviceGeneralCard() {
       />
       <TextInput
         my={"sm"}
+        label="Year"
+        description="Purchasing Year"
+        disabled
+        value={device.year ?? ""}
+      />
+      <TextInput
+        my={"sm"}
         label="Merk"
         description="Device Brand"
         disabled

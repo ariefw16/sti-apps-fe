@@ -34,6 +34,7 @@ export default function DeviceCreateForm() {
       merk: "",
       merkType: "",
       serialNumber: "",
+      year: "",
     },
     schema: zodResolver(schema),
   });
@@ -99,6 +100,13 @@ export default function DeviceCreateForm() {
           description="Input Device Name here.."
           required
           {...form.getInputProps("name")}
+        />
+        <TextInput
+          my={"sm"}
+          label="Year"
+          description="Input Purchased year here.."
+          required
+          {...form.getInputProps("year")}
         />
         <TextInput
           my={"sm"}

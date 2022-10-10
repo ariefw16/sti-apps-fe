@@ -40,6 +40,7 @@ export default function DeviceGeneralEdit() {
       merk: "",
       merkType: "",
       serialNumber: "",
+      year: "",
     },
     schema: zodResolver(schema),
   });
@@ -55,6 +56,7 @@ export default function DeviceGeneralEdit() {
     form.setFieldValue("merk", device.merk || "");
     form.setFieldValue("merkType", device.merkType || "");
     form.setFieldValue("serialNumber", device.serialNumber || "");
+    form.setFieldValue("year", device.year || "");
   }, [device]);
 
   useEffect(() => {
@@ -117,6 +119,13 @@ export default function DeviceGeneralEdit() {
           description="Input Device Name here.."
           required
           {...form.getInputProps("name")}
+        />
+        <TextInput
+          my={"sm"}
+          label="Year"
+          description="Input Purchased Year here.."
+          required
+          {...form.getInputProps("year")}
         />
         <TextInput
           my={"sm"}

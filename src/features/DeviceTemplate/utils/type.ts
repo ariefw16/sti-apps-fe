@@ -32,6 +32,7 @@ export interface DeviceTemplateDevsCreate {
   unitName?: string;
   isSpare?: boolean;
   ipAddress?: string;
+  year?: string;
 }
 
 export interface DeviceTemplateSpec {

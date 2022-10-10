@@ -39,6 +39,7 @@ export default function DeviceTemplateDevsCreate() {
     sn: string;
     unitId: string | null;
     isSpare: string | null;
+    year: string;
   }) => {
     setData((d) => [
       ...d,
@@ -47,6 +48,7 @@ export default function DeviceTemplateDevsCreate() {
         unitId: props.unitId,
         isSpare: props.isSpare === "1",
         unitName: unitOptions.find((f) => f.value === props.unitId)?.label,
+        year: props.year,
       },
     ]);
   };
@@ -68,8 +70,9 @@ export default function DeviceTemplateDevsCreate() {
     sn: string;
     unitId: string | null;
     isSpare: string | null;
+    year: string;
   }) => {
-    const { sn, unitId, isSpare } = props;
+    const { sn, unitId, isSpare, year } = props;
     setData(
       data.map((dt, idx) => {
         if (idx === idxUpdate)
@@ -78,6 +81,7 @@ export default function DeviceTemplateDevsCreate() {
             unitId,
             isSpare: isSpare === "1",
             unitName: unitOptions.find((e) => e.value === unitId)?.label,
+            year,
           };
         else return dt;
       })
@@ -109,6 +113,7 @@ export default function DeviceTemplateDevsCreate() {
               <th>Serial Number</th>
               <th>Is Spare</th>
               <th>Unit</th>
+              <th>Year</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -124,6 +129,7 @@ export default function DeviceTemplateDevsCreate() {
                   )}
                 </td>
                 <td>{d.unitName}</td>
+                <td>{d.year}</td>
                 <td>
                   <Menu
                     control={
@@ -177,6 +183,7 @@ export default function DeviceTemplateDevsCreate() {
           sn: data[idxUpdate]?.serialNumber || "",
           unitId: data[idxUpdate]?.unitId || null,
           isSpare: data[idxUpdate]?.isSpare ? "1" : "0",
+          year: data[idxUpdate]?.year || "",
         }}
       />
     </>

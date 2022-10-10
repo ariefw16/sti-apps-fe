@@ -29,6 +29,7 @@ export default function QuickUpdateDeviceTemplate(props: {
   const [unitId, setUnitId] = useState<string>();
   const [spare, setSpare] = useState<string | null>(null);
   const [ipAddress, setIpAddress] = useState<string>();
+  const [year, setYear] = useState<string>();
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -36,6 +37,7 @@ export default function QuickUpdateDeviceTemplate(props: {
     setUnitId(data.data.unit?.id!.toString());
     setSpare(isSpare);
     setIpAddress(data.data.ipAddress);
+    setYear(data.data.year || "");
   }, [data.data.id]);
 
   const isSpare = () => (data.data.isSpare ? "1" : "0");
@@ -53,6 +55,7 @@ export default function QuickUpdateDeviceTemplate(props: {
       ipAddress,
       serialNumber: sn,
       unitId,
+      year,
     })
       .then(() => {
         showNotification({
@@ -92,6 +95,19 @@ export default function QuickUpdateDeviceTemplate(props: {
           setSn(vals.target.value);
         }}
       />
+      <Grid>
+        <Grid.Col md={6}>
+          <TextInput
+            label="Purchase Year"
+            description="Purchased Year"
+            mb="md"
+            value={year}
+            onChange={(vals) => {
+              setYear(vals.target.value);
+            }}
+          />
+        </Grid.Col>
+      </Grid>
       <Grid>
         <Grid.Col sm={12} md={5}>
           <Select

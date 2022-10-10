@@ -1,4 +1,4 @@
-import { Tabs } from "@mantine/core";
+import { Grid, Tabs } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -8,6 +8,7 @@ import TabNav from "../../components/common/TabNav";
 import { SelectOptions } from "../../types/common";
 import { PageTitleBreadcrumbs } from "../../types/pagetitle.type";
 import { fetchUnit } from "../Unit/utils/service";
+import DeviceTemplateFilterYearDevice from "./components/detail/DeviceFilterYear";
 import DeviceTemplateDevicesDetail from "./components/detail/DeviceTemplateDevDetail";
 import DeviceTemplateGeneralInfoDetail from "./components/detail/DeviceTemplateGeneralDetail";
 import QuickUpdateDeviceTemplate from "./components/detail/QuickUpdateDevice";
@@ -82,7 +83,14 @@ export default function DetailDeviceTemplate() {
           <DeviceTemplateGeneralInfoDetail />
         </Tabs.Tab>
         <Tabs.Tab label="Devices">
-          <DeviceTemplateDevicesDetail unitOptions={unitOptions} />
+          <Grid>
+            <Grid.Col md={3} sm={12}>
+              <DeviceTemplateFilterYearDevice />
+            </Grid.Col>
+            <Grid.Col md={9} sm={12}>
+              <DeviceTemplateDevicesDetail unitOptions={unitOptions} />
+            </Grid.Col>
+          </Grid>
         </Tabs.Tab>
       </TabNav>
       <QuickUpdateDeviceTemplate unitOptions={unitOptions} />
