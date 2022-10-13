@@ -83,3 +83,10 @@ export const deviceTemplateLoadingCreateState = atom({
   key: "deviceTemplateLoadingCreateState",
   default: false,
 });
+
+export const deviceTemplateYearSelectionState = atom<
+  { year: string; count: number; selected: boolean }[]
+>({
+  key: "deviceTemplateYearSelectionState",
+  default: [],
+});

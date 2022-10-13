@@ -2,7 +2,7 @@ import { Grid, Tabs } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import PageTitleComponent from "../../components/common/PageTitle";
 import TabNav from "../../components/common/TabNav";
 import { SelectOptions } from "../../types/common";
@@ -17,6 +17,7 @@ import {
   deviceTemplateDetailState,
   deviceTemplateLoadingDetailState,
   deviceTemplateQuickUpdateTriggreState,
+  deviceTemplateYearSelectionState,
 } from "./utils/store";
 
 export default function DetailDeviceTemplate() {
@@ -34,15 +35,32 @@ export default function DetailDeviceTemplate() {
     },
   ];
   const { id } = useParams();
-  const setTemplate = useSetRecoilState(deviceTemplateDetailState);
+  const [template, setTemplate] = useRecoilState(deviceTemplateDetailState);
   const setLoading = useSetRecoilState(deviceTemplateLoadingDetailState);
   const trigger = useRecoilValue(deviceTemplateQuickUpdateTriggreState);
   const [unitOptions, setUnitOptions] = useState<SelectOptions[]>([]);
+  const [yearSelection, setYearSelection] = useRecoilState(
+    deviceTemplateYearSelectionState
+  );
 
   useEffect(() => {
     setLoading(true);
     fetchSingleDeviceTemplate(+id!)
       .then((res) => {
+        if (res.devices) {
+          const arrYear: { year: string; count: number; selected: boolean }[] =
+            [];
+          for (const d of res.devices) {
+            if (arrYear.length === 0) {
+              arrYear?.push({ year: d.year!, count: 1, selected: false });
+            } else {
+              const idx = arrYear.findIndex((y) => y.year === d.year);
+              if (idx !== -1) arrYear[idx].count = arrYear[idx].count + 1;
+              else arrYear?.push({ year: d.year!, count: 1, selected: false });
+            }
+          }
+          setYearSelection(arrYear);
+        }
         setTemplate(res);
       })
       .catch((e) => {
