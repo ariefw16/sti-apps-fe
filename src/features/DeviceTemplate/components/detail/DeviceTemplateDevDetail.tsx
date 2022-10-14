@@ -9,7 +9,7 @@ import {
   Group,
 } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { ChevronDown, Eye, Pencil, Plus, Trash } from "tabler-icons-react";
@@ -22,6 +22,7 @@ import {
   deviceTemplateDetailState,
   deviceTemplateQuickUpdateDeviceState,
   deviceTemplateQuickUpdateTriggreState,
+  deviceTemplateYearSelectionState,
 } from "../../utils/store";
 import DevsAddModal from "../create/DevsAddModal";
 
@@ -30,6 +31,7 @@ export default function DeviceTemplateDevicesDetail(props: {
 }) {
   const { unitOptions } = props;
   const template = useRecoilValue(deviceTemplateDetailState);
+  const yearSelection = useRecoilValue(deviceTemplateYearSelectionState);
   const navigate = useNavigate();
   const setQuickUpdate = useSetRecoilState(
     deviceTemplateQuickUpdateDeviceState
@@ -42,6 +44,19 @@ export default function DeviceTemplateDevicesDetail(props: {
   const [showDeletion, setShowDeletion] = useState(false);
   const [deletionLoading, setDeletionLoading] = useState(false);
   const [openModal, setOpenModal] = useState(false);
+  const [devices, setDevices] = useState<Device[]>([]);
+
+  useEffect(() => {
+    const selected = yearSelection
+      .filter((fy) => fy.selected)
+      .map((my) => my.year);
+    setDevices(
+      template.devices?.filter((fd) => {
+        if (selected.length < 1) return true;
+        else return selected.includes(fd.year ?? "");
+      }) ?? []
+    );
+  }, [yearSelection]);
 
   const updateMenuHandler = (data: Device) => {
     setQuickUpdate({
@@ -144,8 +159,8 @@ export default function DeviceTemplateDevicesDetail(props: {
             </tr>
           </thead>
           <tbody>
-            {template.devices &&
-              template.devices.map((d) => (
+            {devices &&
+              devices.map((d) => (
                 <tr key={d.id}>
                   <td>{d.serialNumber}</td>
                   <td>

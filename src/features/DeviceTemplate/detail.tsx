@@ -35,13 +35,11 @@ export default function DetailDeviceTemplate() {
     },
   ];
   const { id } = useParams();
-  const [template, setTemplate] = useRecoilState(deviceTemplateDetailState);
+  const setTemplate = useSetRecoilState(deviceTemplateDetailState);
   const setLoading = useSetRecoilState(deviceTemplateLoadingDetailState);
   const trigger = useRecoilValue(deviceTemplateQuickUpdateTriggreState);
   const [unitOptions, setUnitOptions] = useState<SelectOptions[]>([]);
-  const [yearSelection, setYearSelection] = useRecoilState(
-    deviceTemplateYearSelectionState
-  );
+  const setYearSelection = useSetRecoilState(deviceTemplateYearSelectionState);
 
   useEffect(() => {
     setLoading(true);
