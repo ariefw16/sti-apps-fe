@@ -105,7 +105,7 @@ export default function AddChecklistInspectionModal(props: {
         my="md"
         value={inputType}
         onChange={(v) => {
-          setInputType(v);
+          setInputType(v!);
         }}
       />
       <Divider variant="dotted" my="md" />
