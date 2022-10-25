@@ -17,6 +17,7 @@ export interface ZoomAccount {
   tokenExpiredAt?: Date;
   maxParticipant?: number;
   useApi?: boolean;
+  apiType?: string;
 }
 
 export interface ZoomAccountFetchParams extends FetchParams {
@@ -40,6 +41,7 @@ export interface ZoomAccountCreate {
   unitId?: string;
   maxParticipant?: number;
   useApi?: string;
+  apiType?: string;
 }
 
 export interface ZoomAccountTestConnection {

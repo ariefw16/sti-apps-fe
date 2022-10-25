@@ -87,6 +87,7 @@ export default function EditZoomAccountPage() {
     );
     form.setFieldValue("maxParticipant", account.maxParticipant ?? 100);
     form.setFieldValue("useApi", account.useApi ? "Yes" : "No");
+    form.setFieldValue("apiType", account.apiType ?? "jwt");
   }, [account]);
 
   const formSubmitHandler = (data: ZoomAccountCreate) => {

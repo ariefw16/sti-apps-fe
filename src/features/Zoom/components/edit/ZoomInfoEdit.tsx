@@ -6,6 +6,7 @@ import {
   PasswordInput,
   Group,
   NumberInput,
+  Select,
 } from "@mantine/core";
 import { UseFormReturnType } from "@mantine/form/lib/use-form";
 import { useRecoilValue } from "recoil";
@@ -15,6 +16,7 @@ import {
 } from "../../utils/store";
 import { ZoomAccountCreate } from "../../utils/type";
 import moment from "moment";
+import { useEffect, useState } from "react";
 
 export default function ZoomInfoEdit(props: {
   form: UseFormReturnType<ZoomAccountCreate>;
@@ -22,6 +24,7 @@ export default function ZoomInfoEdit(props: {
   const { form } = props;
   const loading = useRecoilValue(zoomAccountCreateLoadingState);
   const account = useRecoilValue(zoomAccountDetailState);
+
   return (
     <Paper p={20} radius="lg">
       <Title order={5}>Account Information</Title>
@@ -36,14 +39,22 @@ export default function ZoomInfoEdit(props: {
       />
       {form.values.useApi === "Yes" && (
         <>
-          <PasswordInput
-            my="sm"
-            label="Account ID"
-            description="Account ID from zoom.us to connect Account"
-            placeholder="Input Account ID"
+          <Select
+            data={["jwt", "oauth"]}
+            label="Connection Type"
+            {...form.getInputProps("apiType")}
             disabled={loading}
-            {...form.getInputProps("account_id")}
           />
+          {form.values.apiType === "jwt" && (
+            <PasswordInput
+              my="sm"
+              label="Account ID"
+              description="Account ID from zoom.us to connect Account"
+              placeholder="Input Account ID"
+              disabled={loading}
+              {...form.getInputProps("account_id")}
+            />
+          )}
           <PasswordInput
             my="sm"
             label="Client ID"

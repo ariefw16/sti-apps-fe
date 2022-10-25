@@ -21,6 +21,14 @@ export default function ZoomAccountInfoDetail() {
       />
       {account.useApi && (
         <>
+          <TextInput
+            my="sm"
+            label="API Type Connection"
+            description="Connection Type to interact with Zoom"
+            readOnly
+            variant="filled"
+            value={account.apiType}
+          />
           <PasswordInput
             my="sm"
             label="Client ID"
