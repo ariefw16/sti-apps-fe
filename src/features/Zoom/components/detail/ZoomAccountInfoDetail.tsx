@@ -1,14 +1,42 @@
-import { Divider, Paper, PasswordInput, TextInput, Title } from "@mantine/core";
+import {
+  Button,
+  Divider,
+  Group,
+  Paper,
+  PasswordInput,
+  TextInput,
+  Title,
+} from "@mantine/core";
 import { useRecoilValue } from "recoil";
 import { zoomAccountDetailState } from "../../utils/store";
 import moment from "moment";
+import { UserCheck } from "tabler-icons-react";
 
 export default function ZoomAccountInfoDetail() {
   const account = useRecoilValue(zoomAccountDetailState);
 
+  const redirectOauth = () => {
+    console.log(import.meta.env.VITE_OAUTH_ZOOM_REDIRECT_URI);
+    // window.open(
+    //   `https://zoom.us/oauth/authorize?response_type=code&client_id=${
+    //     account.client_id
+    //   }&redirect_uri=${import.meta.env.OAUTH_ZOOM_REDIRECT_URI}`,
+    //   "_blank"
+    // );
+  };
+
   return (
     <Paper p={20} radius="lg">
-      <Title order={5}>Account Information</Title>
+      <Group position="apart">
+        <Title order={5}>Account Information</Title>
+        <Button
+          size="xs"
+          rightIcon={<UserCheck size={16} />}
+          onClick={redirectOauth}
+        >
+          OAuth
+        </Button>
+      </Group>
       <Divider my="md" variant="dotted" />
       <TextInput
         my="sm"
@@ -38,15 +66,17 @@ export default function ZoomAccountInfoDetail() {
             variant="filled"
             value={account.client_id || ""}
           />
-          <PasswordInput
-            my="sm"
-            label="Account ID"
-            description="Account ID from zoom.us to connect Account"
-            placeholder="Input Account ID"
-            readOnly
-            variant="filled"
-            value={account.account_id || ""}
-          />
+          {account.apiType === "jwt" && (
+            <PasswordInput
+              my="sm"
+              label="Account ID"
+              description="Account ID from zoom.us to connect Account"
+              placeholder="Input Account ID"
+              readOnly
+              variant="filled"
+              value={account.account_id || ""}
+            />
+          )}
           <TextInput
             my="sm"
             label="Last Connection"
